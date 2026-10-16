@@ -8,7 +8,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class DetailTransaksi extends Model
 {
     protected $table = 'detail_transaksi';
+
     protected $primaryKey = 'id_detail';
+
     public $timestamps = false;
 
     protected $fillable = [
@@ -19,13 +21,27 @@ class DetailTransaksi extends Model
         'subtotal',
     ];
 
+    protected $casts = [
+        'berat' => 'decimal:2',
+        'harga' => 'decimal:2',
+        'subtotal' => 'decimal:2',
+    ];
+
     public function transaksi(): BelongsTo
     {
-        return $this->belongsTo(Transaksi::class, 'id_transaksi', 'id_transaksi');
+        return $this->belongsTo(
+            Transaksi::class,
+            'id_transaksi',
+            'id_transaksi'
+        );
     }
 
-    public function paketLaundry(): BelongsTo
+    public function paket(): BelongsTo
     {
-        return $this->belongsTo(PaketLaundry::class, 'id_paket', 'id_paket');
+        return $this->belongsTo(
+            PaketLaundry::class,
+            'id_paket',
+            'id_paket'
+        );
     }
 }

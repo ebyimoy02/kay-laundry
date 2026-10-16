@@ -3,83 +3,73 @@
 namespace App\Http\Controllers;
 
 use App\Models\PaketLaundry;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
 class PaketLaundryController extends Controller
 {
+    /**
+     * Tampilkan daftar paket.
+     */
     public function index()
     {
-        $paket = PaketLaundry::orderBy(
-            'id_paket',
-            'desc'
-        )->get();
+        $paket = PaketLaundry::orderBy('id_paket')->get();
 
-        return view(
-            'paket.index',
-            compact('paket')
-        );
+        return view('paket.index', compact('paket'));
     }
 
-    public function create()
-    {
-        return view('paket.create');
-    }
-
+    /**
+     * Simpan paket baru.
+     */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'nama_paket' => 'required|string|max:100',
-            'harga' => 'required|numeric|min:0',
-            'satuan' => 'required|string|max:20',
-        ]);
-
-        PaketLaundry::create($validated);
+        PaketLaundry::create($this->validated($request));
 
         return redirect()
             ->route('paket.index')
-            ->with(
-                'success',
-                'Data paket laundry berhasil ditambahkan.'
-            );
+            ->with('success', 'Paket berhasil ditambahkan.');
     }
 
-    public function edit(PaketLaundry $paket)
+    /**
+     * Perbarui paket.
+     */
+    public function update(Request $request, PaketLaundry $paket)
     {
-        return view(
-            'paket.edit',
-            compact('paket')
-        );
-    }
-
-    public function update(
-        Request $request,
-        PaketLaundry $paket
-    ) {
-        $validated = $request->validate([
-            'nama_paket' => 'required|string|max:100',
-            'harga' => 'required|numeric|min:0',
-            'satuan' => 'required|string|max:20',
-        ]);
-
-        $paket->update($validated);
+        $paket->update($this->validated($request));
 
         return redirect()
             ->route('paket.index')
-            ->with(
-                'success',
-                'Data paket laundry berhasil diperbarui.'
-            );
+            ->with('success', 'Paket berhasil diperbarui.');
     }
 
+    /**
+     * Hapus paket.
+     */
     public function destroy(PaketLaundry $paket)
     {
-        $paket->delete();
+        try {
+            $paket->delete();
+        } catch (QueryException $e) {
+            // Biasanya karena paket masih dipakai di data transaksi (foreign key).
+            return redirect()
+                ->route('paket.index')
+                ->with('error', 'Paket tidak dapat dihapus karena masih digunakan pada transaksi.');
+        }
 
         return redirect()
             ->route('paket.index')
-            ->with(
-                'success',
-                'Data paket laundry berhasil dihapus.'
-            );
+            ->with('success', 'Paket berhasil dihapus.');
+    }
+
+    /**
+     * Aturan validasi yang dipakai store() dan update().
+     */
+    private function validated(Request $request): array
+    {
+        return $request->validate([
+            'nama_paket' => ['required', 'string', 'max:100'],
+            'harga'      => ['required', 'numeric', 'min:0'],
+            'satuan'     => ['required', 'string', 'max:20'],
+        ]);
     }
 }

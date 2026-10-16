@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Transaksi;
+use App\Models\Pelanggan;
+use App\Models\PaketLaundry;
 use Illuminate\Http\Request;
 
 class LaporanController extends Controller
@@ -14,9 +16,8 @@ class LaporanController extends Controller
 
         $query = Transaksi::with([
             'pelanggan',
-            'admin',
-            'detailTransaksi.paketLaundry'
-        ]);
+            'detailTransaksi.paket'
+        ])->orderBy('tgl_masuk', 'desc');
 
         if ($tanggalMulai) {
             $query->whereDate('tgl_masuk', '>=', $tanggalMulai);
@@ -26,18 +27,24 @@ class LaporanController extends Controller
             $query->whereDate('tgl_masuk', '<=', $tanggalSelesai);
         }
 
-        $transaksi = $query
-            ->orderBy('tgl_masuk', 'desc')
-            ->get();
+        $transaksi = $query->get();
 
         $totalTransaksi = $transaksi->count();
 
-        $totalPendapatan = $transaksi->sum('total');
+        $totalPendapatan = $transaksi->sum(function ($item) {
+            return (float) $item->total;
+        });
+
+        $totalPelanggan = Pelanggan::count();
+
+        $totalPaket = PaketLaundry::count();
 
         return view('laporan.index', compact(
             'transaksi',
             'totalTransaksi',
             'totalPendapatan',
+            'totalPelanggan',
+            'totalPaket',
             'tanggalMulai',
             'tanggalSelesai'
         ));

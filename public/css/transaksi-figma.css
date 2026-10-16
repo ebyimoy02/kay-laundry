@@ -1,0 +1,1051 @@
+
+/* =========================================================
+   transaksi-figma.css
+   File: public/css/transaksi-figma.css
+   Urutan: style.css -> dashboard-figma.css ->
+           transaksi-figma.css -> profile-dropdown.css
+   ========================================================= */
+
+
+/* =========================================================
+   1. HEADER HALAMAN DAN TOMBOL UTAMA
+   ========================================================= */
+
+.dashboard-page .page-header-flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin: 0 0 20px;
+}
+
+.dashboard-page .page-header-flex .page-title {
+    margin: 0;
+}
+
+.dashboard-page .page-header-flex .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    height: 46px;
+    padding: 0 24px;
+    border: 0;
+    border-radius: 8px;
+    background: #2563eb;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background .2s;
+}
+
+.dashboard-page .page-header-flex .btn-primary:hover {
+    background: #1d4ed8;
+}
+
+.dashboard-page .page-header-flex .btn-primary:focus-visible {
+    outline: 3px solid rgba(4, 40, 92, .35);
+    outline-offset: 2px;
+}
+
+.dashboard-page .page-header-flex .btn-primary svg {
+    width: 18px;
+    height: 18px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+
+/* =========================================================
+   2. ALERT
+   ========================================================= */
+
+.dashboard-page .alert {
+    padding: 14px 18px;
+    margin: 0 0 18px;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.dashboard-page .alert-danger {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #dc2626;
+}
+
+.dashboard-page .alert-danger ul {
+    padding-left: 18px;
+}
+
+
+/* =========================================================
+   3. KARTU, PENCARIAN, TABEL, DAN PAGINATION
+   ========================================================= */
+
+.dashboard-page .transaksi-table-card {
+    background: #ffffff;
+    border: 1px solid #e3ecf8;
+    border-radius: 10px;
+    box-shadow: 0 2px 12px rgba(4, 40, 92, .05);
+    overflow: hidden;
+}
+
+.dashboard-page .transaksi-search-wrapper {
+    padding: 16px;
+    border-bottom: 0;
+    background: #ffffff;
+}
+
+.dashboard-page .transaksi-search-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    max-width: none;
+    height: 44px;
+    padding: 0 16px;
+    border: 1.5px solid #c6d8f0;
+    border-radius: 8px;
+    background: #ffffff;
+    transition: border-color .2s, box-shadow .2s;
+}
+
+.dashboard-page .transaksi-search-box:focus-within {
+    border-color: #04285c;
+    box-shadow: 0 0 0 4px rgba(4, 40, 92, .12);
+}
+
+.dashboard-page .transaksi-search-box svg {
+    position: static;
+    transform: none;
+    flex: 0 0 20px;
+    width: 20px;
+    height: 20px;
+    color: #2f80e6;
+    pointer-events: none;
+}
+
+.dashboard-page .transaksi-search-box input,
+.dashboard-page .transaksi-search-box input:focus {
+    flex: 1;
+    min-width: 0;
+    width: auto;
+    height: 100%;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    outline: none;
+    color: #04285c;
+    font-size: 15px;
+}
+
+.dashboard-page .transaksi-search-box input::placeholder {
+    color: #8795aa;
+}
+
+.dashboard-page .transaksi-table-wrapper {
+    width: auto;
+    margin: 0 16px 8px;
+    border: 1px solid #d5e0ee;
+    border-radius: 8px;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+#tabelTransaksi {
+    width: 100%;
+    min-width: 760px;
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+
+#tabelTransaksi th:nth-child(1) { width: 7%; }
+#tabelTransaksi th:nth-child(2) { width: 16%; }
+#tabelTransaksi th:nth-child(3) { width: 25%; }
+#tabelTransaksi th:nth-child(4) { width: 18%; }
+#tabelTransaksi th:nth-child(5) { width: 17%; }
+#tabelTransaksi th:nth-child(6) { width: 17%; }
+
+#tabelTransaksi thead th {
+    height: 48px;
+    padding: 0 20px;
+    background: #eaf0fb;
+    color: #04285c;
+    border: 1px solid #d5e0ee;
+    border-top: 0;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.4;
+    text-align: left;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+#tabelTransaksi tbody td {
+    height: 58px;
+    padding: 8px 20px;
+    background: #ffffff;
+    color: #3d4b61;
+    border: 1px solid #dfe8f3;
+    font-size: 15px;
+    line-height: 1.4;
+    text-align: left;
+    vertical-align: middle;
+    overflow-wrap: anywhere;
+}
+
+#tabelTransaksi tbody tr.transaksi-data-row:hover td {
+    background: #f5f9ff;
+}
+
+#tabelTransaksi th:first-child,
+#tabelTransaksi td:first-child {
+    border-left: 0;
+}
+
+#tabelTransaksi th:last-child,
+#tabelTransaksi td:last-child {
+    border-right: 0;
+}
+
+#tabelTransaksi tbody tr:nth-last-child(2) td {
+    border-bottom: 0;
+}
+
+#tabelTransaksi .aksi-column {
+    text-align: left !important;
+}
+
+#tabelTransaksi td.text-center {
+    height: 100px;
+    text-align: center;
+}
+
+.dashboard-page .transaksi-harga-list span {
+    font-weight: 400;
+    color: inherit;
+}
+
+.dashboard-page .name-link {
+    color: #243b5a;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.dashboard-page .name-link:hover {
+    text-decoration: underline;
+}
+
+.dashboard-page .name-link:focus-visible {
+    outline: 2px solid rgba(47, 128, 230, .6);
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
+
+/* =========================================================
+   4. TOMBOL AKSI TABEL
+   ========================================================= */
+
+.dashboard-page .transaksi-action-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+}
+
+.dashboard-page .transaksi-action-buttons form {
+    margin: 0;
+}
+
+.dashboard-page .transaksi-action-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border: 0;
+    border-radius: 8px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.dashboard-page .transaksi-action-btn svg {
+    width: 17px;
+    height: 17px;
+}
+
+.dashboard-page .transaksi-action-edit {
+    background: #1b4da8;
+    color: #ffffff;
+}
+
+.dashboard-page .transaksi-action-edit:hover {
+    background: #163f89;
+    box-shadow: 0 3px 8px rgba(27, 77, 168, .25);
+}
+
+.dashboard-page .transaksi-action-delete {
+    background: #ef5f5f;
+    color: #ffffff;
+}
+
+.dashboard-page .transaksi-action-delete:hover {
+    background: #e04848;
+    box-shadow: 0 3px 8px rgba(239, 95, 95, .25);
+}
+
+
+/* =========================================================
+   5. FOOTER DAN PAGINATION
+   ========================================================= */
+
+.dashboard-page .transaksi-pagination-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    min-height: 64px;
+    padding: 12px 24px 16px;
+    border-top: 0;
+    background: #ffffff;
+}
+
+.dashboard-page .transaksi-pagination-info,
+.dashboard-page .transaksi-pagination-info strong {
+    font-size: 14px;
+    font-weight: 400;
+    color: #4a6286;
+}
+
+.dashboard-page .transaksi-pagination {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.dashboard-page .pagination-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    border: 1px solid #d3deee;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #5b7094;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.dashboard-page .pagination-btn.active {
+    background: #1b4da8;
+    border-color: #1b4da8;
+    color: #ffffff;
+}
+
+.dashboard-page .pagination-btn:disabled {
+    opacity: .55;
+    cursor: default;
+}
+
+
+/* =========================================================
+   6. MODAL TAMBAH TRANSAKSI
+   ========================================================= */
+
+/* Lapisan belakang modal */
+
+#modalTambahTransaksi.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    box-sizing: border-box;
+    padding: 24px;
+
+    background: rgba(4, 40, 92, .45);
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    transition: opacity .2s ease, visibility .2s ease;
+}
+
+#modalTambahTransaksi.modal-backdrop.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+/* Kotak modal */
+
+#modalTambahTransaksi .modal-box {
+    display: flex;
+    flex-direction: column;
+
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 480px;
+    max-height: calc(100vh - 48px);
+    min-height: 0;
+
+    overflow: hidden;
+
+    background: #ffffff;
+    border: 1px solid #e3ecf8;
+    border-radius: 10px;
+
+    box-shadow: 0 12px 35px rgba(4, 40, 92, .18);
+
+    transform: translateY(-10px);
+    transition: transform .2s ease;
+}
+
+#modalTambahTransaksi.active .modal-box {
+    transform: translateY(0);
+}
+
+/* Form menjadi wadah untuk area scroll dan footer */
+
+#modalTambahTransaksi #formTransaksi {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+
+    min-height: 0;
+    overflow: hidden;
+}
+
+/* Header modal */
+
+#modalTambahTransaksi .modal-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+
+    flex: 0 0 auto;
+    padding: 24px 28px 20px;
+    margin: 0;
+
+    border-bottom: 0;
+}
+
+#modalTambahTransaksi .modal-header h3 {
+    margin: 0;
+    color: #04285c;
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 1.4;
+}
+
+#modalTambahTransaksi .modal-header p {
+    margin: 0;
+    color: #8795aa;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+#modalTambahTransaksi .modal-close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    width: 30px;
+    height: 30px;
+    padding: 0;
+
+    border: 0;
+    border-radius: 6px;
+    background: transparent;
+
+    color: #8795aa;
+    font-size: 26px;
+    line-height: 1;
+
+    cursor: pointer;
+}
+
+#modalTambahTransaksi .modal-close:hover {
+    background: #f1f5f9;
+    color: #04285c;
+}
+
+/* Isi modal: bagian ini yang bisa di-scroll */
+
+#modalTambahTransaksi .modal-body {
+    flex: 1 1 auto;
+    min-height: 0;
+
+    padding: 22px 28px 8px;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    overscroll-behavior-y: contain;
+    scrollbar-gutter: stable;
+
+    scrollbar-width: thin;
+    scrollbar-color: #c5cbd5 transparent;
+}
+
+/* Scrollbar Chrome dan Edge */
+
+#modalTambahTransaksi .modal-body::-webkit-scrollbar {
+    width: 6px;
+}
+
+#modalTambahTransaksi .modal-body::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+#modalTambahTransaksi .modal-body::-webkit-scrollbar-thumb {
+    background-color: #c5cbd5;
+    border-radius: 10px;
+}
+
+#modalTambahTransaksi .modal-body::-webkit-scrollbar-thumb:hover {
+    background-color: #9ca3af;
+}
+
+/* Jarak setiap kolom form */
+
+#modalTambahTransaksi .form-group {
+    min-width: 0;
+    margin: 0 0 18px;
+}
+
+#modalTambahTransaksi .form-group label {
+    display: block;
+    margin: 0 0 8px;
+
+    color: #243b5a;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+/* Input dan dropdown */
+
+#modalTambahTransaksi .form-group input,
+#modalTambahTransaksi .form-group select,
+#modalTambahTransaksi .detail-paket-row input,
+#modalTambahTransaksi .detail-paket-row select {
+    box-sizing: border-box;
+    display: block;
+    width: 100%;
+    min-width: 0;
+    height: 44px;
+    padding: 0 14px;
+
+    border: 1.5px solid #d3deee;
+    border-radius: 8px;
+
+    background-color: #ffffff;
+    color: #04285c;
+
+    font-family: inherit;
+    font-size: 14px;
+
+    outline: none;
+    transition: border-color .2s, box-shadow .2s;
+}
+
+#modalTambahTransaksi .form-group input:focus,
+#modalTambahTransaksi .form-group select:focus,
+#modalTambahTransaksi .detail-paket-row input:focus,
+#modalTambahTransaksi .detail-paket-row select:focus {
+    border-color: #04285c;
+    box-shadow: 0 0 0 3px rgba(4, 40, 92, .10);
+}
+
+#modalTambahTransaksi input::placeholder {
+    color: #8795aa;
+}
+
+/* Dropdown pelanggan dan paket */
+
+#modalTambahTransaksi .form-group select,
+#modalTambahTransaksi .detail-paket-row select {
+    padding-right: 34px;
+    cursor: pointer;
+}
+
+#modalTambahTransaksi .form-group select:required:invalid,
+#modalTambahTransaksi .detail-paket-row select:required:invalid {
+    color: #8795aa;
+}
+
+/* Tanggal */
+
+#modalTambahTransaksi input[type="date"] {
+    padding-right: 12px;
+}
+
+#modalTambahTransaksi input[type="date"]::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+}
+
+/* Hilangkan spinner input berat */
+
+#modalTambahTransaksi input[type="number"] {
+    appearance: textfield;
+    -moz-appearance: textfield;
+}
+
+#modalTambahTransaksi input[type="number"]::-webkit-inner-spin-button,
+#modalTambahTransaksi input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Baris paket */
+
+#modalTambahTransaksi #detailPaketContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+#modalTambahTransaksi .detail-paket-row {
+    position: relative;
+
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 0 12px;
+
+    box-sizing: border-box;
+    min-width: 0;
+    padding: 14px 14px 12px;
+
+    border: 1px solid #e3ecf8;
+    border-radius: 8px;
+    background: #f8fafc;
+}
+
+/* Paket memenuhi satu baris */
+
+#modalTambahTransaksi .detail-paket-row .form-group:first-child {
+    grid-column: 1 / -1;
+}
+
+/* Jarak form dalam detail paket */
+
+#modalTambahTransaksi .detail-paket-row .form-group {
+    min-width: 0;
+    margin-bottom: 14px;
+}
+
+/* Tombol hapus paket */
+
+#modalTambahTransaksi .btn-hapus-paket {
+    grid-column: 1 / -1;
+    justify-self: end;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 30px;
+    height: 30px;
+    padding: 0;
+
+    border: 1px solid #fecaca;
+    border-radius: 7px;
+    background: #fff1f2;
+
+    color: #dc2626;
+    font-size: 22px;
+    line-height: 1;
+
+    cursor: pointer;
+}
+
+#modalTambahTransaksi .btn-hapus-paket:hover:not(:disabled) {
+    background: #fee2e2;
+}
+
+#modalTambahTransaksi .btn-hapus-paket:disabled {
+    opacity: .45;
+    cursor: not-allowed;
+}
+
+/* Tombol tambah paket */
+
+#modalTambahTransaksi #btnTambahPaket {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 40px;
+    margin-top: 2px;
+    padding: 0 16px;
+
+    border: 1px solid #2563eb;
+    border-radius: 8px;
+    background: #ffffff;
+
+    color: #2563eb;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+    transition: background .2s, color .2s;
+}
+
+#modalTambahTransaksi #btnTambahPaket:hover {
+    background: #eff6ff;
+}
+
+/* Total transaksi */
+
+#modalTambahTransaksi .transaksi-total-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+
+    margin-top: 20px;
+    padding: 15px 16px;
+
+    border: 1px solid #e3ecf8;
+    border-radius: 8px;
+    background: #f5f8fc;
+}
+
+#modalTambahTransaksi .transaksi-total-label {
+    color: #243b5a;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+#modalTambahTransaksi .transaksi-total-value {
+    color: #04285c;
+    font-size: 17px;
+    font-weight: 700;
+    text-align: right;
+    overflow-wrap: anywhere;
+}
+
+/* Footer: tombol tetap terlihat di bawah */
+
+#modalTambahTransaksi .modal-footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+
+    flex: 0 0 auto;
+    padding: 18px 28px 24px;
+    margin: 0;
+
+    border-top: 0;
+    background: #ffffff;
+}
+
+/* Tombol Batal dan Simpan */
+
+#modalTambahTransaksi .modal-footer .btn-secondary,
+#modalTambahTransaksi .modal-footer .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    box-sizing: border-box;
+    min-width: 100px;
+    min-height: 42px;
+    padding: 0 18px;
+
+    border-radius: 8px;
+
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+
+    cursor: pointer;
+    transition: background .2s, border-color .2s;
+}
+
+#modalTambahTransaksi .modal-footer .btn-secondary {
+    border: 1px solid #d3deee;
+    background: #ffffff;
+    color: #243b5a;
+}
+
+#modalTambahTransaksi .modal-footer .btn-secondary:hover {
+    background: #f5f8fc;
+}
+
+#modalTambahTransaksi .modal-footer .btn-primary {
+    border: 1px solid #2563eb;
+    background: #2563eb;
+    color: #ffffff;
+}
+
+#modalTambahTransaksi .modal-footer .btn-primary:hover {
+    border-color: #1d4ed8;
+    background: #1d4ed8;
+}
+
+
+/* =========================================================
+   7. HALAMAN DETAIL TRANSAKSI
+   ========================================================= */
+
+.dashboard-page .detail-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    align-items: stretch;
+}
+
+.dashboard-page .detail-card {
+    padding: 14px 28px;
+    background: #ffffff;
+    border: 1px solid #e3ecf8;
+    border-radius: 10px;
+    box-shadow: 0 2px 12px rgba(4, 40, 92, .05);
+}
+
+.dashboard-page .detail-main {
+    grid-row: 1 / span 2;
+}
+
+.dashboard-page .detail-card-title {
+    padding: 8px 0 14px;
+    margin-bottom: 4px;
+    border-bottom: 1px solid #e3ecf8;
+    font-size: 17px;
+    font-weight: 700;
+    color: #04285c;
+}
+
+.dashboard-page .info-row {
+    display: grid;
+    grid-template-columns: 140px minmax(0, 1fr);
+    gap: 12px;
+    align-items: center;
+    min-height: 50px;
+}
+
+.dashboard-page .info-row dt {
+    font-size: 15px;
+    color: #5b6b82;
+}
+
+.dashboard-page .info-row dd {
+    margin: 0;
+    font-size: 15px;
+    color: #243b5a;
+    overflow-wrap: anywhere;
+}
+
+.dashboard-page .info-row dd.is-total {
+    font-size: 19px;
+    font-weight: 700;
+    color: #04285c;
+}
+
+.dashboard-page .paket-group + .paket-group {
+    margin-top: 6px;
+    padding-top: 6px;
+    border-top: 1px dashed #d5e0ee;
+}
+
+.dashboard-page .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   8. RESPONSIF
+   ========================================================= */
+
+@media (max-width: 768px) {
+    .dashboard-page .detail-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-page .detail-main {
+        grid-row: auto;
+    }
+}
+
+@media (max-width: 576px) {
+    .dashboard-page .page-header-flex {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .dashboard-page .page-header-flex .btn-primary {
+        width: 100%;
+        height: 44px;
+    }
+
+    .dashboard-page .transaksi-search-wrapper {
+        padding: 12px;
+    }
+
+    .dashboard-page .transaksi-table-wrapper {
+        margin: 0 12px 8px;
+    }
+
+    .dashboard-page .transaksi-pagination-footer {
+        flex-wrap: wrap;
+        padding: 12px 12px 16px;
+    }
+
+    .dashboard-page .detail-card {
+        padding: 12px 18px;
+    }
+
+    .dashboard-page .info-row {
+        grid-template-columns: 110px minmax(0, 1fr);
+    }
+
+    #modalTambahTransaksi.modal-backdrop {
+        padding: 12px;
+    }
+
+    #modalTambahTransaksi .modal-box {
+        max-height: calc(100vh - 24px);
+    }
+
+    #modalTambahTransaksi .modal-header {
+        padding: 20px 20px 16px;
+    }
+
+    #modalTambahTransaksi .modal-body {
+        padding: 18px 20px 8px;
+    }
+
+    #modalTambahTransaksi .modal-footer {
+        padding: 16px 20px 20px;
+    }
+
+    #modalTambahTransaksi .detail-paket-row {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 0;
+    }
+
+    #modalTambahTransaksi .detail-paket-row .form-group:first-child {
+        grid-column: auto;
+    }
+
+    #modalTambahTransaksi .detail-paket-row .form-group {
+        margin-bottom: 14px;
+    }
+
+    #modalTambahTransaksi .transaksi-total-section {
+        gap: 10px;
+        padding: 13px;
+    }
+
+    #modalTambahTransaksi .transaksi-total-value {
+        font-size: 15px;
+    }
+
+    #modalTambahTransaksi .modal-footer .btn-secondary,
+    #modalTambahTransaksi .modal-footer .btn-primary {
+        flex: 1;
+        min-width: 0;
+    }
+}
+
+/* =========================================================
+   MODAL KONFIRMASI HAPUS TRANSAKSI
+   Mengikuti tampilan modal konfirmasi Pelanggan
+   ========================================================= */
+
+#modalHapusTransaksi .modal-card {
+    box-sizing: border-box;
+    width: calc(100% - 32px);
+    max-width: 400px;
+    padding: 28px;
+    border-radius: 12px;
+    text-align: center;
+}
+
+#modalHapusTransaksi .hapus-icon {
+    display: grid;
+    place-items: center;
+    width: 52px;
+    height: 52px;
+    margin: 0 auto 16px;
+    border-radius: 50%;
+    background: #fef2f2;
+    color: #ef5f5f;
+}
+
+#modalHapusTransaksi .hapus-icon svg {
+    width: 24px;
+    height: 24px;
+}
+
+#modalHapusTransaksi h2 {
+    margin: 0 0 6px;
+    font-size: 20px;
+    font-weight: 700;
+    color: #04285c;
+}
+
+#modalHapusTransaksi p {
+    margin: 0 0 24px;
+    font-size: 14px;
+    color: #64748b;
+}
+
+#modalHapusTransaksi p strong {
+    color: #334155;
+}
+
+#modalHapusTransaksi .modal-footer {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 0;
+}
+
+#modalHapusTransaksi .modal-btn {
+    min-width: 120px;
+    height: 44px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+#modalHapusTransaksi .modal-btn-danger {
+    border: 1px solid #ef5f5f;
+    background: #ef5f5f;
+    color: #ffffff;
+}
+
+#modalHapusTransaksi .modal-btn-danger:hover {
+    border-color: #e04848;
+    background: #e04848;
+}

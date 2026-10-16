@@ -1,0 +1,356 @@
+
+/* ========================================
+   KAY LAUNDRY - MASTER LAYOUT
+======================================== */
+
+:root {
+    --navy: #0B2553;
+    --navy-active: #1A4480;
+    --navy-hover: #14366C;
+    --text-white: #FFFFFF;
+    --text-muted: #9CA3AF;
+    --page-bg: #EEF4FC;
+    --border: #E2E8F0;
+    --text-main: #1F2937;
+    --sidebar-width: 260px;
+    --navbar-height: 76px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--page-bg);
+    color: var(--text-main);
+}
+
+[x-cloak] {
+    display: none !important;
+}
+
+/* SIDEBAR */
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 1000;
+
+    display: flex;
+    flex-direction: column;
+
+    width: var(--sidebar-width);
+    height: 100vh;
+    overflow-y: auto;
+
+    background: var(--navy);
+    color: var(--text-white);
+
+    transition: transform 0.25s ease;
+}
+
+.sidebar-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    min-height: var(--navbar-height);
+    padding: 18px 20px;
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.brand-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 10px;
+}
+
+.brand-icon svg {
+    width: 24px;
+    height: 24px;
+}
+
+.brand-name {
+    font-size: 21px;
+    font-weight: 700;
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    flex: 1;
+    padding: 24px 14px;
+}
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+
+    min-height: 46px;
+    padding: 12px 14px;
+
+    color: var(--text-muted);
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+
+    border-radius: 8px;
+    transition: background 0.2s, color 0.2s;
+}
+
+.sidebar-link svg {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+.sidebar-link:hover {
+    color: var(--text-white);
+    background: var(--navy-hover);
+}
+
+.sidebar-link.active {
+    color: var(--text-white);
+    background: var(--navy-active);
+    font-weight: 600;
+}
+
+.sidebar-footer {
+    padding: 16px 14px 22px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* AREA UTAMA */
+
+.main-wrapper {
+    min-height: 100vh;
+    min-width: 0;
+    margin-left: var(--sidebar-width);
+    transition: margin-left 0.25s ease;
+}
+
+.main-wrapper.main-sidebar-closed {
+    margin-left: 0;
+}
+
+/* NAVBAR */
+
+.top-navbar {
+    position: sticky;
+    top: 0;
+    z-index: 500;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+
+    min-height: var(--navbar-height);
+    padding: 14px 28px;
+
+    background: #FFFFFF;
+    border-bottom: 1px solid var(--border);
+}
+
+.navbar-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    min-width: 0;
+}
+
+.hamburger-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+
+    color: #475569;
+    background: #F8FAFC;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    cursor: pointer;
+}
+
+.hamburger-btn:hover {
+    background: #EAF0F8;
+}
+
+.hamburger-btn svg {
+    width: 22px;
+    height: 22px;
+}
+
+.navbar-page-title {
+    font-size: 19px;
+    font-weight: 700;
+}
+
+.navbar-profile {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+}
+
+.profile-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 42px;
+    height: 42px;
+
+    color: #1D4ED8;
+    background: #E8F0FF;
+    border-radius: 50%;
+}
+
+.profile-avatar svg {
+    width: 21px;
+    height: 21px;
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.profile-name {
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.profile-role {
+    color: #6B7280;
+    font-size: 12px;
+}
+
+/* KONTEN */
+
+.page-content {
+    width: 100%;
+    min-width: 0;
+    padding: 28px;
+}
+
+.page-heading {
+    margin: 0 0 8px;
+    font-size: 25px;
+    font-weight: 700;
+}
+
+.page-description {
+    margin: 0 0 24px;
+    color: #6B7280;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.content-card {
+    padding: 24px;
+    background: #FFFFFF;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+}
+
+/* SIDEBAR DESKTOP */
+
+.sidebar.sidebar-desktop-hidden {
+    transform: translateX(-100%);
+}
+
+/* OVERLAY MOBILE */
+
+.sidebar-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 900;
+    background: rgba(15, 23, 42, 0.55);
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: min(var(--sidebar-width), 85vw);
+        transform: translateX(-100%);
+    }
+
+    .sidebar.sidebar-mobile-open {
+        transform: translateX(0);
+    }
+
+    .main-wrapper,
+    .main-wrapper.main-sidebar-open,
+    .main-wrapper.main-sidebar-closed {
+        margin-left: 0;
+    }
+
+    .top-navbar {
+        min-height: 66px;
+        padding: 11px 15px;
+    }
+
+    .navbar-left {
+        gap: 10px;
+    }
+
+    .navbar-page-title {
+        font-size: 16px;
+    }
+
+    .hamburger-btn {
+        width: 38px;
+        height: 38px;
+    }
+
+    .profile-avatar {
+        width: 36px;
+        height: 36px;
+    }
+
+    .profile-name {
+        font-size: 12px;
+    }
+
+    .profile-role {
+        font-size: 11px;
+    }
+
+    .page-content {
+        padding: 18px 15px;
+    }
+
+    .content-card {
+        padding: 17px;
+    }
+}
+
+@media (max-width: 380px) {
+    .navbar-profile {
+        gap: 6px;
+    }
+
+    .profile-name {
+        font-size: 11px;
+    }
+}

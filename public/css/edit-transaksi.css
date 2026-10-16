@@ -1,0 +1,182 @@
+/* ==================================================
+   HALAMAN EDIT TRANSAKSI
+   CSS KHUSUS - TIDAK MENGUBAH HALAMAN LAIN
+   ================================================== */
+
+.edit-transaksi-card {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 28px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(15, 42, 74, 0.06);
+}
+
+.edit-transaksi-card .edit-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+}
+
+.edit-transaksi-card .edit-field label {
+    display: block;
+    color: #26384d;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.edit-transaksi-card input,
+.edit-transaksi-card select {
+    width: 100%;
+    min-width: 0;
+    min-height: 44px;
+    box-sizing: border-box;
+    padding: 10px 12px;
+    border: 1px solid #d5deea;
+    border-radius: 7px;
+    background: #ffffff;
+    color: #26384d;
+    font-family: inherit;
+    font-size: 14px;
+}
+
+.edit-transaksi-card input:focus,
+.edit-transaksi-card select:focus {
+    outline: none;
+    border-color: #24558a;
+    box-shadow: 0 0 0 2px rgba(36, 85, 138, 0.10);
+}
+
+.edit-transaksi-card input[readonly] {
+    background: #f5f7fa;
+}
+
+/* BARIS DETAIL PAKET */
+.edit-transaksi-card .edit-paket-row {
+    display: grid;
+    grid-template-columns:
+        minmax(0, 1.5fr)
+        minmax(100px, 0.8fr)
+        minmax(130px, 1fr)
+        max-content;
+    align-items: end;
+    gap: 16px;
+    margin-bottom: 18px;
+    padding: 18px;
+    border: 1px solid #e0e7f0;
+    border-radius: 10px;
+    background: #fbfcfe;
+}
+
+.edit-transaksi-card .edit-paket-row .edit-field {
+    margin: 0;
+}
+
+/* TOMBOL HAPUS PAKET */
+.edit-transaksi-card .edit-paket-row button.btn-hapus-paket {
+    box-sizing: border-box !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    align-self: end;
+    justify-self: start;
+
+    width: auto !important;
+    min-width: 120px !important;
+    max-width: none !important;
+    height: 44px !important;
+    min-height: 44px !important;
+
+    margin: 0 0 0 0 !important;
+    padding: 0 14px !important;
+
+    border: 1px solid #d9534f;
+    border-radius: 7px;
+    background: #ffffff;
+    color: #c0392b;
+
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.2;
+    white-space: nowrap !important;
+    text-align: center;
+
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.edit-transaksi-card .edit-paket-row button.btn-hapus-paket:hover {
+    background: #fff1f0;
+}
+
+.edit-transaksi-card .edit-paket-row button.btn-hapus-paket[hidden] {
+    display: none !important;
+}
+
+/* TOTAL TRANSAKSI */
+.edit-transaksi-card .edit-total {
+    max-width: 360px;
+    margin-top: 24px;
+}
+
+/* TOMBOL AKSI */
+.edit-transaksi-card .edit-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 26px;
+}
+
+.edit-transaksi-card .edit-actions a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+/* LAYAR TABLET */
+@media (max-width: 900px) {
+    .edit-transaksi-card .edit-paket-row {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+/* LAYAR HP */
+@media (max-width: 560px) {
+    .edit-transaksi-card {
+        padding: 16px;
+    }
+
+    .edit-transaksi-card .edit-paket-row {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 14px;
+        padding: 14px;
+    }
+
+    .edit-transaksi-card .edit-paket-row button.btn-hapus-paket {
+        width: auto !important;
+        min-width: 120px !important;
+        justify-self: start;
+        align-self: start;
+    }
+
+    .edit-transaksi-card .edit-total {
+        max-width: 100%;
+    }
+
+    .edit-transaksi-card .edit-actions {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .edit-transaksi-card .edit-actions button,
+    .edit-transaksi-card .edit-actions a {
+        width: 100%;
+        box-sizing: border-box;
+    }
+}

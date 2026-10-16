@@ -1,962 +1,584 @@
+
 <!DOCTYPE html>
 <html lang="id">
 
 <head>
-
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Data Pelanggan - Kay Laundry</title>
 
-    <link
-        rel="stylesheet"
-        href="{{ asset('css/style.css') }}"
-    >
+    <!-- Font Roboto sesuai Figma -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 
+    <!-- Urutan CSS dipertahankan -->
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/dashboard-figma.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/pelanggan-figma.css') }}">
 </head>
-
 
 <body class="dashboard-page">
 
     <div class="dashboard-wrapper">
 
-
-        <!-- =====================================================
-             SIDEBAR
-        ====================================================== -->
-
+        <!-- SIDEBAR -->
         <aside class="sidebar">
 
             <div class="sidebar-brand">
-
                 <div class="brand-icon">
+                    <svg viewBox="0 0 100 120"
+                         fill="none" stroke="#ffffff" stroke-width="7"
+                         stroke-linecap="round" stroke-linejoin="round">
 
-                    <svg
-                        width="22"
-                        height="22"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="#ffffff"
-                        stroke-width="2"
-                    >
-
-                        <rect
-                            x="3"
-                            y="3"
-                            width="18"
-                            height="18"
-                            rx="3"
-                        />
-
-                        <circle
-                            cx="12"
-                            cy="13"
-                            r="4"
-                        />
-
-                        <circle
-                            cx="7"
-                            cy="7"
-                            r="1"
-                            fill="#ffffff"
-                        />
-
-                        <circle
-                            cx="10"
-                            cy="7"
-                            r="1"
-                            fill="#ffffff"
-                        />
-
+                        <rect x="4" y="4" width="92" height="112" rx="10"/>
+                        <line x1="4" y1="30" x2="96" y2="30"/>
+                        <circle cx="22" cy="17" r="3.2" fill="#ffffff" stroke="none"/>
+                        <circle cx="36" cy="17" r="3.2" fill="#ffffff" stroke="none"/>
+                        <line x1="58" y1="17" x2="78" y2="17"/>
+                        <circle cx="50" cy="73" r="27"/>
+                        <path d="M32 75c6-7 12 7 18 0s12 7 18 0"/>
                     </svg>
-
                 </div>
 
                 <h2>Laundry</h2>
-
             </div>
-
 
             <nav class="sidebar-menu">
 
-
                 <!-- DASHBOARD -->
-
-                <a
-                    href="{{ route('dashboard') }}"
-                    class="sidebar-link"
-                >
-
-                    <svg
-                        class="menu-svg"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                    >
-
-                        <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-
-                        <polyline points="9 22 9 12 15 12 15 22"/>
-
+                <a href="{{ route('dashboard') }}" class="sidebar-link">
+                    <svg class="menu-svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 3 2 12h3v8h5v-5h4v5h5v-8h3z"/>
                     </svg>
-
                     <span>Dashboard</span>
-
                 </a>
 
-
-                <!-- PELANGGAN -->
-
-                <a
-                    href="{{ route('pelanggan.index') }}"
-                    class="sidebar-link active"
-                >
-
-                    <svg
-                        class="menu-svg"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                    >
-
-                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-
-                        <circle
-                            cx="9"
-                            cy="7"
-                            r="4"
-                        />
-
-                        <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
-
-                        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-
+                <!-- PELANGGAN: AKTIF -->
+                <a href="{{ route('pelanggan.index') }}" class="sidebar-link active">
+                    <svg class="menu-svg" viewBox="0 0 24 24" fill="currentColor">
+                        <circle cx="9" cy="8" r="3.5"/>
+                        <path d="M2 20c0-3.6 3.1-6 7-6s7 2.4 7 6z"/>
+                        <circle cx="17.5" cy="8.5" r="2.7"/>
+                        <path d="M17.5 14c2.8 0 5 1.8 5 4.5V20H18v-1.5c0-1.8-.6-3.3-1.7-4.4.4-.1.8-.1 1.2-.1z"/>
                     </svg>
-
                     <span>Pelanggan</span>
-
                 </a>
-
 
                 <!-- PAKET LAUNDRY -->
-
-                <a
-                    href="{{ route('paket.index') }}"
-                    class="sidebar-link"
-                >
-
-                    <svg
-                        class="menu-svg"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                    >
-
-                        <path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/>
-
-                        <polyline points="3.29 7 12 12 20.71 7"/>
-
-                        <line
-                            x1="12"
-                            y1="22"
-                            x2="12"
-                            y2="12"
-                        />
-
+                <a href="{{ route('paket.index') }}" class="sidebar-link">
+                    <svg class="menu-svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path fill-rule="evenodd" d="M7 2h2v2h6V2h2v2h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2zM5 9v11h14V9z"/>
+                        <rect x="7" y="12" width="4" height="3"/>
                     </svg>
-
                     <span>Paket Laundry</span>
-
                 </a>
-
 
                 <!-- TRANSAKSI -->
-
-                <a
-                    href="{{ route('transaksi.index') }}"
-                    class="sidebar-link"
-                >
-
-                    <svg
-                        class="menu-svg"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                    >
-
-                        <rect
-                            x="3"
-                            y="4"
-                            width="18"
-                            height="16"
-                            rx="2"
-                        />
-
-                        <line
-                            x1="7"
-                            y1="8"
-                            x2="17"
-                            y2="8"
-                        />
-
-                        <line
-                            x1="7"
-                            y1="12"
-                            x2="13"
-                            y2="12"
-                        />
-
+                <a href="{{ route('transaksi.index') }}" class="sidebar-link">
+                    <svg class="menu-svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path fill-rule="evenodd" d="M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm2 5v2h10V8zm0 4v2h10v-2zm0 4v2h6v-2z"/>
                     </svg>
-
                     <span>Transaksi</span>
-
                 </a>
-
 
                 <!-- LAPORAN -->
-
-                <a
-                    href="{{ route('laporan') }}"
-                    class="sidebar-link"
-                >
-
-                    <svg
-                        class="menu-svg"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                    >
-
-                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-
-                        <polyline points="14 2 14 8 20 8"/>
-
-                        <line
-                            x1="16"
-                            y1="13"
-                            x2="8"
-                            y2="13"
-                        />
-
-                        <line
-                            x1="16"
-                            y1="17"
-                            x2="8"
-                            y2="17"
-                        />
-
+                <a href="{{ route('laporan.index') }}" class="sidebar-link">
+                    <svg class="menu-svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path fill-rule="evenodd" d="M6 2h8l6 6v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm7 1.5V9h5.5z"/>
                     </svg>
-
                     <span>Laporan</span>
-
                 </a>
 
-
                 <!-- LOGOUT -->
-
-                <form
-                    action="{{ route('logout') }}"
-                    method="POST"
-                    class="logout-form"
-                >
-
+                <form action="{{ route('logout') }}" method="POST" class="logout-form">
                     @csrf
 
-                    <button
-                        type="submit"
-                        class="sidebar-link"
-                    >
-
-                        <svg
-                            class="menu-svg"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                        >
-
-                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
-
-                            <polyline points="16 17 21 12 16 7"/>
-
-                            <line
-                                x1="21"
-                                y1="12"
-                                x2="9"
-                                y2="12"
-                            />
-
+                    <button type="submit" class="sidebar-link">
+                        <svg class="menu-svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M5 3h6v2H5v14h6v2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/>
+                            <path d="m16 7 5 5-5 5-1.4-1.4 2.6-2.6H9v-2h8.2l-2.6-2.6z"/>
                         </svg>
-
                         <span>Logout</span>
-
                     </button>
-
                 </form>
 
             </nav>
-
         </aside>
 
-
-
-        <!-- =====================================================
-             MAIN CONTENT
-        ====================================================== -->
-
+        <!-- MAIN -->
         <main class="main-content">
 
-
             <!-- TOPBAR -->
-
             <header class="dashboard-topbar">
 
-                <button
-                    type="button"
-                    class="toggle-btn"
-                >
-
-                    <svg
-                        width="20"
-                        height="20"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="#0F2A4A"
-                        stroke-width="2"
-                    >
-
-                        <line
-                            x1="3"
-                            y1="12"
-                            x2="21"
-                            y2="12"
-                        />
-
-                        <line
-                            x1="3"
-                            y1="6"
-                            x2="21"
-                            y2="6"
-                        />
-
-                        <line
-                            x1="3"
-                            y1="18"
-                            x2="21"
-                            y2="18"
-                        />
-
+                <button type="button" class="toggle-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24"
+                         fill="none" stroke="#0F2A4A" stroke-width="2"
+                         stroke-linecap="round">
+                        <line x1="3" y1="12" x2="21" y2="12"/>
+                        <line x1="3" y1="6" x2="21" y2="6"/>
+                        <line x1="3" y1="18" x2="21" y2="18"/>
                     </svg>
-
                 </button>
 
-
                 <div class="admin-profile">
-
                     <div class="admin-avatar">
-
-                        <svg
-                            width="20"
-                            height="20"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="#0F2A4A"
-                            stroke-width="2"
-                        >
-
-                            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/>
-
-                            <circle
-                                cx="12"
-                                cy="7"
-                                r="4"
-                            />
-
+                        <svg viewBox="0 0 24 24" fill="#ffffff">
+                            <circle cx="12" cy="8" r="4.2"/>
+                            <path d="M4 21c0-4.2 3.6-6.5 8-6.5s8 2.3 8 6.5v1H4z"/>
                         </svg>
-
                     </div>
-
 
                     <div class="admin-info">
-
-                        <strong>Operator</strong>
-
+                        <strong>Kay Laundry</strong>
                         <span>Operator</span>
-
                     </div>
-
-
-                    <svg
-                        width="14"
-                        height="14"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="#7b8794"
-                        stroke-width="2"
-                    >
-
-                        <polyline points="6 9 12 15 18 9"/>
-
-                    </svg>
-
                 </div>
 
             </header>
 
-
-
-            <!-- =====================================================
-                 CONTENT
-            ====================================================== -->
-
+            <!-- CONTENT -->
             <section class="dashboard-content">
 
-
-                <!-- PAGE HEADER -->
-
                 <div class="page-header-flex">
-
                     <div>
-
-                        <h1 class="page-title">
-                            Data Pelanggan
-                        </h1>
-
-                        <p class="page-subtitle">
-                            Kelola data pelanggan Kay Laundry
-                        </p>
-
+                        <h1 class="page-title">Data Pelanggan</h1>
                     </div>
 
-
-                    <!-- BUTTON TAMBAH -->
-
-                    <button
-                        type="button"
-                        class="btn-primary"
-                        id="openTambahPelanggan"
-                    >
+                    <button type="button"
+                            class="btn-primary"
+                            id="openTambahPelanggan">
                         + Tambah Pelanggan
                     </button>
-
                 </div>
 
-
-
-                <!-- PESAN BERHASIL -->
-
+                <!-- NOTIFIKASI -->
                 @if(session('success'))
-
                     <div class="alert alert-success">
-
                         {{ session('success') }}
-
                     </div>
-
                 @endif
-
-
-
-                <!-- PESAN ERROR -->
 
                 @if(session('error'))
-
                     <div class="alert alert-error">
-
                         {{ session('error') }}
-
                     </div>
-
                 @endif
 
+                @if($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
 
+                <!-- TABLE CARD -->
+                <div class="transaksi-table-card">
 
-                <!-- =================================================
-                     TABEL PELANGGAN
-                ================================================== -->
+                    <!-- SEARCH -->
+                    <div class="transaksi-search-wrapper">
+                        <div class="transaksi-search-box">
+                            <svg viewBox="0 0 24 24"
+                                 fill="none"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="11" cy="11" r="7"
+                                        stroke="currentColor"
+                                        stroke-width="2"/>
+                                <path d="M20 20L16.65 16.65"
+                                      stroke="currentColor"
+                                      stroke-width="2"
+                                      stroke-linecap="round"/>
+                            </svg>
 
-                <div class="table-card">
+                            <input type="text"
+                                   id="searchPelanggan"
+                                   placeholder="Cari nama atau no_hp..."
+                                   autocomplete="off">
+                        </div>
+                    </div>
 
-                    <table class="custom-table">
+                    <!-- TABLE -->
+                    <div class="transaksi-table-wrapper">
 
-                        <thead>
+                        <table class="custom-table transaksi-table"
+                               id="tabelPelanggan">
 
-                            <tr>
-
-                                <th style="width: 60px;">
-                                    No
-                                </th>
-
-                                <th>
-                                    Nama Pelanggan
-                                </th>
-
-                                <th>
-                                    No. HP
-                                </th>
-
-                                <th>
-                                    Alamat
-                                </th>
-
-                                <th
-                                    style="
-                                        width: 160px;
-                                        text-align: center;
-                                    "
-                                >
-                                    Aksi
-                                </th>
-
-                            </tr>
-
-                        </thead>
-
-
-                        <tbody>
-
-                            @forelse($pelanggan as $index => $item)
-
+                            <thead>
                                 <tr>
+                                    <th>No</th>
+                                    <th>Nama</th>
+                                    <th>No. HP</th>
+                                    <th>Alamat</th>
+                                    <th class="aksi-column">Aksi</th>
+                                </tr>
+                            </thead>
 
-                                    <td>
-                                        {{ $index + 1 }}
-                                    </td>
+                            <tbody id="pelangganTableBody">
 
+                                @forelse($pelanggan as $index => $item)
+                                    <tr class="pelanggan-row"
+                                        data-search="{{ strtolower($item->nama . ' ' . $item->no_hp) }}">
 
-                                    <td>
+                                        <td>{{ $index + 1 }}</td>
 
-                                        <strong>
-                                            {{ $item->nama }}
-                                        </strong>
+                                        <td>
+                                            <strong>{{ $item->nama }}</strong>
+                                        </td>
 
-                                    </td>
+                                        <td>{{ $item->no_hp }}</td>
 
+                                        <td>{{ $item->alamat }}</td>
 
-                                    <td>
-                                        {{ $item->no_hp }}
-                                    </td>
+                                        <td class="aksi-column">
+                                            <div class="transaksi-action-buttons">
 
+                                                <!-- TOMBOL EDIT -->
+                                                <button type="button"
+                                                        class="transaksi-action-btn transaksi-action-edit btn-edit-pelanggan"
+                                                        data-id="{{ $item->id_pelanggan }}"
+                                                        data-nama="{{ $item->nama }}"
+                                                        data-no-hp="{{ $item->no_hp }}"
+                                                        data-alamat="{{ $item->alamat }}"
+                                                        title="Edit">
 
-                                    <td>
-                                        {{ $item->alamat }}
-                                    </td>
+                                                    <svg viewBox="0 0 24 24" fill="none">
+                                                        <path d="M11 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5"
+                                                              stroke="currentColor"
+                                                              stroke-width="2"
+                                                              stroke-linecap="round"
+                                                              stroke-linejoin="round"/>
 
-
-                                    <td>
-
-                                        <div class="action-btn-group">
-
-
-                                            <!-- BUTTON EDIT -->
-
-                                            <button
-                                                type="button"
-                                                class="btn-action btn-edit btn-edit-pelanggan"
-                                                data-id="{{ $item->id_pelanggan }}"
-                                                data-nama="{{ $item->nama }}"
-                                                data-no-hp="{{ $item->no_hp }}"
-                                                data-alamat="{{ $item->alamat }}"
-                                            >
-                                                Edit
-                                            </button>
-
-
-                                            <!-- BUTTON HAPUS -->
-
-                                            <form
-                                                action="{{ route('pelanggan.destroy', $item->id_pelanggan) }}"
-                                                method="POST"
-                                            >
-
-                                                @csrf
-
-                                                @method('DELETE')
-
-                                                <button
-                                                    type="submit"
-                                                    class="btn-action btn-delete"
-                                                    onclick="return confirm('Apakah Anda yakin ingin menghapus pelanggan ini?')"
-                                                >
-                                                    Hapus
+                                                        <path d="M18.4 2.6a2.1 2.1 0 0 1 3 3L12 15l-4 1 1-4z"
+                                                              stroke="currentColor"
+                                                              stroke-width="2"
+                                                              stroke-linecap="round"
+                                                              stroke-linejoin="round"/>
+                                                    </svg>
                                                 </button>
 
-                                            </form>
+                                                <!-- TOMBOL HAPUS: TIDAK DIBUNGKUS FORM LAMA -->
+                                                <button type="button"
+                                                        class="transaksi-action-btn transaksi-action-delete btn-hapus-pelanggan"
+                                                        data-id="{{ $item->id_pelanggan }}"
+                                                        data-nama="{{ $item->nama }}"
+                                                        data-url="{{ route('pelanggan.destroy', $item->id_pelanggan) }}"
+                                                        title="Hapus">
 
-                                        </div>
+                                                    <svg viewBox="0 0 24 24" fill="none">
+                                                        <path d="M4 7H20"
+                                                              stroke="currentColor"
+                                                              stroke-width="2"
+                                                              stroke-linecap="round"/>
 
-                                    </td>
+                                                        <path d="M10 11V17"
+                                                              stroke="currentColor"
+                                                              stroke-width="2"
+                                                              stroke-linecap="round"/>
 
-                                </tr>
+                                                        <path d="M14 11V17"
+                                                              stroke="currentColor"
+                                                              stroke-width="2"
+                                                              stroke-linecap="round"/>
 
+                                                        <path d="M6 7L7 20H17L18 7"
+                                                              stroke="currentColor"
+                                                              stroke-width="2"
+                                                              stroke-linejoin="round"/>
 
-                            @empty
+                                                        <path d="M9 7V4H15V7"
+                                                              stroke="currentColor"
+                                                              stroke-width="2"
+                                                              stroke-linejoin="round"/>
+                                                    </svg>
+                                                </button>
 
-                                <tr>
+                                            </div>
+                                        </td>
+                                    </tr>
 
-                                    <td
-                                        colspan="5"
-                                        class="empty-state"
-                                    >
-
-                                        <p>
+                                @empty
+                                    <tr id="emptyPelangganRow">
+                                        <td colspan="5"
+                                            class="text-center transaksi-empty">
                                             Belum ada data pelanggan.
-                                        </p>
+                                        </td>
+                                    </tr>
+                                @endforelse
 
+                                <tr id="searchEmptyRow" style="display: none;">
+                                    <td colspan="5"
+                                        class="text-center transaksi-empty">
+                                        Data pelanggan tidak ditemukan.
                                     </td>
-
                                 </tr>
 
-                            @endforelse
+                            </tbody>
+                        </table>
+                    </div>
 
-                        </tbody>
+                    <!-- FOOTER -->
+                    <div class="transaksi-pagination-footer">
 
-                    </table>
+                        <div class="transaksi-pagination-info"
+                             id="pelangganTableInfo">
+
+                            Menampilkan
+
+                            <strong>
+                                {{ $pelanggan->count() > 0 ? '1 - ' . $pelanggan->count() : '0' }}
+                            </strong>
+
+                            dari
+
+                            <strong>{{ $pelanggan->count() }}</strong>
+
+                            data
+                        </div>
+
+                        <div class="transaksi-pagination">
+
+                            <button type="button"
+                                    class="pagination-btn pagination-arrow"
+                                    id="prevPelanggan"
+                                    disabled>
+                                ‹
+                            </button>
+
+                            <button type="button"
+                                    class="pagination-btn active">
+                                1
+                            </button>
+
+                            <button type="button"
+                                    class="pagination-btn pagination-arrow"
+                                    id="nextPelanggan"
+                                    disabled>
+                                ›
+                            </button>
+
+                        </div>
+                    </div>
 
                 </div>
-
             </section>
-
         </main>
-
     </div>
 
+    <!-- MODAL TAMBAH -->
+    <div class="modal-overlay" id="modalTambahPelanggan">
 
-
-    <!-- =====================================================
-         MODAL TAMBAH PELANGGAN
-    ====================================================== -->
-
-    <div
-        class="modal-overlay"
-        id="modalTambahPelanggan"
-    >
-
-        <div
-            class="modal-card"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="modalTitle"
-        >
+        <div class="modal-card" role="dialog" aria-modal="true">
 
             <div class="modal-header">
-
                 <div>
-
-                    <h2 id="modalTitle">
-                        Tambah Pelanggan
-                    </h2>
-
-                    <p>
-                        Tambahkan data pelanggan baru
-                    </p>
-
+                    <h2>Tambah Pelanggan</h2>
                 </div>
 
-
-                <button
-                    type="button"
-                    class="modal-close"
-                    id="closeTambahPelanggan"
-                    aria-label="Tutup modal"
-                >
+                <button type="button"
+                        class="modal-close"
+                        id="closeTambahPelanggan">
                     &times;
                 </button>
-
             </div>
 
-
-
-            <!-- FORM TAMBAH -->
-
-            <form
-                action="{{ route('pelanggan.store') }}"
-                method="POST"
-                class="pelanggan-form"
-            >
+            <form action="{{ route('pelanggan.store') }}"
+                  method="POST"
+                  class="pelanggan-form">
 
                 @csrf
 
-
-                <!-- NAMA -->
-
                 <div class="modal-form-group">
+                    <label for="modal_nama">Nama Pelanggan</label>
 
-                    <label for="modal_nama">
-                        Nama Pelanggan
-                    </label>
-
-                    <input
-                        type="text"
-                        id="modal_nama"
-                        name="nama"
-                        value="{{ old('nama') }}"
-                        placeholder="Masukkan nama pelanggan"
-                        required
-                    >
+                    <input type="text"
+                           id="modal_nama"
+                           name="nama"
+                           value="{{ old('nama') }}"
+                           placeholder="Masukkan nama pelanggan"
+                           required>
 
                     @error('nama')
-
-                        <small class="modal-error">
-                            {{ $message }}
-                        </small>
-
+                        <small class="modal-error">{{ $message }}</small>
                     @enderror
-
                 </div>
 
-
-
-                <!-- NO HP -->
-
                 <div class="modal-form-group">
+                    <label for="modal_no_hp">No. HP</label>
 
-                    <label for="modal_no_hp">
-                        No. HP
-                    </label>
-
-                    <input
-                        type="text"
-                        id="modal_no_hp"
-                        name="no_hp"
-                        value="{{ old('no_hp') }}"
-                        placeholder="Masukkan nomor HP pelanggan"
-                        required
-                    >
+                    <input type="text"
+                           id="modal_no_hp"
+                           name="no_hp"
+                           value="{{ old('no_hp') }}"
+                           placeholder="Masukkan nomor HP pelanggan"
+                           required>
 
                     @error('no_hp')
-
-                        <small class="modal-error">
-                            {{ $message }}
-                        </small>
-
+                        <small class="modal-error">{{ $message }}</small>
                     @enderror
-
                 </div>
 
-
-
-                <!-- ALAMAT -->
-
                 <div class="modal-form-group">
+                    <label for="modal_alamat">Alamat</label>
 
-                    <label for="modal_alamat">
-                        Alamat
-                    </label>
-
-                    <textarea
-                        id="modal_alamat"
-                        name="alamat"
-                        rows="4"
-                        placeholder="Masukkan alamat pelanggan"
-                        required
-                    >{{ old('alamat') }}</textarea>
+                    <textarea id="modal_alamat"
+                              name="alamat"
+                              rows="4"
+                              placeholder="Masukkan alamat pelanggan"
+                              required>{{ old('alamat') }}</textarea>
 
                     @error('alamat')
-
-                        <small class="modal-error">
-                            {{ $message }}
-                        </small>
-
+                        <small class="modal-error">{{ $message }}</small>
                     @enderror
-
                 </div>
 
-
-
-                <!-- BUTTON -->
-
                 <div class="modal-footer">
-
-                    <button
-                        type="button"
-                        class="modal-btn modal-btn-cancel"
-                        id="cancelTambahPelanggan"
-                    >
+                    <button type="button"
+                            class="modal-btn modal-btn-cancel"
+                            id="cancelTambahPelanggan">
                         Batal
                     </button>
 
-
-                    <button
-                        type="submit"
-                        class="modal-btn modal-btn-save"
-                    >
+                    <button type="submit"
+                            class="modal-btn modal-btn-save">
                         Simpan
                     </button>
-
                 </div>
 
             </form>
-
         </div>
-
     </div>
 
+    <!-- MODAL EDIT -->
+    <div class="modal-overlay" id="modalEditPelanggan">
 
-
-    <!-- =====================================================
-         MODAL EDIT PELANGGAN
-    ====================================================== -->
-
-    <div
-        class="modal-overlay"
-        id="modalEditPelanggan"
-    >
-
-        <div
-            class="modal-card"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="modalEditTitle"
-        >
+        <div class="modal-card" role="dialog" aria-modal="true">
 
             <div class="modal-header">
-
                 <div>
-
-                    <h2 id="modalEditTitle">
-                        Edit Pelanggan
-                    </h2>
-
-                    <p>
-                        Perbarui data pelanggan
-                    </p>
-
+                    <h2>Edit Pelanggan</h2>
+                    <p>Perbarui data pelanggan</p>
                 </div>
 
-
-                <button
-                    type="button"
-                    class="modal-close"
-                    id="closeEditPelanggan"
-                    aria-label="Tutup modal"
-                >
+                <button type="button"
+                        class="modal-close"
+                        id="closeEditPelanggan">
                     &times;
                 </button>
-
             </div>
 
-
-
-            <!-- FORM EDIT -->
-
-            <form
-                action=""
-                method="POST"
-                class="pelanggan-form"
-                id="formEditPelanggan"
-            >
+            <form action=""
+                  method="POST"
+                  class="pelanggan-form"
+                  id="formEditPelanggan">
 
                 @csrf
-
                 @method('PUT')
 
-
-                <!-- NAMA -->
-
                 <div class="modal-form-group">
+                    <label for="edit_nama">Nama Pelanggan</label>
 
-                    <label for="edit_nama">
-                        Nama Pelanggan
-                    </label>
-
-                    <input
-                        type="text"
-                        id="edit_nama"
-                        name="nama"
-                        placeholder="Masukkan nama pelanggan"
-                        required
-                    >
-
+                    <input type="text"
+                           id="edit_nama"
+                           name="nama"
+                           placeholder="Masukkan nama pelanggan"
+                           required>
                 </div>
 
-
-
-                <!-- NO HP -->
-
                 <div class="modal-form-group">
+                    <label for="edit_no_hp">No. HP</label>
 
-                    <label for="edit_no_hp">
-                        No. HP
-                    </label>
-
-                    <input
-                        type="text"
-                        id="edit_no_hp"
-                        name="no_hp"
-                        placeholder="Masukkan nomor HP pelanggan"
-                        required
-                    >
-
+                    <input type="text"
+                           id="edit_no_hp"
+                           name="no_hp"
+                           placeholder="Masukkan nomor HP pelanggan"
+                           required>
                 </div>
 
-
-
-                <!-- ALAMAT -->
-
                 <div class="modal-form-group">
+                    <label for="edit_alamat">Alamat</label>
 
-                    <label for="edit_alamat">
-                        Alamat
-                    </label>
-
-                    <textarea
-                        id="edit_alamat"
-                        name="alamat"
-                        rows="4"
-                        placeholder="Masukkan alamat pelanggan"
-                        required
-                    ></textarea>
-
+                    <textarea id="edit_alamat"
+                              name="alamat"
+                              rows="4"
+                              placeholder="Masukkan alamat pelanggan"
+                              required></textarea>
                 </div>
-
-
-
-                <!-- BUTTON -->
 
                 <div class="modal-footer">
-
-                    <button
-                        type="button"
-                        class="modal-btn modal-btn-cancel"
-                        id="cancelEditPelanggan"
-                    >
+                    <button type="button"
+                            class="modal-btn modal-btn-cancel"
+                            id="cancelEditPelanggan">
                         Batal
                     </button>
 
-
-                    <button
-                        type="submit"
-                        class="modal-btn modal-btn-save"
-                    >
+                    <button type="submit"
+                            class="modal-btn modal-btn-save">
                         Update
                     </button>
-
                 </div>
 
             </form>
-
         </div>
-
     </div>
 
+    <!-- MODAL HAPUS -->
+    <div class="modal-overlay" id="modalHapus">
 
+        <div class="modal-card" role="dialog" aria-modal="true">
 
-    <!-- =====================================================
-         JAVASCRIPT EXTERNAL
-    ====================================================== -->
+            <div class="hapus-icon">
+                <svg viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="2"
+                     stroke-linecap="round"
+                     stroke-linejoin="round">
 
+                    <polyline points="3 6 5 6 21 6"></polyline>
+                    <path d="m19 6-1 14H6L5 6"></path>
+                    <path d="M10 11v6"></path>
+                    <path d="M14 11v6"></path>
+                    <path d="M9 6V4h6v2"></path>
+                </svg>
+            </div>
+
+            <h2>Konfirmasi Hapus</h2>
+
+            <p>
+                Apakah kamu yakin ingin menghapus pelanggan
+                <strong id="namaPelangganHapus"></strong>?
+            </p>
+
+            <form id="formHapusPelanggan" method="POST" action="">
+                @csrf
+                @method('DELETE')
+
+                <div class="modal-footer">
+
+                    <button type="button"
+                            class="modal-btn modal-btn-cancel"
+                            id="batalHapusPelanggan">
+                        Batal
+                    </button>
+
+                    <button type="submit"
+                            class="modal-btn modal-btn-danger">
+                        Hapus
+                    </button>
+
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT PELANGGAN -->
     <script src="{{ asset('js/pelanggan.js') }}"></script>
 
 </body>
-
 </html>

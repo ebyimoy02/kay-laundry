@@ -1,0 +1,494 @@
+/* =========================================================
+   pelanggan-figma.css
+   Lokasi: public/css/pelanggan-figma.css
+   Urutan: style.css -> dashboard-figma.css -> pelanggan-figma.css
+   ========================================================= */
+
+/* HEADER HALAMAN */
+.dashboard-page .page-header-flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin: 0 0 20px;
+}
+
+.dashboard-page .page-header-flex .page-title {
+    margin: 0;
+}
+
+.dashboard-page .page-header-flex .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    height: 46px;
+    padding: 0 24px;
+    border: 0;
+    border-radius: 8px;
+    background: #2563EB;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 700;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background .2s;
+}
+
+.dashboard-page .page-header-flex .btn-primary:hover {
+    background: #1d4ed8;
+}
+
+.dashboard-page .page-header-flex .btn-primary:focus-visible {
+    outline: 3px solid rgba(37, 99, 235, .35);
+    outline-offset: 2px;
+}
+
+/* PESAN VALIDASI */
+.dashboard-page .alert {
+    padding: 14px 18px;
+    margin: 0 0 18px;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.dashboard-page .alert-danger {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #dc2626;
+}
+
+.dashboard-page .alert-danger ul {
+    padding-left: 18px;
+}
+
+/* KARTU TABEL */
+.dashboard-page .transaksi-table-card {
+    background: #ffffff;
+    border: 1px solid #e3ecf8;
+    border-radius: 10px;
+    box-shadow: 0 2px 12px rgba(4, 40, 92, .05);
+    overflow: hidden;
+}
+
+/* SEARCH BAR */
+.dashboard-page .transaksi-search-wrapper {
+    box-sizing: border-box;
+    display: block;
+    width: 100%;
+    padding: 16px;
+    border-bottom: 0;
+    background: #ffffff;
+}
+
+.dashboard-page .transaksi-search-box {
+    box-sizing: border-box;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    max-width: none;
+    height: 44px;
+    padding: 0 16px;
+    border: 1.5px solid #c6d8f0;
+    border-radius: 8px;
+    background: #ffffff;
+    transition: border-color .2s, box-shadow .2s;
+}
+
+.dashboard-page .transaksi-search-box:focus-within {
+    border-color: #04285c;
+    box-shadow: 0 0 0 4px rgba(4, 40, 92, .12);
+}
+
+.dashboard-page .transaksi-search-box svg {
+    position: static;
+    transform: none;
+    flex: 0 0 20px;
+    width: 20px;
+    height: 20px;
+    color: #2f80e6;
+    pointer-events: none;
+}
+
+.dashboard-page .transaksi-search-box input,
+.dashboard-page .transaksi-search-box input:focus {
+    box-sizing: border-box;
+    flex: 1;
+    min-width: 0;
+    width: auto;
+    height: 100%;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    outline: none;
+    color: #04285c;
+    font-size: 15px;
+}
+
+.dashboard-page .transaksi-search-box input::placeholder {
+    color: #8795aa;
+}
+
+/* PEMBUNGKUS TABEL */
+.dashboard-page .transaksi-table-wrapper {
+    box-sizing: border-box;
+    width: auto;
+    margin: 0 16px 8px;
+    border: 1px solid #d5e0ee;
+    border-radius: 8px;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+/* TABEL PELANGGAN */
+#tabelPelanggan {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 760px;
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+
+/* Lebar kolom: No | Nama | No. HP | Alamat | Aksi */
+#tabelPelanggan th:nth-child(1) { width: 8%; }
+#tabelPelanggan th:nth-child(2) { width: 22%; }
+#tabelPelanggan th:nth-child(3) { width: 18%; }
+#tabelPelanggan th:nth-child(4) { width: 34%; }
+#tabelPelanggan th:nth-child(5) { width: 18%; }
+
+#tabelPelanggan thead th {
+    height: 48px;
+    padding: 0 20px;
+    background: #e9f0f9;
+    color: #04285c;
+    border: 1px solid #d5e0ee;
+    border-top: 0;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.4;
+    text-align: left;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+#tabelPelanggan tbody td {
+    height: 60px;
+    padding: 0 20px;
+    background: #ffffff;
+    color: #3d4b61;
+    border: 1px solid #dfe8f3;
+    font-size: 15px;
+    line-height: 1.4;
+    text-align: left;
+    vertical-align: middle;
+    overflow-wrap: anywhere;
+}
+
+#tabelPelanggan tbody tr:hover td {
+    background: #f5f9ff;
+}
+
+#tabelPelanggan th:first-child,
+#tabelPelanggan td:first-child {
+    border-left: 0;
+}
+
+#tabelPelanggan th:last-child,
+#tabelPelanggan td:last-child {
+    border-right: 0;
+}
+
+#tabelPelanggan tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+#tabelPelanggan .aksi-column {
+    text-align: left !important;
+}
+
+/* TOMBOL AKSI */
+.dashboard-page .transaksi-action-buttons {
+    justify-content: flex-start;
+    gap: 8px;
+}
+
+.dashboard-page .transaksi-action-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+}
+
+.dashboard-page .transaksi-action-btn svg {
+    width: 17px;
+    height: 17px;
+}
+
+.dashboard-page .transaksi-action-edit {
+    background: #1b4da8;
+    color: #ffffff;
+}
+
+.dashboard-page .transaksi-action-edit:hover {
+    background: #163f89;
+    box-shadow: 0 3px 8px rgba(27, 77, 168, .25);
+}
+
+.dashboard-page .transaksi-action-delete {
+    background: #ef5f5f;
+    color: #ffffff;
+}
+
+.dashboard-page .transaksi-action-delete:hover {
+    background: #e04848;
+    box-shadow: 0 3px 8px rgba(239, 95, 95, .25);
+}
+
+/* =========================================================
+   FOOTER DAN PAGINATION
+   ========================================================= */
+
+.dashboard-page .transaksi-pagination-footer {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    min-height: 64px;
+    padding: 12px 24px 16px;
+    border-top: 0;
+    background: #ffffff;
+}
+
+.dashboard-page .transaksi-pagination-info {
+    font-size: 14px;
+    color: #4a6286;
+}
+
+.dashboard-page .transaksi-pagination {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.dashboard-page .pagination-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border: 1px solid #d3deee;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #5b7094;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.dashboard-page a.pagination-btn:hover {
+    border-color: #04285c;
+    color: #04285c;
+}
+
+.dashboard-page .pagination-btn.active {
+    background: #1b4da8;
+    border-color: #1b4da8;
+    color: #ffffff;
+}
+
+.dashboard-page .pagination-btn.is-disabled {
+    opacity: .55;
+    cursor: not-allowed;
+}
+
+/* =========================================================
+   MODAL TAMBAH DAN EDIT PELANGGAN
+   ========================================================= */
+
+:is(#modalTambahPelanggan, #modalEditPelanggan) .modal-card {
+    width: calc(100% - 32px);
+    max-width: 480px;
+    border-radius: 12px;
+}
+
+:is(#modalTambahPelanggan, #modalEditPelanggan) .modal-header {
+    display: flex;
+    align-items: center;
+    padding: 26px 28px 0;
+    margin-bottom: 22px;
+    border-bottom: 0;
+}
+
+:is(#modalTambahPelanggan, #modalEditPelanggan) .modal-header h2 {
+    font-size: 21px;
+}
+
+:is(#modalTambahPelanggan, #modalEditPelanggan) .pelanggan-form {
+    padding: 0 28px 28px;
+}
+
+:is(#modalTambahPelanggan, #modalEditPelanggan) .modal-form-group {
+    margin-bottom: 18px;
+}
+
+:is(#modalTambahPelanggan, #modalEditPelanggan) .modal-form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 15px;
+    font-weight: 500;
+    color: #243b5a;
+}
+
+:is(#modalTambahPelanggan, #modalEditPelanggan) .modal-form-group input,
+:is(#modalTambahPelanggan, #modalEditPelanggan) .modal-form-group select,
+:is(#modalTambahPelanggan, #modalEditPelanggan) .modal-form-group textarea {
+    box-sizing: border-box;
+    display: block;
+    width: 100%;
+    min-height: 46px;
+    padding: 10px 16px;
+    border: 1.5px solid #d3deee;
+    border-radius: 8px;
+    background: #f7faff;
+    color: #04285c;
+    font: inherit;
+    font-size: 15px;
+    outline: none;
+    transition: border-color .2s, box-shadow .2s, background .2s;
+}
+
+:is(#modalTambahPelanggan, #modalEditPelanggan) .modal-form-group input::placeholder,
+:is(#modalTambahPelanggan, #modalEditPelanggan) .modal-form-group textarea::placeholder {
+    color: #8795aa;
+}
+
+:is(#modalTambahPelanggan, #modalEditPelanggan) .modal-form-group input:focus,
+:is(#modalTambahPelanggan, #modalEditPelanggan) .modal-form-group select:focus,
+:is(#modalTambahPelanggan, #modalEditPelanggan) .modal-form-group textarea:focus {
+    border-color: #04285c;
+    background: #ffffff;
+    box-shadow: 0 0 0 4px rgba(4, 40, 92, .12);
+}
+
+:is(#modalTambahPelanggan, #modalEditPelanggan) .modal-form-group select {
+    appearance: none;
+    -webkit-appearance: none;
+    padding-right: 44px;
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2304285c' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+}
+
+:is(#modalTambahPelanggan, #modalEditPelanggan) .modal-footer {
+    margin-top: 36px;
+}
+
+:is(#modalTambahPelanggan, #modalEditPelanggan) .modal-btn,
+#modalHapus .modal-btn {
+    min-width: 140px;
+    height: 44px;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+/* =========================================================
+   MODAL KONFIRMASI HAPUS
+   ========================================================= */
+
+#modalHapus .modal-card {
+    width: calc(100% - 32px);
+    max-width: 400px;
+    padding: 28px;
+    text-align: center;
+}
+
+#modalHapus .hapus-icon {
+    display: grid;
+    place-items: center;
+    width: 52px;
+    height: 52px;
+    margin: 0 auto 16px;
+    border-radius: 50%;
+    background: #fef2f2;
+    color: #ef5f5f;
+}
+
+#modalHapus .hapus-icon svg {
+    width: 24px;
+    height: 24px;
+}
+
+#modalHapus h2 {
+    margin-bottom: 6px;
+    font-size: 20px;
+    font-weight: 700;
+    color: #04285c;
+}
+
+#modalHapus p {
+    margin-bottom: 24px;
+    font-size: 14px;
+    color: #64748b;
+}
+
+#modalHapus p strong {
+    color: #334155;
+}
+
+#modalHapus .modal-footer {
+    display: flex;
+    justify-content: center;
+    margin-top: 0;
+}
+
+#modalHapus .modal-btn-danger {
+    border: 1px solid #ef5f5f;
+    background: #ef5f5f;
+    color: #ffffff;
+}
+
+#modalHapus .modal-btn-danger:hover {
+    border-color: #e04848;
+    background: #e04848;
+}
+
+/* =========================================================
+   RESPONSIF
+   ========================================================= */
+
+@media (max-width: 576px) {
+    .dashboard-page .page-header-flex {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .dashboard-page .page-header-flex .btn-primary {
+        width: 100%;
+        height: 44px;
+    }
+
+    .dashboard-page .transaksi-search-wrapper {
+        padding: 12px;
+    }
+
+    .dashboard-page .transaksi-table-wrapper {
+        margin: 0 12px 8px;
+    }
+
+    .dashboard-page .transaksi-pagination-footer {
+        padding: 12px 12px 16px;
+    }
+
+    :is(#modalTambahPelanggan, #modalEditPelanggan) .modal-header {
+        padding: 22px 20px 0;
+    }
+
+    :is(#modalTambahPelanggan, #modalEditPelanggan) .pelanggan-form {
+        padding: 0 20px 22px;
+    }
+}

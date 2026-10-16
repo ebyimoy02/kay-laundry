@@ -1,176 +1,103 @@
-document.addEventListener('DOMContentLoaded', function () {
+/* =========================================================
+   sidebar-toggle.js
+   Simpan di: public/js/sidebar-toggle.js
+   Membuat tombol hamburger (.toggle-btn) berfungsi:
+   - Layar lebar (> 992px): sidebar dilipat jadi ikon saja / dibuka lagi.
+     Pilihan diingat (localStorage) dan berlaku di semua halaman.
+   - Layar kecil (<= 992px): sidebar muncul sebagai panel di atas konten,
+     ditutup lewat klik area gelap, tombol Esc, atau hamburger lagi.
+   Cukup tambahkan SATU baris ini di halaman mana pun yang memakai
+   sidebar + topbar (Dashboard, Pelanggan, Paket, dst.):
+       <script src="{{ asset('js/sidebar-toggle.js') }}"></script>
+   CSS yang dibutuhkan disuntikkan oleh file ini sendiri.
+   ========================================================= */
+(function () {
+    'use strict';
 
-    // =====================================================
-    // MODAL TAMBAH PAKET
-    // =====================================================
+    var css = [
+        '.sidebar-backdrop{display:none;position:fixed;inset:0;z-index:55;background:rgba(15,30,60,.45)}',
+        '.dashboard-page .sidebar{transition:flex-basis .2s ease,width .2s ease}',
 
-    const openButton = document.getElementById('openTambahPaket');
-    const modalTambah = document.getElementById('modalTambahPaket');
-    const closeButton = document.getElementById('closeTambahPaket');
-    const cancelButton = document.getElementById('cancelTambahPaket');
+        /* Desktop: sidebar dilipat jadi ikon */
+        '@media (min-width:993px){',
+        '.dashboard-page.sidebar-collapsed .sidebar{flex-basis:76px;width:76px}',
+        '.dashboard-page.sidebar-collapsed .sidebar-brand{justify-content:center;padding:0}',
+        '.dashboard-page.sidebar-collapsed .sidebar-brand h2,',
+        '.dashboard-page.sidebar-collapsed .sidebar-link span{display:none}',
+        '.dashboard-page.sidebar-collapsed .sidebar-menu{padding:14px 8px 24px}',
+        '.dashboard-page.sidebar-collapsed .sidebar-link{justify-content:center;padding:0}',
+        '}',
 
-    if (openButton && modalTambah) {
+        /* Layar kecil: sidebar terbuka menjadi panel penuh di atas konten */
+        '@media (max-width:992px){',
+        '.dashboard-page.sidebar-open .sidebar{position:fixed;top:0;left:0;flex-basis:230px;width:230px;z-index:60;box-shadow:8px 0 30px rgba(4,40,92,.3)}',
+        '.dashboard-page.sidebar-open .sidebar-brand{justify-content:flex-start;padding:0 20px}',
+        '.dashboard-page.sidebar-open .sidebar-brand h2{display:block}',
+        '.dashboard-page.sidebar-open .sidebar-link span{display:inline}',
+        '.dashboard-page.sidebar-open .sidebar-menu{padding:14px 10px 24px}',
+        '.dashboard-page.sidebar-open .sidebar-link{justify-content:flex-start;padding:0 20px}',
+        '.dashboard-page.sidebar-open .sidebar-backdrop{display:block}',
+        '.dashboard-page.sidebar-open .main-content{margin-left:76px}',
+        '}',
+        '@media (max-width:576px){',
+        '.dashboard-page.sidebar-open .main-content{margin-left:60px}',
+        '}'
+    ].join('\n');
 
-        openButton.addEventListener('click', function () {
-            modalTambah.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        });
+    var style = document.createElement('style');
+    style.setAttribute('data-sidebar-toggle', '');
+    style.textContent = css;
+    document.head.appendChild(style);
 
-        if (closeButton) {
-            closeButton.addEventListener('click', function () {
-                modalTambah.classList.remove('active');
-                document.body.style.overflow = '';
-            });
-        }
+    var btn = document.querySelector('.dashboard-topbar .toggle-btn');
+    var sidebar = document.querySelector('.sidebar');
+    if (!btn || !sidebar) { return; }
 
-        if (cancelButton) {
-            cancelButton.addEventListener('click', function () {
-                modalTambah.classList.remove('active');
-                document.body.style.overflow = '';
-            });
-        }
+    var body = document.body;
+    var small = window.matchMedia('(max-width: 992px)');
+    var STORE_KEY = 'sidebarCollapsed';
 
-        modalTambah.addEventListener('click', function (event) {
-            if (event.target === modalTambah) {
-                modalTambah.classList.remove('active');
-                document.body.style.overflow = '';
-            }
-        });
+    var backdrop = document.createElement('div');
+    backdrop.className = 'sidebar-backdrop';
+    body.appendChild(backdrop);
+
+    function setOpen(open) {
+        body.classList.toggle('sidebar-open', open);
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
     }
 
+    function setCollapsed(collapsed) {
+        body.classList.toggle('sidebar-collapsed', collapsed);
+        btn.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+        try { localStorage.setItem(STORE_KEY, collapsed ? '1' : '0'); } catch (e) { /* diabaikan */ }
+    }
 
-    // =====================================================
-    // MODAL EDIT PAKET
-    // =====================================================
+    // Pulihkan pilihan terakhir (desktop)
+    try {
+        if (!small.matches && localStorage.getItem(STORE_KEY) === '1') {
+            body.classList.add('sidebar-collapsed');
+            btn.setAttribute('aria-expanded', 'false');
+        }
+    } catch (e) { /* diabaikan */ }
 
-    const modalEdit = document.getElementById('modalEditPaket');
-    const formEdit = document.getElementById('formEditPaket');
+    btn.setAttribute('aria-label', 'Buka/tutup menu');
 
-    const closeEditButton = document.getElementById('closeEditPaket');
-    const cancelEditButton = document.getElementById('cancelEditPaket');
-
-    const editButtons = document.querySelectorAll('.btn-edit-paket');
-
-
-    editButtons.forEach(function (button) {
-
-        button.addEventListener('click', function () {
-
-            const id = button.dataset.id;
-            const nama = button.dataset.nama;
-            const harga = button.dataset.harga;
-            const satuan = button.dataset.satuan;
-
-
-            const namaInput = document.getElementById('edit_nama_paket');
-            const hargaInput = document.getElementById('edit_harga');
-            const satuanInput = document.getElementById('edit_satuan');
-
-
-            if (namaInput) {
-                namaInput.value = nama;
-            }
-
-            if (hargaInput) {
-                hargaInput.value = harga;
-            }
-
-            if (satuanInput) {
-                satuanInput.value = satuan;
-            }
-
-
-            if (formEdit) {
-                formEdit.action = '/paket/' + id;
-            }
-
-
-            if (modalEdit) {
-                modalEdit.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            }
-
-        });
-
+    btn.addEventListener('click', function () {
+        if (small.matches) {
+            setOpen(!body.classList.contains('sidebar-open'));
+        } else {
+            setCollapsed(!body.classList.contains('sidebar-collapsed'));
+        }
     });
 
+    backdrop.addEventListener('click', function () { setOpen(false); });
 
-    // =====================================================
-    // TUTUP MODAL EDIT
-    // =====================================================
-
-    if (closeEditButton && modalEdit) {
-
-        closeEditButton.addEventListener('click', function () {
-
-            modalEdit.classList.remove('active');
-            document.body.style.overflow = '';
-
-        });
-
-    }
-
-
-    if (cancelEditButton && modalEdit) {
-
-        cancelEditButton.addEventListener('click', function () {
-
-            modalEdit.classList.remove('active');
-            document.body.style.overflow = '';
-
-        });
-
-    }
-
-
-    if (modalEdit) {
-
-        modalEdit.addEventListener('click', function (event) {
-
-            if (event.target === modalEdit) {
-
-                modalEdit.classList.remove('active');
-                document.body.style.overflow = '';
-
-            }
-
-        });
-
-    }
-
-
-    // =====================================================
-    // TOMBOL ESCAPE
-    // =====================================================
-
-    document.addEventListener('keydown', function (event) {
-
-        if (event.key !== 'Escape') {
-            return;
-        }
-
-
-        if (
-            modalTambah &&
-            modalTambah.classList.contains('active')
-        ) {
-
-            modalTambah.classList.remove('active');
-            document.body.style.overflow = '';
-
-        }
-
-
-        if (
-            modalEdit &&
-            modalEdit.classList.contains('active')
-        ) {
-
-            modalEdit.classList.remove('active');
-            document.body.style.overflow = '';
-
-        }
-
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') { setOpen(false); }
     });
 
-});
+    // Ganti ukuran layar: tutup panel geser agar tidak tertinggal terbuka
+    var onChange = function () { setOpen(false); };
+    if (small.addEventListener) { small.addEventListener('change', onChange); }
+    else if (small.addListener) { small.addListener(onChange); }
+})();

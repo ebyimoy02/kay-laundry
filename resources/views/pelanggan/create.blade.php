@@ -138,9 +138,7 @@
 
                     <div>
                         <h1 class="page-title">Tambah Pelanggan</h1>
-                        <p class="page-subtitle">
-                            Tambahkan data pelanggan baru Kay Laundry
-                        </p>
+                        
                     </div>
 
                     <a href="{{ route('pelanggan.index') }}" class="btn-secondary">

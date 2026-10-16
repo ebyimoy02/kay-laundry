@@ -1,0 +1,418 @@
+/* =========================================================
+   dashboard-figma.css
+   Simpan di: public/css/dashboard-figma.css
+   Dimuat SETELAH style.css, jadi tidak menimpa file lama.
+   Semua aturan di-scope ke body.dashboard-page supaya tidak
+   mengganggu halaman lain yang memakai style.css.
+   ========================================================= */
+
+/* [UBAH 1] Token warna & font (diperkirakan dari gambar Figma) */
+.dashboard-page {
+    --fg-navy: #04285c;            /* sidebar, judul, angka */
+    --fg-page-bg: #eef4fc;         /* latar area konten */
+    --fg-card-border: #e3ecf8;     /* border kartu & garis header */
+    --fg-text: #33415c;            /* label kartu, legend */
+    --fg-muted: #6b7c93;           /* teks role di profil */
+    --fg-blue: #2f80e6;            /* ikon kartu, batang grafik */
+    --fg-icon-bg: #e3eefc;         /* kotak ikon kartu */
+    --fg-active-bg: rgba(47, 128, 230, 0.35); /* menu sidebar aktif: biru transparan di atas navy */
+
+    margin: 0;
+    overflow: auto;                /* jaga-jaga kalau style.css memakai overflow:hidden */
+    background: var(--fg-page-bg);
+    font-family: 'Roboto', 'Segoe UI', Tahoma, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+.dashboard-page *,
+.dashboard-page *::before,
+.dashboard-page *::after {
+    box-sizing: border-box;
+    font-family: inherit;
+}
+
+/* [UBAH 2] Rangka: sidebar kiri + konten kanan, memenuhi layar */
+.dashboard-page .dashboard-wrapper {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+    background: var(--fg-page-bg);
+}
+
+/* =========================================================
+   SIDEBAR
+   ========================================================= */
+.dashboard-page .sidebar {
+    position: sticky;              /* menimpa position:fixed bila ada di style.css */
+    top: 0;
+    left: auto;
+    flex: 0 0 230px;
+    width: 230px;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    background: var(--fg-navy);    /* [UBAH 3] navy sesuai Figma */
+    color: #ffffff;
+    border: 0;
+    box-shadow: none;
+    z-index: 10;
+}
+
+/* [UBAH 4] Brand: tinggi sama dengan topbar (68px), logo + teks "Laundry" */
+.dashboard-page .sidebar-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 0 0 auto;
+    height: 68px;
+    padding: 0 20px;
+    margin: 0;
+    border: 0;
+}
+
+.dashboard-page .brand-icon {
+    display: flex;
+    align-items: center;
+    width: auto;
+    height: auto;
+    padding: 0;
+    background: none;
+    border: 0;
+}
+
+.dashboard-page .brand-icon svg {
+    display: block;
+    width: 30px;
+    height: 36px;
+}
+
+.dashboard-page .sidebar-brand h2 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1;
+    color: #ffffff;
+}
+
+/* [UBAH 5] Daftar menu: jarak antar item 8px, padding samping 10px */
+.dashboard-page .sidebar-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 14px 10px 24px;
+}
+
+.dashboard-page .sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    height: 48px;
+    padding: 0 20px;
+    margin: 0;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1;
+    text-align: left;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background .2s, color .2s;
+}
+
+.dashboard-page .sidebar-link:hover {
+    background: rgba(255, 255, 255, .08);
+}
+
+.dashboard-page .sidebar-link:focus-visible {
+    outline: 2px solid #ffffff;
+    outline-offset: 2px;
+}
+
+/* [UBAH 6] Menu aktif: kotak terang, teks & ikon navy, bold */
+.dashboard-page .sidebar-link.active,
+.dashboard-page .sidebar-link.active:hover {
+    background: var(--fg-active-bg);
+    color: #ffffff;
+    font-weight: 700;
+}
+
+/* [UBAH 7] Ikon menu solid (bukan garis), 22px */
+.dashboard-page .menu-svg {
+    flex: 0 0 22px;
+    width: 22px;
+    height: 22px;
+    fill: currentColor;
+    stroke: none;
+}
+
+/* [UBAH 8] Logout diberi jarak ekstra dari menu di atasnya */
+.dashboard-page .logout-form {
+    margin: 6px 0 0;
+    padding: 0;
+}
+
+/* =========================================================
+   TOPBAR
+   ========================================================= */
+.dashboard-page .main-content {
+    flex: 1 1 auto;
+    min-width: 0;
+    width: auto;
+    margin: 0;                     /* menimpa margin-left sidebar lama */
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    background: var(--fg-page-bg);
+}
+
+/* [UBAH 9] Header putih setinggi 68px, garis bawah tipis + bayangan halus */
+.dashboard-page .dashboard-topbar {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 68px;
+    padding: 0 28px;
+    background: #ffffff;
+    border: 0;
+    box-shadow: 0 1px 0 var(--fg-card-border), 0 2px 10px rgba(4, 40, 92, .04);
+}
+
+.dashboard-page .toggle-btn {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    margin-left: -8px;
+    padding: 0;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    cursor: pointer;
+}
+
+.dashboard-page .toggle-btn:hover { background: #f1f5fb; }
+
+.dashboard-page .toggle-btn svg {
+    width: 26px;
+    height: 26px;
+    stroke: var(--fg-navy);
+    stroke-width: 2.6;             /* hamburger lebih tebal seperti Figma */
+}
+
+/* [UBAH 10] Profil operator: avatar bulat navy, nama bold, role abu-abu */
+.dashboard-page .admin-profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-left: auto;
+}
+
+.dashboard-page .admin-avatar {
+    flex: 0 0 auto;
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: var(--fg-navy);
+}
+
+.dashboard-page .admin-avatar svg {
+    width: 22px;
+    height: 22px;
+}
+
+.dashboard-page .admin-info {
+    display: flex;
+    flex-direction: column;
+    text-align: left;              /* style.css lama: text-align:right */
+    line-height: 1.25;
+}
+
+.dashboard-page .admin-info strong {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--fg-navy);
+}
+
+.dashboard-page .admin-info span {
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--fg-muted);
+}
+
+/* =========================================================
+   KONTEN
+   ========================================================= */
+.dashboard-page .dashboard-content {
+    flex: 1;
+    padding: 26px 28px 32px;
+}
+
+/* [UBAH 11] Judul halaman 26px bold navy */
+.dashboard-page .page-title {
+    margin: 0 0 20px;
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--fg-navy);
+}
+
+/* [UBAH 12] 3 kartu sama lebar, jarak 22px */
+.dashboard-page .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px;
+    margin: 0 0 22px;
+}
+
+/* [UBAH 13] Kartu: ikon di atas, lalu label, lalu angka (susunan vertikal) */
+.dashboard-page .summary-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;   /* style.css lama: center */
+    text-align: left;              /* style.css lama: center */
+    gap: 18px;
+    padding: 28px;
+    background: #ffffff;
+    border: 1px solid var(--fg-card-border);
+    border-radius: 10px;
+    box-shadow: 0 2px 12px rgba(4, 40, 92, .05);
+}
+
+.dashboard-page .summary-icon,
+.dashboard-page .summary-icon.blue-bg {
+    display: grid;
+    place-items: center;
+    width: 52px;
+    height: 52px;
+    margin: 0;                     /* style.css lama: margin-bottom 12px */
+    border-radius: 10px;
+    background: var(--fg-icon-bg);
+}
+
+.dashboard-page .summary-icon svg {
+    width: 28px;
+    height: 28px;
+    fill: var(--fg-blue);
+    stroke: none;
+}
+
+.dashboard-page .summary-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.dashboard-page .summary-info span {
+    display: block;
+    margin: 0;                     /* style.css lama: margin-bottom 6px */
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--fg-text);
+}
+
+.dashboard-page .summary-info strong {
+    font-size: 34px;
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--fg-navy);
+}
+
+/* [UBAH 14] Kartu grafik: judul kiri, legend kanan, area grafik 300px */
+.dashboard-page .dashboard-chart-card {
+    padding: 22px 26px 18px;
+    background: #ffffff;
+    border: 1px solid var(--fg-card-border);
+    border-radius: 10px;
+    box-shadow: 0 2px 12px rgba(4, 40, 92, .05);
+}
+
+.dashboard-page .chart-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 0 0 14px;
+}
+
+.dashboard-page .chart-header h2 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--fg-navy);
+}
+
+.dashboard-page .chart-legend {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: var(--fg-text);
+}
+
+.dashboard-page .legend-color {
+    display: inline-block;
+    width: 28px;
+    height: 14px;
+    border-radius: 2px;
+    background: var(--fg-blue);
+}
+
+.dashboard-page .chart-container {
+    position: relative;
+    width: 100%;
+    height: 300px;                 /* butuh maintainAspectRatio:false di Chart.js */
+}
+
+/* =========================================================
+   RESPONSIF
+   ========================================================= */
+/* [UBAH 15] Tablet: sidebar jadi ikon saja, kartu 2 kolom */
+@media (max-width: 992px) {
+    .dashboard-page .sidebar { flex-basis: 76px; width: 76px; }
+    .dashboard-page .sidebar-brand { justify-content: center; padding: 0; }
+    .dashboard-page .sidebar-brand h2,
+    .dashboard-page .sidebar-link span { display: none; }
+    .dashboard-page .sidebar-menu { padding: 14px 8px 24px; }
+    .dashboard-page .sidebar-link { justify-content: center; padding: 0; }
+    .dashboard-page .summary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* [UBAH 16] Mobile: kartu 1 kolom, ikon di kiri angka */
+@media (max-width: 576px) {
+    .dashboard-page .sidebar { flex-basis: 60px; width: 60px; }
+    .dashboard-page .sidebar-menu { padding: 12px 6px 20px; }
+    .dashboard-page .dashboard-topbar { padding: 0 16px; }
+    .dashboard-page .admin-info { display: none; }
+    .dashboard-page .dashboard-content { padding: 20px 16px 28px; }
+    .dashboard-page .page-title { font-size: 22px; }
+    .dashboard-page .summary-grid { grid-template-columns: 1fr; gap: 14px; }
+    .dashboard-page .summary-card { flex-direction: row; align-items: center; gap: 16px; padding: 20px; }
+    .dashboard-page .dashboard-chart-card { padding: 18px 16px 14px; }
+    .dashboard-page .chart-header { flex-wrap: wrap; }
+    .dashboard-page .chart-container { height: 240px; }
+}
+
+
+/* Hilangkan panah di samping profil operator */
+.dashboard-page .admin-profile > svg {
+    display: none !important;
+}
+
+.dashboard-page .admin-profile::before,
+.dashboard-page .admin-profile::after {
+    content: none !important;
+    display: none !important;
+}

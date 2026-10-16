@@ -9,7 +9,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Transaksi extends Model
 {
     protected $table = 'transaksi';
+
     protected $primaryKey = 'id_transaksi';
+
     public $timestamps = false;
 
     protected $fillable = [
@@ -20,18 +22,36 @@ class Transaksi extends Model
         'total',
     ];
 
+    protected $casts = [
+        'tgl_masuk' => 'date',
+        'tgl_selesai' => 'date',
+        'total' => 'decimal:2',
+    ];
+
     public function admin(): BelongsTo
     {
-        return $this->belongsTo(Admin::class, 'id_admin', 'id_admin');
+        return $this->belongsTo(
+            Admin::class,
+            'id_admin',
+            'id_admin'
+        );
     }
 
     public function pelanggan(): BelongsTo
     {
-        return $this->belongsTo(Pelanggan::class, 'id_pelanggan', 'id_pelanggan');
+        return $this->belongsTo(
+            Pelanggan::class,
+            'id_pelanggan',
+            'id_pelanggan'
+        );
     }
 
     public function detailTransaksi(): HasMany
     {
-        return $this->hasMany(DetailTransaksi::class, 'id_transaksi', 'id_transaksi');
+        return $this->hasMany(
+            DetailTransaksi::class,
+            'id_transaksi',
+            'id_transaksi'
+        );
     }
 }

@@ -11,17 +11,23 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $totalPelanggan = Pelanggan::count();
+        // Periksa session login
+        if (!session()->has('logged_in')) {
+            return redirect()->route('login');
+        }
 
+        // Total data
+        $totalPelanggan = DB::table('pelanggan')->count();
         $totalPaket = PaketLaundry::count();
-
         $totalTransaksi = Transaksi::count();
 
+        // Pendapatan hari ini
         $pendapatanHariIni = Transaksi::whereDate(
             'tgl_masuk',
             now()->toDateString()
         )->sum('total');
 
+        // Pendapatan bulan ini
         $pendapatanBulanIni = Transaksi::whereYear(
             'tgl_masuk',
             now()->year
@@ -29,6 +35,7 @@ class DashboardController extends Controller
             ->whereMonth('tgl_masuk', now()->month)
             ->sum('total');
 
+        // Grafik pendapatan harian
         $pendapatanHarian = Transaksi::select(
             DB::raw('DATE(tgl_masuk) as tanggal'),
             DB::raw('SUM(total) as total')
@@ -38,6 +45,7 @@ class DashboardController extends Controller
             ->orderBy('tanggal')
             ->get();
 
+        // Grafik pendapatan bulanan
         $pendapatanBulanan = Transaksi::select(
             DB::raw('MONTH(tgl_masuk) as bulan'),
             DB::raw('SUM(total) as total')
@@ -47,6 +55,14 @@ class DashboardController extends Controller
             ->orderBy('bulan')
             ->get();
 
+        // Data grafik untuk dashboard.js
+        $grafik = $pendapatanBulanan->map(function ($item) {
+            return [
+                'bulan' => (int) $item->bulan,
+                'total' => (float) $item->total,
+            ];
+        })->values();
+
         return view('dashboard', compact(
             'totalPelanggan',
             'totalPaket',
@@ -54,7 +70,8 @@ class DashboardController extends Controller
             'pendapatanHariIni',
             'pendapatanBulanIni',
             'pendapatanHarian',
-            'pendapatanBulanan'
+            'pendapatanBulanan',
+            'grafik'
         ));
     }
 }
