@@ -461,7 +461,6 @@
             <div class="modal-header">
                 <div>
                     <h2>Edit Pelanggan</h2>
-                    <p>Perbarui data pelanggan</p>
                 </div>
 
                 <button type="button"

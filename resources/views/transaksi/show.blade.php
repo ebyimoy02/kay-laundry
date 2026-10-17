@@ -204,7 +204,7 @@
                             </div>
 
                             <div class="info-row">
-                                <dt>Tanggal Masuk</dt>
+                                <dt>Tanggal</dt>
                                 <dd>
                                     {{ $transaksi->tgl_masuk
                                         ? \Carbon\Carbon::parse($transaksi->tgl_masuk)->format('d-m-Y')
@@ -213,14 +213,14 @@
                             </div>
 
                             <div class="info-row">
-                                <dt>Nama Pelanggan</dt>
+                                <dt>Pelanggan</dt>
                                 <dd>
                                     {{ $transaksi->pelanggan->nama ?? '-' }}
                                 </dd>
                             </div>
 
                             <div class="info-row">
-                                <dt>Detail Paket</dt>
+                                <dt>Paket</dt>
                                 <dd>
                                     <div class="paket-group">
                                         @forelse ($transaksi->detailTransaksi as $detail)

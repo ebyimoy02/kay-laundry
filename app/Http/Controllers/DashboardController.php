@@ -55,10 +55,11 @@ class DashboardController extends Controller
             ->orderBy('bulan')
             ->get();
 
-        // Data grafik untuk dashboard.js
-        $grafik = $pendapatanBulanan->map(function ($item) {
+        
+        // Data grafik harian untuk dashboard.js
+        $grafik = $pendapatanHarian->map(function ($item) {
             return [
-                'bulan' => (int) $item->bulan,
+                'tanggal' => $item->tanggal,
                 'total' => (float) $item->total,
             ];
         })->values();

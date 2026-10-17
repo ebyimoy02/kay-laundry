@@ -12,178 +12,179 @@
     <link rel="stylesheet" href="{{ asset('css/transaksi-figma.css') }}">
     <link rel="stylesheet" href="{{ asset('css/edit-transaksi.css') }}">
     <link rel="stylesheet" href="{{ asset('css/profile-dropdown.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
-<style>
-    .edit-transaksi-card {
-        box-sizing: border-box;
-        width: 100%;
-        padding: 24px;
-        background: #fff;
-        border-radius: 12px;
-    }
-
-    .edit-transaksi-card .edit-field {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-        min-width: 0;
-    }
-
-    .edit-transaksi-card .edit-field label {
-        display: block;
-        font-size: 14px;
-        font-weight: 600;
-        color: #26384d;
-    }
-
-    .edit-transaksi-card .edit-field select,
-    .edit-transaksi-card .edit-field input {
-        box-sizing: border-box;
-        width: 100%;
-        min-width: 0;
-        min-height: 42px;
-        padding: 10px 12px;
-        border: 1px solid #d5deea;
-        border-radius: 7px;
-        background: #fff;
-        color: #26384d;
-        font-family: inherit;
-        font-size: 14px;
-    }
-
-    .edit-transaksi-card .edit-field input[readonly] {
-        background: #f5f7fa;
-    }
-
-    /* BARIS DETAIL PAKET */
-    .edit-transaksi-card .edit-paket-row {
-        display: grid;
-        grid-template-columns:
-            minmax(0, 1.5fr)
-            minmax(100px, .8fr)
-            minmax(130px, 1fr)
-            max-content;
-        align-items: end;
-        gap: 16px;
-        margin-bottom: 16px;
-        padding: 18px;
-        border: 1px solid #e0e7f0;
-        border-radius: 10px;
-        background: #fbfcfe;
-    }
-
-    .edit-transaksi-card .edit-paket-row .modal-form-group {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-        min-width: 0;
-        margin: 0;
-    }
-
-    /* TOMBOL HAPUS PAKET */
-    .edit-transaksi-card .edit-paket-row button.btn-hapus-paket {
-        box-sizing: border-box !important;
-        display: inline-flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        justify-self: start !important;
-        align-self: end !important;
-
-        width: max-content !important;
-        min-width: 120px !important;
-        max-width: none !important;
-        height: 42px !important;
-        min-height: 42px !important;
-
-        margin: 0 !important;
-        padding: 0 12px !important;
-
-        border: 1px solid #d9534f !important;
-        border-radius: 7px !important;
-        background: #fff !important;
-        color: #c0392b !important;
-
-        font-family: inherit !important;
-        font-size: 13px !important;
-        font-weight: 600 !important;
-        line-height: 1.2 !important;
-        white-space: nowrap !important;
-        text-align: center !important;
-
-        cursor: pointer;
-        flex-shrink: 0;
-    }
-
-    .edit-transaksi-card .edit-paket-row button.btn-hapus-paket:hover {
-        background: #fff1f0 !important;
-    }
-
-    .edit-transaksi-card .edit-paket-row button.btn-hapus-paket[hidden] {
-        display: none !important;
-    }
-
-    /* TOTAL TRANSAKSI */
-    .edit-transaksi-card .edit-total {
-        max-width: 360px;
-        margin-top: 24px;
-    }
-
-    /* TOMBOL AKSI */
-    .edit-transaksi-card .edit-actions {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        gap: 12px;
-        margin-top: 26px;
-    }
-
-    .edit-transaksi-card .edit-actions a {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        text-decoration: none;
-    }
-
-    /* TABLET */
-    @media (max-width: 900px) {
-        .edit-transaksi-card .edit-paket-row {
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-        }
-    }
-
-    /* HP */
-    @media (max-width: 560px) {
+    <style>
         .edit-transaksi-card {
-            padding: 16px;
-        }
-
-        .edit-transaksi-card .edit-paket-row {
-            grid-template-columns: minmax(0, 1fr);
-            gap: 14px;
-            padding: 14px;
-        }
-
-        .edit-transaksi-card .edit-paket-row button.btn-hapus-paket {
-            justify-self: start !important;
-            align-self: start !important;
-        }
-
-        .edit-transaksi-card .edit-total {
-            max-width: 100%;
-        }
-
-        .edit-transaksi-card .edit-actions {
-            flex-direction: column;
-            align-items: stretch;
-        }
-
-        .edit-transaksi-card .edit-actions button,
-        .edit-transaksi-card .edit-actions a {
-            width: 100%;
             box-sizing: border-box;
+            width: 100%;
+            padding: 24px;
+            background: #fff;
+            border-radius: 12px;
         }
-    }
-</style>
+
+        .edit-transaksi-card .edit-field {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            min-width: 0;
+        }
+
+        .edit-transaksi-card .edit-field label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #26384d;
+        }
+
+        .edit-transaksi-card .edit-field select,
+        .edit-transaksi-card .edit-field input {
+            box-sizing: border-box;
+            width: 100%;
+            min-width: 0;
+            min-height: 42px;
+            padding: 10px 12px;
+            border: 1px solid #d5deea;
+            border-radius: 7px;
+            background: #fff;
+            color: #26384d;
+            font-family: inherit;
+            font-size: 14px;
+        }
+
+        .edit-transaksi-card .edit-field input[readonly] {
+            background: #f5f7fa;
+        }
+
+        /* BARIS DETAIL PAKET */
+        .edit-transaksi-card .edit-paket-row {
+            display: grid;
+            grid-template-columns:
+                minmax(0, 1.5fr)
+                minmax(100px, .8fr)
+                minmax(130px, 1fr)
+                max-content;
+            align-items: end;
+            gap: 16px;
+            margin-bottom: 16px;
+            padding: 18px;
+            border: 1px solid #e0e7f0;
+            border-radius: 10px;
+            background: #fbfcfe;
+        }
+
+        .edit-transaksi-card .edit-paket-row .modal-form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            min-width: 0;
+            margin: 0;
+        }
+
+        /* TOMBOL IKON HAPUS PAKET */
+        .edit-transaksi-card .edit-paket-row button.btn-hapus-paket {
+            box-sizing: border-box !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            justify-self: center !important;
+            align-self: end !important;
+
+            width: 40px !important;
+            min-width: 40px !important;
+            max-width: 40px !important;
+            height: 42px !important;
+            min-height: 42px !important;
+
+            margin: 0 !important;
+            padding: 0 !important;
+
+            border: 1px solid #d9534f !important;
+            border-radius: 7px !important;
+            background: #fff !important;
+            color: #c0392b !important;
+
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .edit-transaksi-card .edit-paket-row button.btn-hapus-paket:hover {
+            background: #fff1f0 !important;
+        }
+
+        .edit-transaksi-card .edit-paket-row button.btn-hapus-paket svg {
+            display: block;
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+
+        .edit-transaksi-card .edit-paket-row button.btn-hapus-paket[hidden] {
+            display: none !important;
+        }
+
+        /* TOTAL TRANSAKSI */
+        .edit-transaksi-card .edit-total {
+            max-width: 360px;
+            margin-top: 24px;
+        }
+
+        /* TOMBOL AKSI */
+        .edit-transaksi-card .edit-actions {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 12px;
+            margin-top: 26px;
+        }
+
+        .edit-transaksi-card .edit-actions a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+        }
+
+        /* TABLET */
+        @media (max-width: 900px) {
+            .edit-transaksi-card .edit-paket-row {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        /* HP */
+        @media (max-width: 560px) {
+            .edit-transaksi-card {
+                padding: 16px;
+            }
+
+            .edit-transaksi-card .edit-paket-row {
+                grid-template-columns: minmax(0, 1fr);
+                gap: 14px;
+                padding: 14px;
+            }
+
+            .edit-transaksi-card .edit-paket-row button.btn-hapus-paket {
+                justify-self: start !important;
+                align-self: start !important;
+            }
+
+            .edit-transaksi-card .edit-total {
+                max-width: 100%;
+            }
+
+            .edit-transaksi-card .edit-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .edit-transaksi-card .edit-actions button,
+            .edit-transaksi-card .edit-actions a {
+                width: 100%;
+                box-sizing: border-box;
+            }
+        }
+    </style>
 </head>
 
 <body class="dashboard-page">
@@ -369,17 +370,22 @@
                             </select>
                         </div>
 
-                        <!-- TANGGAL MASUK -->
+                        <!-- TANGGAL -->
                         <div class="modal-form-group edit-field"
                              style="margin-top: 20px;">
 
-                            <label for="tgl_masuk">Tanggal Masuk</label>
+                            <label for="tgl_masuk_display">Tanggal</label>
 
-                            <input type="date"
+                            <input type="text"
+                                   id="tgl_masuk_display"
+                                   placeholder="dd/mm/yyyy"
+                                   autocomplete="off"
+                                   required>
+
+                            <input type="hidden"
                                    name="tgl_masuk"
                                    id="tgl_masuk"
-                                   value="{{ old('tgl_masuk', $transaksi->tgl_masuk ? \Carbon\Carbon::parse($transaksi->tgl_masuk)->format('Y-m-d') : '') }}"
-                                   required>
+                                   value="{{ old('tgl_masuk', $transaksi->tgl_masuk ? \Carbon\Carbon::parse($transaksi->tgl_masuk)->format('Y-m-d') : '') }}">
                         </div>
 
                         <!-- DETAIL PAKET -->
@@ -430,10 +436,36 @@
                                                readonly>
                                     </div>
 
+                                    <!-- IKON HAPUS PAKET -->
                                     <button type="button"
-                                            class="btn-hapus-paket"
+                                            class="transaksi-action-btn transaksi-action-delete btn-hapus-paket"
+                                            title="Hapus Paket"
+                                            aria-label="Hapus Paket"
                                             {{ $loop->first && $loop->last ? 'hidden' : '' }}>
-                                        Hapus Paket
+                                        <svg viewBox="0 0 24 24"
+                                             fill="none"
+                                             xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M4 7H20"
+                                                  stroke="currentColor"
+                                                  stroke-width="2"
+                                                  stroke-linecap="round"/>
+                                            <path d="M10 11V17"
+                                                  stroke="currentColor"
+                                                  stroke-width="2"
+                                                  stroke-linecap="round"/>
+                                            <path d="M14 11V17"
+                                                  stroke="currentColor"
+                                                  stroke-width="2"
+                                                  stroke-linecap="round"/>
+                                            <path d="M6 7L7 20H17L18 7"
+                                                  stroke="currentColor"
+                                                  stroke-width="2"
+                                                  stroke-linejoin="round"/>
+                                            <path d="M9 7V4H15V7"
+                                                  stroke="currentColor"
+                                                  stroke-width="2"
+                                                  stroke-linejoin="round"/>
+                                        </svg>
                                     </button>
 
                                 </div>
@@ -479,10 +511,36 @@
                                                readonly>
                                     </div>
 
+                                    <!-- IKON HAPUS PAKET -->
                                     <button type="button"
-                                            class="btn-hapus-paket"
+                                            class="transaksi-action-btn transaksi-action-delete btn-hapus-paket"
+                                            title="Hapus Paket"
+                                            aria-label="Hapus Paket"
                                             hidden>
-                                        Hapus Paket
+                                        <svg viewBox="0 0 24 24"
+                                             fill="none"
+                                             xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M4 7H20"
+                                                  stroke="currentColor"
+                                                  stroke-width="2"
+                                                  stroke-linecap="round"/>
+                                            <path d="M10 11V17"
+                                                  stroke="currentColor"
+                                                  stroke-width="2"
+                                                  stroke-linecap="round"/>
+                                            <path d="M14 11V17"
+                                                  stroke="currentColor"
+                                                  stroke-width="2"
+                                                  stroke-linecap="round"/>
+                                            <path d="M6 7L7 20H17L18 7"
+                                                  stroke="currentColor"
+                                                  stroke-width="2"
+                                                  stroke-linejoin="round"/>
+                                            <path d="M9 7V4H15V7"
+                                                  stroke="currentColor"
+                                                  stroke-width="2"
+                                                  stroke-linejoin="round"/>
+                                        </svg>
                                     </button>
 
                                 </div>
@@ -531,6 +589,9 @@
         </main>
 
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/id.js"></script>
 
     <script src="{{ asset('js/sidebar-toggle.js') }}"></script>
     <script src="{{ asset('js/edit-transaksi.js') }}"></script>

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="id">
 
@@ -228,24 +229,22 @@
                                             {{ $item->pelanggan->nama ?? '-' }}
                                         </td>
 
+                                        <!-- PAKET: NAMA PAKET DIGABUNG -->
                                         <td>
                                             @if($item->detailTransaksi && $item->detailTransaksi->count())
                                                 <div class="transaksi-paket-list">
-                                                    @foreach($item->detailTransaksi as $detail)
-                                                        <span>{{ $detail->paket->nama_paket ?? '-' }}</span>
-                                                    @endforeach
+                                                    {{ $item->detailTransaksi->pluck('paket.nama_paket')->filter()->implode(', ') ?: '-' }}
                                                 </div>
                                             @else
                                                 -
                                             @endif
                                         </td>
 
+                                        <!-- HARGA: TOTAL SEMUA PAKET -->
                                         <td>
                                             @if($item->detailTransaksi && $item->detailTransaksi->count())
                                                 <div class="transaksi-harga-list">
-                                                    @foreach($item->detailTransaksi as $detail)
-                                                        <span>Rp {{ number_format($detail->harga, 0, ',', '.') }}</span>
-                                                    @endforeach
+                                                    Rp {{ number_format($item->detailTransaksi->sum('harga'), 0, ',', '.') }}
                                                 </div>
                                             @else
                                                 Rp 0
