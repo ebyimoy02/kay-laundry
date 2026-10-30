@@ -254,7 +254,12 @@
 
 .dashboard-page .transaksi-pagination-info {
     font-size: 14px;
+    font-weight: 400;
     color: #4a6286;
+}
+
+.dashboard-page .transaksi-pagination-info strong {
+    font-weight: 700;
 }
 
 .dashboard-page .transaksi-pagination {

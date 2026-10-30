@@ -68,6 +68,10 @@ Route::get('/transaksi/{transaksi}/edit', [TransaksiController::class, 'edit'])
 Route::put('/transaksi/{transaksi}', [TransaksiController::class, 'update'])
     ->name('transaksi.update');
 
+// Ubah status pembayaran transaksi
+Route::patch('/transaksi/{transaksi}/pembayaran', [TransaksiController::class, 'updatePembayaran'])
+    ->name('transaksi.pembayaran.update');
+
 Route::get('/transaksi/{transaksi}', [TransaksiController::class, 'show'])
     ->name('transaksi.show');
 

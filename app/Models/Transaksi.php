@@ -15,12 +15,13 @@ class Transaksi extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'id_admin',
-        'id_pelanggan',
-        'tgl_masuk',
-        'tgl_selesai',
-        'total',
-    ];
+    'id_admin',
+    'id_pelanggan',
+    'tgl_masuk',
+    'tgl_selesai',
+    'total',
+    'status_pembayaran',
+];
 
     protected $casts = [
         'tgl_masuk' => 'date',

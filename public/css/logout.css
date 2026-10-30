@@ -1,0 +1,126 @@
+
+/* =========================================
+   MODAL KONFIRMASI LOGOUT
+   Khusus halaman konfirmasi Logout Kay Laundry
+========================================= */
+
+.logout-modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(15, 23, 42, 0.28);
+}
+
+.logout-modal-overlay.is-visible {
+    display: flex;
+}
+
+.logout-modal {
+    width: 100%;
+    max-width: 360px;
+    padding: 30px 24px 26px;
+    background: #ffffff;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 8px 30px rgba(15, 35, 70, 0.14);
+}
+
+.logout-modal-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 76px;
+    height: 76px;
+    margin: 0 auto 10px;
+    border-radius: 50%;
+    background: #123775;
+    color: #ffffff;
+}
+
+.logout-modal-icon svg {
+    width: 42px;
+    height: 42px;
+}
+
+.logout-modal h2 {
+    margin: 0 0 16px;
+    color: #123775;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.logout-modal p {
+    margin: 0 0 20px;
+    color: #26364d;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.logout-modal-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+.logout-modal-actions form {
+    flex: 1;
+    margin: 0;
+}
+
+.logout-btn-cancel,
+.logout-btn-confirm {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 42px;
+    padding: 10px 12px;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.logout-btn-cancel {
+    flex: 1;
+    border: 1px solid #cbd5e1;
+    background: #ffffff;
+    color: #123775;
+}
+
+.logout-btn-cancel:hover {
+    background: #f1f5f9;
+}
+
+.logout-btn-confirm {
+    border: 1px solid #123775;
+    background: #123775;
+    color: #ffffff;
+}
+
+.logout-btn-confirm:hover {
+    background: #0d2856;
+}
+
+.logout-btn-cancel:focus-visible,
+.logout-btn-confirm:focus-visible {
+    outline: 2px solid #5b91e5;
+    outline-offset: 3px;
+}
+
+@media (max-width: 400px) {
+    .logout-modal {
+        padding: 26px 18px 22px;
+    }
+
+    .logout-modal-actions {
+        gap: 8px;
+    }
+}

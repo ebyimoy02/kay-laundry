@@ -1378,18 +1378,34 @@ html, body {
         padding 0.3s ease;
 }
 
+/* SIDEBAR DIPERKECIL, IKON TETAP TERLIHAT */
 .dashboard-wrapper.sidebar-collapsed .sidebar {
-    width: 0 !important;
-    min-width: 0 !important;
-    flex: 0 0 0 !important;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-    border-right-width: 0 !important;
+    width: 76px !important;
+    min-width: 76px !important;
+    flex: 0 0 76px !important;
+    overflow: hidden;
 }
 
+/* SEMBUNYIKAN TEKS MENU */
+.dashboard-wrapper.sidebar-collapsed .sidebar .sidebar-link span {
+    display: none !important;
+}
+
+/* PUSATKAN IKON MENU */
+.dashboard-wrapper.sidebar-collapsed .sidebar .sidebar-link {
+    justify-content: center;
+    gap: 0;
+}
+
+/* SEMBUNYIKAN NAMA LAUNDRY */
+.dashboard-wrapper.sidebar-collapsed .sidebar .sidebar-brand h2 {
+    display: none !important;
+}
+
+/* TAMPILKAN IKON DAN TETAP BISA DIKLIK */
 .dashboard-wrapper.sidebar-collapsed .sidebar > * {
-    opacity: 0;
-    pointer-events: none;
+    opacity: 1;
+    pointer-events: auto;
 }
 
 .dashboard-wrapper .main-content {

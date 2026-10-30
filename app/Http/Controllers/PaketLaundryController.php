@@ -11,12 +11,31 @@ class PaketLaundryController extends Controller
     /**
      * Tampilkan daftar paket.
      */
-    public function index()
-    {
-        $paket = PaketLaundry::orderBy('id_paket')->get();
+    
+public function index(Request $request)
+{
+    $query = PaketLaundry::query();
 
-        return view('paket.index', compact('paket'));
+    // Pencarian berdasarkan nama paket
+    if ($request->filled('q')) {
+        $keyword = $request->q;
+
+        $query->where(
+            'nama_paket',
+            'like',
+            '%' . $keyword . '%'
+        );
     }
+
+    // Maksimal 10 data per halaman
+    $paket = $query
+        ->orderBy('id_paket')
+        ->paginate(10)
+        ->withQueryString();
+
+    return view('paket.index', compact('paket'));
+}
+
 
     /**
      * Simpan paket baru.

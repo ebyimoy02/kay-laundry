@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="id">
 
@@ -13,10 +12,11 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 
-    <!-- Urutan CSS dipertahankan -->
+    <!-- CSS -->
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/dashboard-figma.css') }}">
     <link rel="stylesheet" href="{{ asset('css/pelanggan-figma.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/logout.css') }}">
 </head>
 
 <body class="dashboard-page">
@@ -24,7 +24,7 @@
     <div class="dashboard-wrapper">
 
         <!-- SIDEBAR -->
-        <aside class="sidebar">
+        <aside class="sidebar" id="sidebarMenu">
 
             <div class="sidebar-brand">
                 <div class="brand-icon">
@@ -55,7 +55,7 @@
                     <span>Dashboard</span>
                 </a>
 
-                <!-- PELANGGAN: AKTIF -->
+                <!-- PELANGGAN -->
                 <a href="{{ route('pelanggan.index') }}" class="sidebar-link active">
                     <svg class="menu-svg" viewBox="0 0 24 24" fill="currentColor">
                         <circle cx="9" cy="8" r="3.5"/>
@@ -92,17 +92,19 @@
                 </a>
 
                 <!-- LOGOUT -->
-                <form action="{{ route('logout') }}" method="POST" class="logout-form">
-                    @csrf
+                <div class="logout-form">
+                    <button type="button"
+                            class="sidebar-link"
+                            id="openLogoutModal">
 
-                    <button type="submit" class="sidebar-link">
                         <svg class="menu-svg" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M5 3h6v2H5v14h6v2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/>
                             <path d="m16 7 5 5-5 5-1.4-1.4 2.6-2.6H9v-2h8.2l-2.6-2.6z"/>
                         </svg>
+
                         <span>Logout</span>
                     </button>
-                </form>
+                </div>
 
             </nav>
         </aside>
@@ -113,7 +115,14 @@
             <!-- TOPBAR -->
             <header class="dashboard-topbar">
 
-                <button type="button" class="toggle-btn">
+                <button
+                    type="button"
+                    class="toggle-btn"
+                    id="sidebarToggle"
+                    aria-label="Tutup sidebar"
+                    aria-controls="sidebarMenu"
+                    aria-expanded="true">
+
                     <svg width="20" height="20" viewBox="0 0 24 24"
                          fill="none" stroke="#0F2A4A" stroke-width="2"
                          stroke-linecap="round">
@@ -182,7 +191,10 @@
 
                     <!-- SEARCH -->
                     <div class="transaksi-search-wrapper">
-                        <div class="transaksi-search-box">
+                        <form action="{{ route('pelanggan.index') }}"
+                              method="GET"
+                              class="transaksi-search-box">
+
                             <svg viewBox="0 0 24 24"
                                  fill="none"
                                  xmlns="http://www.w3.org/2000/svg">
@@ -197,9 +209,11 @@
 
                             <input type="text"
                                    id="searchPelanggan"
+                                   name="q"
+                                   value="{{ request('q') }}"
                                    placeholder="Cari nama atau no_hp..."
                                    autocomplete="off">
-                        </div>
+                        </form>
                     </div>
 
                     <!-- TABLE -->
@@ -221,10 +235,11 @@
                             <tbody id="pelangganTableBody">
 
                                 @forelse($pelanggan as $index => $item)
-                                    <tr class="pelanggan-row"
-                                        data-search="{{ strtolower($item->nama . ' ' . $item->no_hp) }}">
+                                    <tr class="pelanggan-row">
 
-                                        <td>{{ $index + 1 }}</td>
+                                        <td>
+                                            {{ ($pelanggan->firstItem() ?? 1) + $index }}
+                                        </td>
 
                                         <td>
                                             <strong>{{ $item->nama }}</strong>
@@ -261,7 +276,7 @@
                                                     </svg>
                                                 </button>
 
-                                                <!-- TOMBOL HAPUS: TIDAK DIBUNGKUS FORM LAMA -->
+                                                <!-- TOMBOL HAPUS -->
                                                 <button type="button"
                                                         class="transaksi-action-btn transaksi-action-delete btn-hapus-pelanggan"
                                                         data-id="{{ $item->id_pelanggan }}"
@@ -305,61 +320,64 @@
                                     <tr id="emptyPelangganRow">
                                         <td colspan="5"
                                             class="text-center transaksi-empty">
-                                            Belum ada data pelanggan.
+                                            {{ request('q') ? 'Data pelanggan tidak ditemukan.' : 'Belum ada data pelanggan.' }}
                                         </td>
                                     </tr>
                                 @endforelse
-
-                                <tr id="searchEmptyRow" style="display: none;">
-                                    <td colspan="5"
-                                        class="text-center transaksi-empty">
-                                        Data pelanggan tidak ditemukan.
-                                    </td>
-                                </tr>
 
                             </tbody>
                         </table>
                     </div>
 
-                    <!-- FOOTER -->
+                    <!-- FOOTER PAGINATION -->
                     <div class="transaksi-pagination-footer">
 
                         <div class="transaksi-pagination-info"
                              id="pelangganTableInfo">
 
                             Menampilkan
-
                             <strong>
-                                {{ $pelanggan->count() > 0 ? '1 - ' . $pelanggan->count() : '0' }}
+                                {{ $pelanggan->firstItem() ?? 0 }} - {{ $pelanggan->lastItem() ?? 0 }}
                             </strong>
-
                             dari
-
-                            <strong>{{ $pelanggan->count() }}</strong>
-
+                            <strong>{{ $pelanggan->total() }}</strong>
                             data
                         </div>
 
                         <div class="transaksi-pagination">
 
-                            <button type="button"
-                                    class="pagination-btn pagination-arrow"
-                                    id="prevPelanggan"
-                                    disabled>
-                                ‹
-                            </button>
+                            <!-- SEBELUMNYA -->
+                            @if ($pelanggan->onFirstPage())
+                                <span class="pagination-btn pagination-arrow"
+                                      aria-disabled="true">‹</span>
+                            @else
+                                <a href="{{ $pelanggan->previousPageUrl() }}"
+                                   class="pagination-btn pagination-arrow"
+                                   aria-label="Halaman sebelumnya">‹</a>
+                            @endif
 
-                            <button type="button"
-                                    class="pagination-btn active">
-                                1
-                            </button>
+                            <!-- NOMOR HALAMAN -->
+                            @if ($pelanggan->lastPage() > 1)
+                                @foreach ($pelanggan->getUrlRange(1, $pelanggan->lastPage()) as $page => $url)
+                                    @if ($page == $pelanggan->currentPage())
+                                        <span class="pagination-btn active"
+                                              aria-current="page">{{ $page }}</span>
+                                    @else
+                                        <a href="{{ $url }}"
+                                           class="pagination-btn">{{ $page }}</a>
+                                    @endif
+                                @endforeach
+                            @endif
 
-                            <button type="button"
-                                    class="pagination-btn pagination-arrow"
-                                    id="nextPelanggan"
-                                    disabled>
-                                ›
-                            </button>
+                            <!-- BERIKUTNYA -->
+                            @if ($pelanggan->hasMorePages())
+                                <a href="{{ $pelanggan->nextPageUrl() }}"
+                                   class="pagination-btn pagination-arrow"
+                                   aria-label="Halaman berikutnya">›</a>
+                            @else
+                                <span class="pagination-btn pagination-arrow"
+                                      aria-disabled="true">›</span>
+                            @endif
 
                         </div>
                     </div>
@@ -578,6 +596,59 @@
 
     <!-- JAVASCRIPT PELANGGAN -->
     <script src="{{ asset('js/pelanggan.js') }}"></script>
+
+    <!-- JAVASCRIPT SIDEBAR -->
+    <script src="{{ asset('js/sidebar-toggle.js') }}"></script>
+
+    <!-- JAVASCRIPT LOGOUT -->
+    <script src="{{ asset('js/logout.js') }}"></script>
+
+    <!-- MODAL KONFIRMASI LOGOUT -->
+    <div class="logout-modal-overlay"
+         id="logoutModal"
+         aria-hidden="true">
+
+        <div class="logout-modal"
+             role="dialog"
+             aria-modal="true"
+             aria-labelledby="logoutModalTitle">
+
+            <div class="logout-modal-icon">
+                <svg viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="1.8"
+                     stroke-linecap="round"
+                     stroke-linejoin="round"
+                     aria-hidden="true">
+                    <path d="M10 17l5-5-5-5"/>
+                    <path d="M15 12H3"/>
+                    <path d="M12 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6"/>
+                </svg>
+            </div>
+
+            <h2 id="logoutModalTitle">Logout</h2>
+
+            <p>Apakah Anda yakin ingin keluar dari sistem?</p>
+
+            <div class="logout-modal-actions">
+                <button type="button"
+                        class="logout-btn-cancel"
+                        id="cancelLogout">
+                    Batal
+                </button>
+
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <button type="submit" class="logout-btn-confirm">
+                        Ya, Logout
+                    </button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+    <!-- AKHIR MODAL KONFIRMASI LOGOUT -->
 
 </body>
 </html>

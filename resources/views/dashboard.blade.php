@@ -34,6 +34,7 @@
         href="{{ asset('css/profile-dropdown.css') }}"
     >
 
+    <link rel="stylesheet" href="{{ asset('css/logout.css') }}">
 </head>
 
 
@@ -180,33 +181,22 @@
 
                 </a>
 
+            
+<!-- LOGOUT -->
+<div class="logout-form">
+    <button type="button"
+            class="sidebar-link"
+            id="openLogoutModal">
 
+        <svg class="menu-svg" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M5 3h6v2H5v14h6v2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/>
+            <path d="m16 7 5 5-5 5-1.4-1.4 2.6-2.6H9v-2h8.2l-2.6-2.6z"/>
+        </svg>
 
-                <!-- LOGOUT -->
+        <span>Logout</span>
+    </button>
+</div>
 
-                <form
-                    action="{{ route('logout') }}"
-                    method="POST"
-                    class="logout-form"
-                >
-
-                    @csrf
-
-                    <button
-                        type="submit"
-                        class="sidebar-link"
-                    >
-
-                        <svg class="menu-svg" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M5 3h6v2H5v14h6v2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/>
-                            <path d="m16 7 5 5-5 5-1.4-1.4 2.6-2.6H9v-2h8.2l-2.6-2.6z"/>
-                        </svg>
-
-                        <span>Logout</span>
-
-                    </button>
-
-                </form>
 
 
             </nav>
@@ -462,7 +452,55 @@
     
     <script src="{{ asset('js/sidebar-toggle.js') }}"></script>
     <script src="{{ asset('js/dashboard.js') }}"></script>
+    <script src="{{ asset('js/logout.js') }}"></script>
 
+
+<!-- MODAL KONFIRMASI LOGOUT -->
+<div class="logout-modal-overlay"
+     id="logoutModal"
+     aria-hidden="true">
+
+    <div class="logout-modal"
+         role="dialog"
+         aria-modal="true"
+         aria-labelledby="logoutModalTitle">
+
+        <div class="logout-modal-icon">
+            <svg viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="1.8"
+                 stroke-linecap="round"
+                 stroke-linejoin="round"
+                 aria-hidden="true">
+                <path d="M10 17l5-5-5-5"/>
+                <path d="M15 12H3"/>
+                <path d="M12 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6"/>
+            </svg>
+        </div>
+
+        <h2 id="logoutModalTitle">Logout</h2>
+
+        <p>Apakah Anda yakin ingin keluar dari sistem?</p>
+
+        <div class="logout-modal-actions">
+            <button type="button"
+                    class="logout-btn-cancel"
+                    id="cancelLogout">
+                Batal
+            </button>
+
+            <form action="{{ route('logout') }}" method="POST">
+                @csrf
+                <button type="submit" class="logout-btn-confirm">
+                    Ya, Logout
+                </button>
+            </form>
+        </div>
+
+    </div>
+</div>
+<!-- AKHIR MODAL KONFIRMASI LOGOUT -->
 
 
 </body>

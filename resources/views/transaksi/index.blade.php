@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="id">
 
@@ -17,6 +16,7 @@
     <link rel="stylesheet" href="{{ asset('css/transaksi-figma.css') }}">
     <link rel="stylesheet" href="{{ asset('css/profile-dropdown.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="{{ asset('css/logout.css') }}">
 </head>
 
 <body class="dashboard-page">
@@ -87,16 +87,20 @@
                     <span>Laporan</span>
                 </a>
 
-                <form action="{{ route('logout') }}" method="POST" class="logout-form">
-                    @csrf
-                    <button type="submit" class="sidebar-link">
-                        <svg class="menu-svg" viewBox="0 0 24 24" fill="currentColor">
+                <!-- LOGOUT -->
+                <div class="logout-form">
+                    <button type="button"
+                            class="sidebar-link"
+                            id="openLogoutModal">
+                        <svg class="menu-svg"
+                             viewBox="0 0 24 24"
+                             fill="currentColor">
                             <path d="M5 3h6v2H5v14h6v2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/>
                             <path d="m16 7 5 5-5 5-1.4-1.4 2.6-2.6H9v-2h8.2l-2.6-2.6z"/>
                         </svg>
                         <span>Logout</span>
                     </button>
-                </form>
+                </div>
 
             </nav>
         </aside>
@@ -206,6 +210,7 @@
                                     <th>Pelanggan</th>
                                     <th>Paket</th>
                                     <th>Harga</th>
+                                    <th>Pembayaran</th>
                                     <th class="aksi-column">Aksi</th>
                                 </tr>
                             </thead>
@@ -215,21 +220,21 @@
                                 @forelse($transaksi as $item)
                                     <tr class="transaksi-data-row">
 
-                                        <td>{{ $loop->iteration }}</td>
-
                                         <td>
-                                            @if($item->tgl_masuk)
-                                                {{ $item->tgl_masuk->format('d/m/Y') }}
-                                            @else
-                                                -
-                                            @endif
+                                            {{ $transaksi->firstItem() + $loop->index }}
                                         </td>
 
+                                        <!-- TANGGAL TRANSAKSI -->
+                                        <td>
+                                            {{ $item->tgl_masuk ? \Carbon\Carbon::parse($item->tgl_masuk)->format('d/m/Y') : '-' }}
+                                        </td>
+
+                                        <!-- PELANGGAN -->
                                         <td>
                                             {{ $item->pelanggan->nama ?? '-' }}
                                         </td>
 
-                                        <!-- PAKET: NAMA PAKET DIGABUNG -->
+                                        <!-- PAKET -->
                                         <td>
                                             @if($item->detailTransaksi && $item->detailTransaksi->count())
                                                 <div class="transaksi-paket-list">
@@ -251,6 +256,30 @@
                                             @endif
                                         </td>
 
+                                        <!-- STATUS PEMBAYARAN -->
+                                        <td>
+                                            <form action="{{ route('transaksi.pembayaran.update', $item->id_transaksi) }}"
+                                                  method="POST">
+                                                @csrf
+                                                @method('PATCH')
+
+                                                <select name="status_pembayaran"
+                                                        aria-label="Status pembayaran transaksi {{ $item->id_transaksi }}"
+                                                        onchange="this.form.submit()"
+                                                        required>
+                                                    <option value="Belum Lunas"
+                                                        {{ ($item->status_pembayaran ?? 'Belum Lunas') === 'Belum Lunas' ? 'selected' : '' }}>
+                                                        Belum Lunas
+                                                    </option>
+                                                    <option value="Lunas"
+                                                        {{ ($item->status_pembayaran ?? 'Belum Lunas') === 'Lunas' ? 'selected' : '' }}>
+                                                        Lunas
+                                                    </option>
+                                                </select>
+                                            </form>
+                                        </td>
+
+                                        <!-- AKSI -->
                                         <td class="aksi-column">
                                             <div class="transaksi-action-buttons">
 
@@ -273,7 +302,7 @@
                                                     </svg>
                                                 </a>
 
-                                                <!-- HAPUS: MEMBUKA MODAL -->
+                                                <!-- HAPUS -->
                                                 <button type="button"
                                                         class="transaksi-action-btn transaksi-action-delete btn-hapus-transaksi"
                                                         data-id="{{ $item->id_transaksi }}"
@@ -312,7 +341,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="6"
+                                        <td colspan="7"
                                             class="text-center transaksi-empty">
                                             Belum ada data transaksi.
                                         </td>
@@ -327,26 +356,62 @@
                     <div class="transaksi-pagination-footer">
 
                         <div class="transaksi-pagination-info">
-                            Menampilkan
-                            <strong>
-                                {{ $transaksi->count() > 0 ? '1 - ' . $transaksi->count() : '0' }}
-                            </strong>
-                            dari
-                            <strong>{{ $transaksi->count() }}</strong>
-                            data
+                            @if($transaksi->total() > 0)
+                                Menampilkan
+                                <strong>{{ $transaksi->firstItem() }} - {{ $transaksi->lastItem() }}</strong>
+                                dari
+                                <strong>{{ $transaksi->total() }}</strong>
+                                data
+                            @else
+                                Menampilkan 0 dari 0 data
+                            @endif
                         </div>
 
                         <div class="transaksi-pagination">
-                            <button type="button"
-                                    class="pagination-btn pagination-arrow"
-                                    disabled>‹</button>
+                            @if($transaksi->onFirstPage())
+                                <button type="button"
+                                        class="pagination-btn pagination-arrow"
+                                        disabled
+                                        aria-label="Halaman sebelumnya">
+                                    ‹
+                                </button>
+                            @else
+                                <a href="{{ $transaksi->previousPageUrl() }}"
+                                   class="pagination-btn pagination-arrow"
+                                   aria-label="Halaman sebelumnya">
+                                    ‹
+                                </a>
+                            @endif
 
-                            <button type="button"
-                                    class="pagination-btn active">1</button>
+                            @foreach($transaksi->getUrlRange(1, $transaksi->lastPage()) as $page => $url)
+                                @if($page == $transaksi->currentPage())
+                                    <button type="button"
+                                            class="pagination-btn active"
+                                            aria-current="page">
+                                        {{ $page }}
+                                    </button>
+                                @else
+                                    <a href="{{ $url }}"
+                                       class="pagination-btn">
+                                        {{ $page }}
+                                    </a>
+                                @endif
+                            @endforeach
 
-                            <button type="button"
-                                    class="pagination-btn pagination-arrow"
-                                    disabled>›</button>
+                            @if($transaksi->hasMorePages())
+                                <a href="{{ $transaksi->nextPageUrl() }}"
+                                   class="pagination-btn pagination-arrow"
+                                   aria-label="Halaman berikutnya">
+                                    ›
+                                </a>
+                            @else
+                                <button type="button"
+                                        class="pagination-btn pagination-arrow"
+                                        disabled
+                                        aria-label="Halaman berikutnya">
+                                    ›
+                                </button>
+                            @endif
                         </div>
 
                     </div>
@@ -357,7 +422,7 @@
         </main>
     </div>
 
-    <!-- MODAL TAMBAH TRANSAKSI: DIPERTAHANKAN -->
+    <!-- MODAL TAMBAH TRANSAKSI -->
     <div class="modal-backdrop" id="modalTambahTransaksi">
 
         <div class="modal-box">
@@ -415,6 +480,22 @@
                                     {{ $item->nama }}
                                 </option>
                             @endforeach
+                        </select>
+                    </div>
+
+                    <!-- STATUS PEMBAYARAN -->
+                    <div class="form-group">
+                        <label for="status_pembayaran">Pembayaran</label>
+
+                        <select id="status_pembayaran"
+                                name="status_pembayaran"
+                                required>
+                            <option value="Belum Lunas" selected>
+                                Belum Lunas
+                            </option>
+                            <option value="Lunas">
+                                Lunas
+                            </option>
                         </select>
                     </div>
 
@@ -568,6 +649,54 @@
     <!-- JAVASCRIPT TRANSAKSI -->
     <script src="{{ asset('js/transaksi.js') }}"></script>
     <script src="{{ asset('js/sidebar-toggle.js') }}"></script>
+    <script src="{{ asset('js/logout.js') }}"></script>
+
+    <!-- MODAL KONFIRMASI LOGOUT -->
+    <div class="logout-modal-overlay"
+         id="logoutModal"
+         aria-hidden="true">
+
+        <div class="logout-modal"
+             role="dialog"
+             aria-modal="true"
+             aria-labelledby="logoutModalTitle">
+
+            <div class="logout-modal-icon">
+                <svg viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="1.8"
+                     stroke-linecap="round"
+                     stroke-linejoin="round"
+                     aria-hidden="true">
+                    <path d="M10 17l5-5-5-5"/>
+                    <path d="M15 12H3"/>
+                    <path d="M12 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6"/>
+                </svg>
+            </div>
+
+            <h2 id="logoutModalTitle">Logout</h2>
+
+            <p>Apakah Anda yakin ingin keluar dari sistem?</p>
+
+            <div class="logout-modal-actions">
+                <button type="button"
+                        class="logout-btn-cancel"
+                        id="cancelLogout">
+                    Batal
+                </button>
+
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <button type="submit" class="logout-btn-confirm">
+                        Ya, Logout
+                    </button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+    <!-- AKHIR MODAL KONFIRMASI LOGOUT -->
 
 </body>
 </html>

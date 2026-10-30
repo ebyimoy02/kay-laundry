@@ -21,7 +21,8 @@ class TransaksiController extends Controller
             'detailTransaksi.paket',
         ])
             ->orderBy('id_transaksi', 'desc')
-            ->get();
+            ->paginate(10)
+            ->withQueryString();
 
         $pelanggan = Pelanggan::orderBy(
             'nama',
@@ -89,6 +90,12 @@ class TransaksiController extends Controller
                 'after_or_equal:tgl_masuk',
             ],
 
+            'status_pembayaran' => [
+                'sometimes',
+                'required',
+                'in:Lunas,Belum Lunas',
+            ],
+
             'items' => [
                 'required',
                 'array',
@@ -124,6 +131,10 @@ class TransaksiController extends Controller
                     $validated['tgl_selesai'] ?? null,
 
                 'total' => 0,
+
+                'status_pembayaran' =>
+                    $validated['status_pembayaran']
+                    ?? 'Belum Lunas',
             ]);
 
             foreach ($validated['items'] as $item) {
@@ -234,6 +245,7 @@ class TransaksiController extends Controller
             $transaksi
         ) {
             // Perbarui pelanggan dan tanggal masuk.
+            // Status pembayaran tidak diubah di sini.
             $transaksi->update([
                 'id_pelanggan' =>
                     $validated['id_pelanggan'],
@@ -320,5 +332,31 @@ class TransaksiController extends Controller
                 'Transaksi berhasil dihapus.'
             );
     }
+
+    /**
+     * Memperbarui status pembayaran transaksi.
+     */
+    public function updatePembayaran(
+        Request $request,
+        Transaksi $transaksi
+    ) {
+        $validated = $request->validate([
+            'status_pembayaran' => [
+                'required',
+                'in:Lunas,Belum Lunas',
+            ],
+        ]);
+
+        $transaksi->update([
+            'status_pembayaran' =>
+                $validated['status_pembayaran'],
+        ]);
+
+        return redirect()
+            ->route('transaksi.index')
+            ->with(
+                'success',
+                'Status pembayaran berhasil diperbarui.'
+            );
+    }
 }
-  

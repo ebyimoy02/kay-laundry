@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -19,6 +18,7 @@
     <!-- CSS utama -->
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/dashboard-figma.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/logout.css') }}">
 
     <!-- Perbaikan sidebar dan profil -->
     <style>
@@ -49,40 +49,52 @@
         .dashboard-wrapper > #sidebarMenu {
             box-sizing: border-box;
             overflow: hidden;
+            flex-shrink: 0;
             transition:
                 width 0.3s ease,
                 min-width 0.3s ease,
                 flex-basis 0.3s ease,
-                padding 0.3s ease,
-                border-width 0.3s ease;
+                padding 0.3s ease;
         }
 
-        /* SIDEBAR DITUTUP */
+        /* SIDEBAR DIPERKECIL: IKON TETAP TERLIHAT */
         .dashboard-wrapper.sidebar-collapsed > #sidebarMenu {
             display: flex !important;
-            width: 0 !important;
-            min-width: 0 !important;
-            flex: 0 0 0 !important;
-            padding-left: 0 !important;
-            padding-right: 0 !important;
-            border-left-width: 0 !important;
-            border-right-width: 0 !important;
+            width: 76px !important;
+            min-width: 76px !important;
+            flex: 0 0 76px !important;
             overflow: hidden !important;
         }
 
-        .dashboard-wrapper.sidebar-collapsed > #sidebarMenu > * {
-            visibility: hidden;
-            pointer-events: none;
+        /* SEMBUNYIKAN TEKS NAMA LAUNDRY */
+        .dashboard-wrapper.sidebar-collapsed > #sidebarMenu .sidebar-brand h2 {
+            display: none !important;
         }
 
-        /* KONTEN MELEBAR SAAT SIDEBAR DITUTUP */
+        /* PUSATKAN IKON LOGO */
+        .dashboard-wrapper.sidebar-collapsed > #sidebarMenu .sidebar-brand {
+            justify-content: center;
+        }
+
+        /* SEMBUNYIKAN TEKS MENU */
+        .dashboard-wrapper.sidebar-collapsed > #sidebarMenu .sidebar-link span {
+            display: none !important;
+        }
+
+        /* PUSATKAN IKON MENU */
+        .dashboard-wrapper.sidebar-collapsed > #sidebarMenu .sidebar-link {
+            justify-content: center;
+            gap: 0;
+        }
+
+        /* KONTEN UTAMA MENYESUAIKAN RUANG YANG TERSEDIA */
         .dashboard-wrapper > .main-content {
             flex: 1 1 0%;
             min-width: 0;
         }
 
         .dashboard-wrapper.sidebar-collapsed > .main-content {
-            width: 100% !important;
+            width: auto !important;
             min-width: 0 !important;
             flex: 1 1 0% !important;
         }
@@ -202,19 +214,17 @@
                 </a>
 
                 <!-- LOGOUT -->
-                <form action="{{ route('logout') }}"
-                      method="POST"
-                      class="logout-form">
-                    @csrf
-
-                    <button type="submit" class="sidebar-link">
+                <div class="logout-form">
+                    <button type="button"
+                            class="sidebar-link"
+                            id="openLogoutModal">
                         <svg class="menu-svg" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M5 3h6v2H5v14h6v2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/>
                             <path d="m16 7 5 5-5 5-1.4-1.4 2.6-2.6H9v-2h8.2l-2.6-2.6z"/>
                         </svg>
                         <span>Logout</span>
                     </button>
-                </form>
+                </div>
 
             </nav>
         </aside>
@@ -272,8 +282,56 @@
         </main>
     </div>
 
+    <!-- MODAL KONFIRMASI LOGOUT -->
+    <div class="logout-modal-overlay"
+         id="logoutModal"
+         aria-hidden="true">
+
+        <div class="logout-modal"
+             role="dialog"
+             aria-modal="true"
+             aria-labelledby="logoutModalTitle">
+
+            <div class="logout-modal-icon">
+                <svg viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="1.8"
+                     stroke-linecap="round"
+                     stroke-linejoin="round"
+                     aria-hidden="true">
+                    <path d="M10 17l5-5-5-5"/>
+                    <path d="M15 12H3"/>
+                    <path d="M12 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6"/>
+                </svg>
+            </div>
+
+            <h2 id="logoutModalTitle">Logout</h2>
+
+            <p>Apakah Anda yakin ingin keluar dari sistem?</p>
+
+            <div class="logout-modal-actions">
+                <button type="button"
+                        class="logout-btn-cancel"
+                        id="cancelLogout">
+                    Batal
+                </button>
+
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <button type="submit" class="logout-btn-confirm">
+                        Ya, Logout
+                    </button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+    <!-- AKHIR MODAL KONFIRMASI LOGOUT -->
+
     <!-- JAVASCRIPT SIDEBAR -->
     <script src="{{ asset('js/sidebar-toggle.js') }}"></script>
+    <script src="{{ asset('js/logout.js') }}"></script>
 
     @stack('scripts')
 

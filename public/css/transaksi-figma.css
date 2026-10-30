@@ -157,27 +157,29 @@
     margin: 0 16px 8px;
     border: 1px solid #d5e0ee;
     border-radius: 8px;
-    overflow-x: auto;
+    overflow-x: hidden;
     overflow-y: hidden;
 }
 
 #tabelTransaksi {
     width: 100%;
-    min-width: 760px;
+    min-width: 0;
     table-layout: fixed;
     border-collapse: collapse;
 }
 
-#tabelTransaksi th:nth-child(1) { width: 7%; }
-#tabelTransaksi th:nth-child(2) { width: 16%; }
-#tabelTransaksi th:nth-child(3) { width: 25%; }
-#tabelTransaksi th:nth-child(4) { width: 18%; }
-#tabelTransaksi th:nth-child(5) { width: 17%; }
+/* Pembagian lebar untuk seluruh 7 kolom */
+#tabelTransaksi th:nth-child(1) { width: 6%; }
+#tabelTransaksi th:nth-child(2) { width: 13%; }
+#tabelTransaksi th:nth-child(3) { width: 19%; }
+#tabelTransaksi th:nth-child(4) { width: 17%; }
+#tabelTransaksi th:nth-child(5) { width: 16%; }
 #tabelTransaksi th:nth-child(6) { width: 17%; }
+#tabelTransaksi th:nth-child(7) { width: 12%; }
 
 #tabelTransaksi thead th {
     height: 48px;
-    padding: 0 20px;
+    padding: 0 10px;
     background: #eaf0fb;
     color: #04285c;
     border: 1px solid #d5e0ee;
@@ -187,16 +189,16 @@
     line-height: 1.4;
     text-align: left;
     vertical-align: middle;
-    white-space: nowrap;
+    white-space: normal;
 }
 
 #tabelTransaksi tbody td {
     height: 58px;
-    padding: 8px 20px;
+    padding: 8px 10px;
     background: #ffffff;
     color: #3d4b61;
     border: 1px solid #dfe8f3;
-    font-size: 15px;
+    font-size: 14px;
     line-height: 1.4;
     text-align: left;
     vertical-align: middle;
@@ -222,7 +224,59 @@
 }
 
 #tabelTransaksi .aksi-column {
-    text-align: left !important;
+    text-align: center !important;
+}
+
+/* Dropdown pembayaran: mengikuti warna Kay Laundry */
+#tabelTransaksi td:nth-child(6) form {
+    margin: 0;
+    width: 100%;
+}
+
+#tabelTransaksi td:nth-child(6) select {
+    box-sizing: border-box;
+    display: block;
+    width: 100%;
+    min-width: 0;
+    height: 36px;
+    padding: 0 22px 0 8px;
+    border: 1px solid #c6d8f0;
+    border-radius: 7px;
+    background-color: #ffffff;
+    color: #04285c;
+    font-family: inherit;
+    font-size: 12px;
+    cursor: pointer;
+    outline: none;
+}
+
+#tabelTransaksi td:nth-child(6) select:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, .12);
+}
+
+#tabelTransaksi td:nth-child(6) select:hover {
+    border-color: #2563eb;
+}
+
+/* Tombol aksi tetap berada dalam kolomnya */
+#tabelTransaksi .transaksi-action-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+#tabelTransaksi .transaksi-action-btn {
+    flex: 0 0 30px;
+    width: 30px;
+    height: 32px;
+    border-radius: 7px;
+}
+
+#tabelTransaksi .transaksi-action-btn svg {
+    width: 16px;
+    height: 16px;
 }
 
 #tabelTransaksi td.text-center {
@@ -321,11 +375,14 @@
     background: #ffffff;
 }
 
-.dashboard-page .transaksi-pagination-info,
-.dashboard-page .transaksi-pagination-info strong {
+.dashboard-page .transaksi-pagination-info {
     font-size: 14px;
     font-weight: 400;
     color: #4a6286;
+}
+
+.dashboard-page .transaksi-pagination-info strong {
+    font-weight: 700;
 }
 
 .dashboard-page .transaksi-pagination {
@@ -346,6 +403,8 @@
     background: #ffffff;
     color: #5b7094;
     font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
     cursor: pointer;
 }
 
@@ -353,6 +412,8 @@
     background: #1b4da8;
     border-color: #1b4da8;
     color: #ffffff;
+    font-weight: 700;
+    text-decoration: none;
 }
 
 .dashboard-page .pagination-btn:disabled {

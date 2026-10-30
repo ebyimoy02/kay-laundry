@@ -178,31 +178,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
     /* =====================================================
        SEARCH PELANGGAN
+       Pencarian diproses oleh Laravel melalui form GET.
+       Tidak memfilter baris tabel secara langsung.
     ====================================================== */
 
     const searchPelanggan = document.getElementById('searchPelanggan');
-    const pelangganRows = document.querySelectorAll('.pelanggan-row');
-    const searchEmptyRow = document.getElementById('searchEmptyRow');
 
     if (searchPelanggan) {
-        searchPelanggan.addEventListener('input', function () {
-            const keyword = this.value.toLowerCase().trim();
-            let visibleRows = 0;
+        searchPelanggan.addEventListener('keydown', function (event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
 
-            pelangganRows.forEach(function (row) {
-                const searchData = row.getAttribute('data-search') || '';
+                const searchForm = searchPelanggan.closest('form');
 
-                if (searchData.toLowerCase().includes(keyword)) {
-                    row.style.display = '';
-                    visibleRows++;
-                } else {
-                    row.style.display = 'none';
+                if (searchForm) {
+                    searchForm.submit();
                 }
-            });
-
-            if (searchEmptyRow) {
-                searchEmptyRow.style.display =
-                    visibleRows === 0 ? 'table-row' : 'none';
             }
         });
     }
@@ -227,28 +218,5 @@ document.addEventListener('DOMContentLoaded', function () {
             closeModalHapus();
         }
     });
-
-
-    /* =====================================================
-       HAMBURGER MENU - HALAMAN PELANGGAN
-    ====================================================== */
-
-    const dashboardWrapper = document.querySelector('.dashboard-wrapper');
-    const toggleButton = document.querySelector('.toggle-btn');
-
-    if (dashboardWrapper && toggleButton) {
-        toggleButton.setAttribute('aria-expanded', 'true');
-
-        toggleButton.addEventListener('click', function () {
-            const isCollapsed = dashboardWrapper.classList.toggle(
-                'sidebar-collapsed'
-            );
-
-            toggleButton.setAttribute(
-                'aria-expanded',
-                String(!isCollapsed)
-            );
-        });
-    }
 
 });
