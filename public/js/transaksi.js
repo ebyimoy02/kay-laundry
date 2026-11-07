@@ -191,6 +191,30 @@ document.addEventListener('DOMContentLoaded', function () {
         );
     }
 
+    /*
+    |--------------------------------------------------------------------------
+    | FILTER TANGGAL TRANSAKSI
+    |--------------------------------------------------------------------------
+    */
+
+    const filterTanggal = document.getElementById('filterTanggal');
+
+    if (filterTanggal && typeof flatpickr === 'function') {
+        flatpickr(filterTanggal, {
+            locale: flatpickr.l10ns.id || 'default',
+            dateFormat: 'Y-m-d',
+            altInput: true,
+            altFormat: 'd/m/Y',
+            allowInput: false,
+            defaultDate: filterTanggal.value || null,
+
+            onChange: function (selectedDates, dateStr, instance) {
+                if (dateStr && instance.input.form) {
+                    instance.input.form.submit();
+                }
+            }
+        });
+    }
 
     /*
     |--------------------------------------------------------------------------
@@ -213,8 +237,6 @@ if (openButton && modal) {
         document.body.style.overflow = 'hidden';
     });
 }
-
-
 
     /*
     |--------------------------------------------------------------------------
@@ -512,16 +534,31 @@ if (openButton && modal) {
                 return;
             }
 
-            const selectedOption =
-                select.options[select.selectedIndex];
+const selectedOption =
+    select.options[select.selectedIndex];
 
-            const harga = selectedOption
-                ? Number(selectedOption.dataset.harga) || 0
-                : 0;
+const harga = selectedOption
+    ? Number(selectedOption.dataset.harga) || 0
+    : 0;
 
-            const berat = Number(beratInput.value) || 0;
+// Ambil satuan dari paket yang dipilih
+const satuan = selectedOption
+    ? (selectedOption.dataset.satuan || '').trim()
+    : '';
 
-            const subtotal = harga * berat;
+// Perbarui label jumlah sesuai satuan paket
+const labelJumlah = row.querySelector('.label-jumlah');
+
+if (labelJumlah) {
+    labelJumlah.textContent = satuan
+        ? `Jumlah (${satuan})`
+        : 'Jumlah';
+}
+
+// Jumlah tetap disimpan menggunakan field lama
+const berat = Number(beratInput.value) || 0;
+
+const subtotal = harga * berat;
 
             /*
             | Harga otomatis

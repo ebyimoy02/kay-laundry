@@ -11,38 +11,84 @@ use Illuminate\Support\Facades\DB;
 
 class TransaksiController extends Controller
 {
-    /**
-     * Menampilkan halaman data transaksi.
-     */
-    public function index()
-    {
-        $transaksi = Transaksi::with([
-            'pelanggan',
-            'detailTransaksi.paket',
-        ])
-            ->orderBy('id_transaksi', 'desc')
-            ->paginate(10)
-            ->withQueryString();
+    
+/**
+ * Menampilkan halaman data transaksi.
+ */
 
-        $pelanggan = Pelanggan::orderBy(
-            'nama',
-            'asc'
-        )->get();
+public function index(Request $request)
+{
+    // Ambil kata kunci pencarian nama pelanggan.
+    $keyword = trim($request->query('q', ''));
 
-        $paket = PaketLaundry::orderBy(
-            'nama_paket',
-            'asc'
-        )->get();
+    // Ambil filter status pembayaran.
+    $statusPembayaran = $request->query(
+        'status_pembayaran',
+        ''
+    );
 
-        return view(
-            'transaksi.index',
-            compact(
-                'transaksi',
-                'pelanggan',
-                'paket'
-            )
+    // Ambil filter tanggal transaksi.
+    $tanggal = $request->query('tanggal', '');
+
+    // Ambil data transaksi beserta relasinya.
+    $query = Transaksi::with([
+        'pelanggan',
+        'detailTransaksi.paket',
+    ]);
+
+    // Pencarian berdasarkan nama pelanggan.
+    if ($keyword !== '') {
+        $query->whereHas('pelanggan', function ($pelangganQuery) use ($keyword) {
+            $pelangganQuery->where(
+                'nama',
+                'like',
+                '%' . $keyword . '%'
+            );
+        });
+    }
+
+    // Filter berdasarkan status pembayaran.
+    if (in_array($statusPembayaran, ['Lunas', 'Belum Bayar'], true)) {
+        $query->where(
+            'status_pembayaran',
+            $statusPembayaran
         );
     }
+
+    // Filter berdasarkan satu tanggal transaksi.
+    if ($tanggal !== '') {
+        $request->validate([
+            'tanggal' => ['date_format:Y-m-d'],
+        ]);
+
+        $query->whereDate('tgl_masuk', $tanggal);
+    }
+
+    // Urutkan transaksi terbaru dan pertahankan semua filter.
+    $transaksi = $query
+        ->orderBy('id_transaksi', 'desc')
+        ->paginate(10)
+        ->withQueryString();
+
+    $pelanggan = Pelanggan::orderBy(
+        'nama',
+        'asc'
+    )->get();
+
+    $paket = PaketLaundry::orderBy(
+        'nama_paket',
+        'asc'
+    )->get();
+
+    return view(
+        'transaksi.index',
+        compact(
+            'transaksi',
+            'pelanggan',
+            'paket'
+        )
+    );
+}
 
     /**
      * Menampilkan halaman create transaksi.
@@ -93,7 +139,7 @@ class TransaksiController extends Controller
             'status_pembayaran' => [
                 'sometimes',
                 'required',
-                'in:Lunas,Belum Lunas',
+                'in:Lunas,Belum Bayar',
             ],
 
             'items' => [
@@ -343,7 +389,7 @@ class TransaksiController extends Controller
         $validated = $request->validate([
             'status_pembayaran' => [
                 'required',
-                'in:Lunas,Belum Lunas',
+                'in:Lunas,Belum Bayar',
             ],
         ]);
 

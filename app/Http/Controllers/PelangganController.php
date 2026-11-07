@@ -22,13 +22,30 @@ public function index(Request $request)
         });
     }
 
-    // Maksimal 10 data per halaman
+    // Filter berdasarkan alamat yang dipilih
+    if ($request->filled('alamat')) {
+        $query->where('alamat', $request->alamat);
+    }
+
+    // Daftar alamat unik untuk pilihan filter
+    $daftarAlamat = Pelanggan::query()
+        ->whereNotNull('alamat')
+        ->where('alamat', '!=', '')
+        ->distinct()
+        ->orderBy('alamat', 'asc')
+        ->pluck('alamat');
+
+    // Urutkan nama pelanggan A-Z dan tampilkan 10 data per halaman
     $pelanggan = $query
+        ->orderBy('nama', 'asc')
         ->orderBy('id_pelanggan', 'desc')
         ->paginate(10)
         ->withQueryString();
 
-    return view('pelanggan.index', compact('pelanggan'));
+    return view(
+        'pelanggan.index',
+        compact('pelanggan', 'daftarAlamat')
+    );
 }
 
     public function create()

@@ -492,3 +492,156 @@
         padding: 0 20px 22px;
     }
 }
+
+
+/* =========================================================
+   FILTER ALAMAT PELANGGAN
+   Tambahan baru — pertahankan CSS sebelumnya
+   ========================================================= */
+
+.dashboard-page .pelanggan-filter-form {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 0 16px 16px;
+    background: #ffffff;
+}
+
+.dashboard-page .pelanggan-filter-form label {
+    color: #04285c;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.dashboard-page .pelanggan-filter-form select {
+    min-width: 220px;
+    max-width: 100%;
+    height: 40px;
+    padding: 0 12px;
+    border: 1.5px solid #c6d8f0;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #334155;
+    font-family: inherit;
+    font-size: 14px;
+    outline: none;
+}
+
+.dashboard-page .pelanggan-filter-form select:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+.dashboard-page .pelanggan-filter-form button,
+.dashboard-page .pelanggan-filter-form a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 40px;
+    padding: 0 16px;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.dashboard-page .pelanggan-filter-form button {
+    border: 1px solid #2563eb;
+    background: #2563eb;
+    color: #ffffff;
+}
+
+.dashboard-page .pelanggan-filter-form button:hover {
+    background: #1d4ed8;
+}
+
+.dashboard-page .pelanggan-filter-form a {
+    border: 1px solid #c6d8f0;
+    background: #ffffff;
+    color: #334155;
+}
+
+.dashboard-page .pelanggan-filter-form a:hover {
+    background: #f1f5f9;
+}
+
+@media (max-width: 576px) {
+    .dashboard-page .pelanggan-filter-form {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .dashboard-page .pelanggan-filter-form select {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .dashboard-page .pelanggan-filter-form button,
+    .dashboard-page .pelanggan-filter-form a {
+        width: 100%;
+    }
+}
+
+/* SEARCH DAN FILTER ALAMAT SEJAJAR */
+.dashboard-page .pelanggan-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 16px;
+}
+
+.dashboard-page .pelanggan-toolbar .transaksi-search-wrapper {
+    flex: 1 1 0;
+    min-width: 0;
+    width: auto;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.dashboard-page .pelanggan-toolbar .transaksi-search-box {
+    width: 100%;
+    max-width: none;
+    box-sizing: border-box;
+}
+
+.dashboard-page .pelanggan-toolbar .pelanggan-filter-form {
+    flex: 0 0 240px;
+    width: 240px;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.dashboard-page .pelanggan-toolbar .pelanggan-filter-form select {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    height: 44px;
+    box-sizing: border-box;
+}
+
+@media (max-width: 576px) {
+    .dashboard-page .pelanggan-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+        padding: 12px;
+    }
+
+    .dashboard-page .pelanggan-toolbar .transaksi-search-wrapper {
+        width: 100%;
+        flex: 0 0 auto;
+    }
+
+    .dashboard-page .pelanggan-toolbar .pelanggan-filter-form {
+        width: 100%;
+        flex: 0 0 auto;
+    }
+}

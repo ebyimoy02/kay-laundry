@@ -1,4 +1,3 @@
-
 @extends('layouts.app')
 
 @push('styles')
@@ -13,48 +12,149 @@
     <div class="laporan-card">
 
         <!-- HEADER DAN PERIODE -->
-        <div class="laporan-header">
+<div class="laporan-header">
 
-            <h1 class="laporan-title">Laporan</h1>
+    <h1 class="laporan-title">Laporan</h1>
 
-            <form action="{{ route('laporan.index') }}"
-                  method="GET"
-                  class="laporan-filter">
+    <div class="laporan-header-actions">
 
-                <span class="laporan-periode-label">PERIODE</span>
+        <form action="{{ route('laporan.index') }}"
+              method="GET"
+              class="laporan-filter">
 
-                <!-- TANGGAL AWAL -->
-                <input type="text"
-                       id="tanggal_mulai_display"
-                       class="laporan-date-input"
-                       placeholder="dd/mm/yyyy"
-                       autocomplete="off"
-                       required>
+            <span class="laporan-periode-label">PERIODE</span>
 
-                <input type="hidden"
-                       name="tanggal_mulai"
-                       id="tanggal_mulai"
-                       value="{{ request('tanggal_mulai', $tanggalMulai ?? '') }}">
+            <select name="periode" id="periode_laporan" class="laporan-date-input">
+                <option value="semua" {{ ($periode ?? 'bulanan') == 'semua' ? 'selected' : '' }}>Semua Data</option>
+                <option value="mingguan" {{ ($periode ?? 'bulanan') == 'mingguan' ? 'selected' : '' }}>Mingguan</option>
+                <option value="bulanan" {{ ($periode ?? 'bulanan') == 'bulanan' ? 'selected' : '' }}>Bulanan</option>
+                <option value="tahunan" {{ ($periode ?? 'bulanan') == 'tahunan' ? 'selected' : '' }}>Tahunan</option>
+                <option value="rentang" {{ ($periode ?? 'bulanan') == 'rentang' ? 'selected' : '' }}>Rentang Tanggal</option>
+            </select>
 
-                <!-- TANGGAL AKHIR -->
-                <input type="text"
-                       id="tanggal_selesai_display"
-                       class="laporan-date-input"
-                       placeholder="dd/mm/yyyy"
-                       autocomplete="off"
-                       required>
+            <!-- PILIH MINGGU -->
+            <input type="date"
+                   name="tanggal_acuan"
+                   id="tanggal_acuan"
+                   class="laporan-date-input"
+                   value="{{ $tanggalAcuan ?? now()->toDateString() }}">
 
-                <input type="hidden"
-                       name="tanggal_selesai"
-                       id="tanggal_selesai"
-                       value="{{ request('tanggal_selesai', $tanggalSelesai ?? '') }}">
+            <!-- PILIH BULAN -->
+            <input type="month"
+                   name="bulan"
+                   id="bulan_laporan"
+                   class="laporan-date-input"
+                   value="{{ $bulan ?? now()->format('Y-m') }}">
 
-                <button type="submit" class="laporan-btn-tampilkan">
-                    Tampilkan
-                </button>
+            <!-- PILIH TAHUN -->
+            <input type="number"
+                   name="tahun"
+                   id="tahun_laporan"
+                   class="laporan-date-input"
+                   min="2000"
+                   max="{{ now()->year }}"
+                   value="{{ $tahun ?? now()->year }}">
 
-            </form>
-        </div>
+            <!-- RENTANG TANGGAL -->
+            <input type="text"
+                   id="tanggal_mulai_display"
+                   class="laporan-date-input"
+                   placeholder="dd/mm/yyyy"
+                   autocomplete="off">
+
+            <input type="hidden"
+                   name="tanggal_mulai"
+                   id="tanggal_mulai"
+                   value="{{ $tanggalMulai ?? '' }}">
+
+            <input type="text"
+                   id="tanggal_selesai_display"
+                   class="laporan-date-input"
+                   placeholder="dd/mm/yyyy"
+                   autocomplete="off">
+
+            <input type="hidden"
+                   name="tanggal_selesai"
+                   id="tanggal_selesai"
+                   value="{{ $tanggalSelesai ?? '' }}">
+
+            <button type="submit" class="laporan-btn-tampilkan">
+                Tampilkan
+            </button>
+
+        </form>
+
+        <a href="{{ route('laporan.cetak', request()->only([
+        'periode',
+        'tanggal_acuan',
+        'bulan',
+        'tahun',
+        'tanggal_mulai',
+        'tanggal_selesai',
+        'q'
+        ])) }}"
+   class="laporan-btn-tampilkan">
+    Cetak
+</a>
+
+    </div>
+
+</div>
+
+<!-- PENCARIAN LAPORAN -->
+<form action="{{ route('laporan.index') }}"
+      method="GET"
+      class="laporan-search-form">
+
+    <!-- Pertahankan filter periode -->
+    <input type="hidden" name="periode" value="{{ request('periode', $periode ?? 'bulanan') }}">
+    <input type="hidden" name="tanggal_acuan" value="{{ request('tanggal_acuan', $tanggalAcuan ?? now()->toDateString()) }}">
+    <input type="hidden" name="bulan" value="{{ request('bulan', $bulan ?? now()->format('Y-m')) }}">
+    <input type="hidden" name="tahun" value="{{ request('tahun', $tahun ?? now()->year) }}">
+    <input type="hidden" name="tanggal_mulai" value="{{ request('tanggal_mulai', '') }}">
+    <input type="hidden" name="tanggal_selesai" value="{{ request('tanggal_selesai', '') }}">
+
+    <div class="laporan-search-box">
+        <svg xmlns="http://www.w3.org/2000/svg"
+             width="20"
+             height="20"
+             viewBox="0 0 24 24"
+             fill="none"
+             stroke="currentColor"
+             stroke-width="2"
+             stroke-linecap="round"
+             stroke-linejoin="round"
+             aria-hidden="true">
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="m21 21-4.35-4.35"></path>
+        </svg>
+
+        <input type="text"
+               name="q"
+               value="{{ $keyword ?? request('q', '') }}"
+               placeholder="Cari nama pelanggan atau paket laundry..."
+               aria-label="Cari nama pelanggan atau paket laundry">
+    </div>
+
+    <button type="submit" class="laporan-btn-cari">
+        Cari
+    </button>
+
+    @if(request()->filled('q'))
+        <a href="{{ route('laporan.index', array_filter([
+            'periode' => request('periode', $periode ?? 'bulanan'),
+            'tanggal_acuan' => request('tanggal_acuan', $tanggalAcuan ?? ''),
+            'bulan' => request('bulan', $bulan ?? ''),
+            'tahun' => request('tahun', $tahun ?? ''),
+            'tanggal_mulai' => request('tanggal_mulai'),
+            'tanggal_selesai' => request('tanggal_selesai'),
+        ], fn ($value) => $value !== null && $value !== '')) }}"
+           class="laporan-btn-reset">
+            Reset
+        </a>
+    @endif
+
+</form>
 
         <!-- TABEL LAPORAN -->
         <div class="laporan-table-wrapper">
@@ -67,7 +167,7 @@
                         <th>Tanggal</th>
                         <th>Pelanggan</th>
                         <th>Paket</th>
-                        <th>Berat</th>
+                        <th>Jumlah</th>
                         <th>Harga</th>
                         <th>Total</th>
                     </tr>
@@ -106,19 +206,20 @@
                                     @endforelse
                                 </div>
                             </td>
-
-                            <!-- BERAT -->
-                            <td>
-                                <div class="laporan-detail-list">
-                                    @forelse($item->detailTransaksi as $detail)
-                                        <div>
-                                            {{ number_format((float) $detail->berat, 2, ',', '.') }} Kg
-                                        </div>
-                                    @empty
-                                        -
-                                    @endforelse
-                                </div>
-                            </td>
+           
+<!-- JUMLAH -->
+<td>
+    <div class="laporan-detail-list">
+        @forelse($item->detailTransaksi as $detail)
+            <div>
+                {{ number_format((float) $detail->berat, 2, ',', '.') }}
+                {{ $detail->paket->satuan ?? '' }}
+            </div>
+        @empty
+            -
+        @endforelse
+    </div>
+</td>
 
                             <!-- HARGA -->
                             <td>
@@ -149,11 +250,11 @@
                     @endforelse
 
                 </tbody>
-            
+
             </table>
         </div>
 
-                <!-- PAGINATION -->
+        <!-- PAGINATION -->
         @if ($transaksi->hasPages())
             <div class="laporan-pagination">
                 <div class="laporan-pagination-info">

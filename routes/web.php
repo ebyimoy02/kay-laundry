@@ -79,5 +79,12 @@ Route::delete('/transaksi/{transaksi}', [TransaksiController::class, 'destroy'])
     ->name('transaksi.destroy');
 
 // Laporan
+Route::get('/laporan/pdf', [LaporanController::class, 'exportPdf'])
+    ->name('laporan.pdf');
+
+// Cetak Laporan
+Route::get('/laporan/cetak', [LaporanController::class, 'cetak'])
+    ->name('laporan.cetak');
+
 Route::get('/laporan', [LaporanController::class, 'index'])
     ->name('laporan.index');

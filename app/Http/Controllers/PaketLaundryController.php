@@ -11,7 +11,7 @@ class PaketLaundryController extends Controller
     /**
      * Tampilkan daftar paket.
      */
-    
+
 public function index(Request $request)
 {
     $query = PaketLaundry::query();
@@ -27,15 +27,30 @@ public function index(Request $request)
         );
     }
 
+    // Filter berdasarkan satuan paket
+    if ($request->filled('satuan')) {
+        $query->where('satuan', $request->satuan);
+    }
+
+    // Daftar satuan yang tersedia di database
+    $daftarSatuan = PaketLaundry::query()
+        ->whereNotNull('satuan')
+        ->where('satuan', '!=', '')
+        ->distinct()
+        ->orderBy('satuan')
+        ->pluck('satuan');
+
     // Maksimal 10 data per halaman
     $paket = $query
         ->orderBy('id_paket')
         ->paginate(10)
         ->withQueryString();
 
-    return view('paket.index', compact('paket'));
+    return view(
+        'paket.index',
+        compact('paket', 'daftarSatuan')
+    );
 }
-
 
     /**
      * Simpan paket baru.

@@ -31,6 +31,23 @@
     margin-bottom: 28px;
 }
 
+/* Tombol aksi pada header Laporan */
+.laporan-header-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.laporan-header-actions .laporan-btn-tampilkan {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
 .laporan-title {
     margin: 0;
     color: #0b2553;
@@ -279,4 +296,163 @@
 /* Sembunyikan informasi bahasa Inggris bawaan Laravel */
 .laporan-pagination p {
     display: none;
+}
+
+/* ==================================================
+   PENCARIAN LAPORAN
+   ================================================== */
+
+.laporan-search-form {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    width: 100%;
+    margin-bottom: 24px;
+}
+
+.laporan-search-box {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    min-width: 220px;
+    height: 46px;
+    gap: 10px;
+    padding: 0 14px;
+    border: 1px solid #dfe4ec;
+    border-radius: 11px;
+    background: #fff;
+    color: #8290a5;
+    transition: border-color 0.2s ease,
+                box-shadow 0.2s ease;
+}
+
+.laporan-search-box:focus-within {
+    border-color: #0b2553;
+    box-shadow: 0 0 0 3px rgba(11, 37, 83, 0.08);
+}
+
+.laporan-search-box svg {
+    flex-shrink: 0;
+}
+
+.laporan-search-box input {
+    width: 100%;
+    min-width: 0;
+    height: 100%;
+    padding: 0;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: #172b4d;
+    font: inherit;
+    font-size: 14px;
+}
+
+.laporan-search-box input::placeholder {
+    color: #929cac;
+}
+
+.laporan-btn-cari,
+.laporan-btn-reset {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 46px;
+    padding: 0 22px;
+    border: 1px solid #0b2553;
+    border-radius: 11px;
+    background: #0b2553;
+    color: #fff;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.laporan-btn-cari:hover {
+    background: #15386d;
+}
+
+.laporan-btn-reset {
+    border-color: #dfe4ec;
+    background: #fff;
+    color: #0b2553;
+}
+
+.laporan-btn-reset:hover {
+    background: #f0f4f8;
+}
+
+@media (max-width: 600px) {
+    .laporan-search-form {
+        align-items: stretch;
+    }
+
+    .laporan-search-box {
+        flex-basis: 100%;
+        min-width: 0;
+    }
+
+    .laporan-btn-cari,
+    .laporan-btn-reset {
+        flex: 1;
+    }
+}
+
+/* ==================================================
+   FILTER PERIODE DAN TOMBOL PDF
+   ================================================== */
+
+.laporan-header-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.laporan-header-actions .laporan-filter {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.laporan-filter select.laporan-date-input {
+    cursor: pointer;
+}
+
+.laporan-filter input[type="number"].laporan-date-input {
+    width: 110px;
+}
+
+.laporan-header-actions > a.laporan-btn-tampilkan {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+/* Tampilan layar kecil */
+@media (max-width: 600px) {
+    .laporan-header-actions {
+        width: 100%;
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .laporan-header-actions .laporan-filter {
+        width: 100%;
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .laporan-header-actions > a.laporan-btn-tampilkan {
+        width: 100%;
+    }
 }

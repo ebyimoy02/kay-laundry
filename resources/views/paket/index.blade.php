@@ -203,34 +203,61 @@
                 {{-- TABLE CARD --}}
                 <div class="transaksi-table-card">
 
-                    {{-- SEARCH --}}
-                    <div class="transaksi-search-wrapper">
-                        <form action="{{ route('paket.index') }}"
-                              method="GET"
-                              class="transaksi-search-box">
+{{-- SEARCH DAN FILTER SATUAN --}}
+<div class="transaksi-search-wrapper">
 
-                            <svg viewBox="0 0 24 24"
-                                 fill="none"
-                                 xmlns="http://www.w3.org/2000/svg">
+    {{-- Pencarian nama paket --}}
+    <form action="{{ route('paket.index') }}"
+          method="GET"
+          class="transaksi-search-box">
 
-                                <circle cx="11" cy="11" r="7"
-                                        stroke="currentColor"
-                                        stroke-width="2"/>
+        <svg viewBox="0 0 24 24"
+             fill="none"
+             xmlns="http://www.w3.org/2000/svg">
+            <circle cx="11" cy="11" r="7"
+                    stroke="currentColor"
+                    stroke-width="2"/>
+            <path d="M20 20L16.65 16.65"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"/>
+        </svg>
 
-                                <path d="M20 20L16.65 16.65"
-                                      stroke="currentColor"
-                                      stroke-width="2"
-                                      stroke-linecap="round"/>
-                            </svg>
+        <input type="text"
+               id="searchPaket"
+               name="q"
+               value="{{ request('q') }}"
+               placeholder="Cari nama paket..."
+               autocomplete="off">
+    </form>
 
-                            <input type="text"
-                                   id="searchPaket"
-                                   name="q"
-                                   value="{{ request('q') }}"
-                                   placeholder="Cari nama paket..."
-                                   autocomplete="off">
-                        </form>
-                    </div>
+    {{-- Filter satuan terpisah --}}
+    <form action="{{ route('paket.index') }}"
+          method="GET"
+          class="paket-filter-form">
+
+        <input type="hidden"
+               name="q"
+               value="{{ request('q') }}">
+
+        <select name="satuan"
+                id="filterSatuanPaket"
+                aria-label="Filter satuan paket"
+                onchange="this.form.submit()">
+
+            <option value="">Semua Satuan</option>
+
+            @foreach($daftarSatuan as $satuan)
+                <option value="{{ $satuan }}"
+                    {{ request('satuan') == $satuan ? 'selected' : '' }}>
+                    {{ $satuan }}
+                </option>
+            @endforeach
+
+        </select>
+    </form>
+
+</div>
 
                     {{-- TABLE --}}
                     <div class="transaksi-table-wrapper">

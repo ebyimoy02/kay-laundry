@@ -1,4 +1,3 @@
-
 document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('formEditTransaksi');
     const container = document.getElementById('detailPaketContainer');
@@ -60,10 +59,10 @@ document.addEventListener('DOMContentLoaded', function () {
             allowInput: true,
             defaultDate: tanggalHariIniISO,
 
-        onReady: function (selectedDates, dateStr, instance) {
-            tanggalISO.value = tanggalHariIniISO;
-            instance.setDate(tanggalHariIniISO, true, 'Y-m-d');
-        },
+            onReady: function (selectedDates, dateStr, instance) {
+                tanggalISO.value = tanggalHariIniISO;
+                instance.setDate(tanggalHariIniISO, true, 'Y-m-d');
+            },
 
             onChange: function (tanggalTerpilih) {
                 if (!tanggalTerpilih.length) {
@@ -132,6 +131,60 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function formatRupiah(angka) {
         return 'Rp ' + Math.round(angka).toLocaleString('id-ID');
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | LABEL JUMLAH DAN HARGA SESUAI SATUAN PAKET
+    |--------------------------------------------------------------------------
+    */
+
+function perbaruiLabelSatuan(row) {
+    const selectPaket = row.querySelector('.paket-select');
+    const labelJumlah = row.querySelector('.label-jumlah-edit');
+    const labelHarga = row.querySelector('.label-harga-edit');
+
+    if (!selectPaket || !labelJumlah || !labelHarga) {
+        return;
+    }
+
+    const opsiTerpilih =
+        selectPaket.options[selectPaket.selectedIndex];
+
+    const satuanAsli = opsiTerpilih
+        ? opsiTerpilih.dataset.satuan || ''
+        : '';
+
+    const satuan = satuanAsli.trim().toLowerCase();
+
+    let satuanTampil = '';
+
+    if (satuan === 'kg') {
+        satuanTampil = 'Kg';
+    } else if (satuan === 'pcs') {
+        satuanTampil = 'Pcs';
+    } else if (
+        satuan === 'm' ||
+        satuan === 'm2' ||
+        satuan === 'm²' ||
+        satuan === 'm^2'
+    ) {
+        satuanTampil = satuan === 'm' ? 'm' : 'm²';
+    }
+
+    labelJumlah.textContent = satuanTampil
+        ? `Jumlah (${satuanTampil})`
+        : 'Jumlah';
+
+    labelHarga.textContent = satuanTampil
+        ? `Harga per ${satuanTampil}`
+        : 'Harga';
+}
+
+    function perbaruiSemuaLabelSatuan() {
+        container.querySelectorAll('.detail-paket-row').forEach(function (row) {
+            perbaruiLabelSatuan(row);
+        });
     }
 
     /*
@@ -211,13 +264,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
     container.addEventListener('change', function (event) {
         if (event.target.matches('.paket-select')) {
+            const row = event.target.closest('.detail-paket-row');
+
+            if (row) {
+                perbaruiLabelSatuan(row);
+            }
+
             hitungTotal();
         }
     });
 
     /*
     |--------------------------------------------------------------------------
-    | PERUBAHAN BERAT PAKET
+    | PERUBAHAN JUMLAH PAKET
     |--------------------------------------------------------------------------
     */
 
@@ -289,6 +348,7 @@ document.addEventListener('DOMContentLoaded', function () {
         container.appendChild(barisBaru);
 
         perbaruiIndex();
+        perbaruiLabelSatuan(barisBaru);
         aturTombolHapus();
         hitungTotal();
     });
@@ -300,6 +360,7 @@ document.addEventListener('DOMContentLoaded', function () {
     */
 
     perbaruiIndex();
+    perbaruiSemuaLabelSatuan();
     aturTombolHapus();
     hitungTotal();
 });

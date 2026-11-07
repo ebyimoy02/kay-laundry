@@ -393,123 +393,133 @@
 
                             @forelse ($transaksi->detailTransaksi as $index => $detail)
 
-                                <div class="detail-paket-row edit-paket-row">
+    <div class="detail-paket-row edit-paket-row">
 
-                                    <div class="modal-form-group edit-field">
-                                        <label>Paket Laundry</label>
+        <div class="modal-form-group edit-field">
+            <label>Paket Laundry</label>
 
-                                        <select name="items[{{ $index }}][id_paket]"
-                                                class="paket-select"
-                                                required>
+            <select name="items[{{ $index }}][id_paket]"
+                    class="paket-select"
+                    required>
 
-                                            <option value="">Pilih Paket</option>
+                <option value="">Pilih Paket</option>
 
-                                            @foreach ($paket as $paketItem)
-                                                <option value="{{ $paketItem->id_paket }}"
-                                                        data-harga="{{ $paketItem->harga }}"
-                                                    {{ old("items.$index.id_paket", $detail->id_paket) == $paketItem->id_paket ? 'selected' : '' }}>
-                                                    {{ $paketItem->nama_paket }}
-                                                </option>
-                                            @endforeach
+                @foreach ($paket as $paketItem)
+                    <option value="{{ $paketItem->id_paket }}"
+                            data-harga="{{ $paketItem->harga }}"
+                            data-satuan="{{ $paketItem->satuan }}"
+                        {{ old("items.$index.id_paket", $detail->id_paket) == $paketItem->id_paket ? 'selected' : '' }}>
+                        {{ $paketItem->nama_paket }}
+                    </option>
+                @endforeach
 
-                                        </select>
-                                    </div>
+            </select>
+        </div>
 
-                                    <div class="modal-form-group edit-field">
-                                        <label>Berat (kg)</label>
+        <div class="modal-form-group edit-field">
+            <label class="label-jumlah-edit">Jumlah</label>
 
-                                        <input type="number"
-                                               name="items[{{ $index }}][berat]"
-                                               class="berat-input"
-                                               min="0.01"
-                                               step="0.01"
-                                               value="{{ old("items.$index.berat", $detail->berat) }}"
-                                               required>
-                                    </div>
+            <input type="number"
+                   name="items[{{ $index }}][berat]"
+                   class="berat-input"
+                   min="0.01"
+                   step="0.01"
+                   value="{{ old("items.$index.berat", $detail->berat) }}"
+                   required>
+        </div>
 
-                                    <div class="modal-form-group edit-field">
-                                        <label>Harga per kg</label>
+        <div class="modal-form-group edit-field">
+            <label class="label-harga-edit">Harga</label>
 
-                                        <input type="text"
-                                               class="harga-paket"
-                                               value="Rp {{ number_format($detail->harga, 0, ',', '.') }}"
-                                               readonly>
-                                    </div>
+            <input type="text"
+                   class="harga-paket"
+                   value="Rp {{ number_format($detail->harga, 0, ',', '.') }}"
+                   readonly>
+        </div>
 
-                                    <!-- IKON HAPUS PAKET -->
-                                    <button type="button"
-                                            class="transaksi-action-btn transaksi-action-delete btn-hapus-paket"
-                                            title="Hapus Paket"
-                                            aria-label="Hapus Paket"
-                                            {{ $loop->first && $loop->last ? 'hidden' : '' }}>
-                                        <svg viewBox="0 0 24 24"
-                                             fill="none"
-                                             xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M4 7H20"
-                                                  stroke="currentColor"
-                                                  stroke-width="2"
-                                                  stroke-linecap="round"/>
-                                            <path d="M10 11V17"
-                                                  stroke="currentColor"
-                                                  stroke-width="2"
-                                                  stroke-linecap="round"/>
-                                            <path d="M14 11V17"
-                                                  stroke="currentColor"
-                                                  stroke-width="2"
-                                                  stroke-linecap="round"/>
-                                            <path d="M6 7L7 20H17L18 7"
-                                                  stroke="currentColor"
-                                                  stroke-width="2"
-                                                  stroke-linejoin="round"/>
-                                            <path d="M9 7V4H15V7"
-                                                  stroke="currentColor"
-                                                  stroke-width="2"
-                                                  stroke-linejoin="round"/>
-                                        </svg>
-                                    </button>
+        <!-- IKON HAPUS PAKET -->
+        <button type="button"
+                class="transaksi-action-btn transaksi-action-delete btn-hapus-paket"
+                title="Hapus Paket"
+                aria-label="Hapus Paket"
+                {{ $loop->first && $loop->last ? 'hidden' : '' }}>
 
-                                </div>
+            <svg viewBox="0 0 24 24"
+                 fill="none"
+                 xmlns="http://www.w3.org/2000/svg">
 
-                            @empty
+                <path d="M4 7H20"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"/>
 
-                                <div class="detail-paket-row edit-paket-row">
+                <path d="M10 11V17"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"/>
 
-                                    <div class="modal-form-group edit-field">
-                                        <label>Paket Laundry</label>
+                <path d="M14 11V17"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"/>
 
-                                        <select name="items[0][id_paket]"
-                                                class="paket-select"
-                                                required>
-                                            <option value="">Pilih Paket</option>
+                <path d="M6 7L7 20H17L18 7"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linejoin="round"/>
 
-                                            @foreach ($paket as $paketItem)
-                                                <option value="{{ $paketItem->id_paket }}"
-                                                        data-harga="{{ $paketItem->harga }}">
-                                                    {{ $paketItem->nama_paket }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
+                <path d="M9 7V4H15V7"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linejoin="round"/>
 
-                                    <div class="modal-form-group edit-field">
-                                        <label>Berat (kg)</label>
+            </svg>
+        </button>
 
-                                        <input type="number"
-                                               name="items[0][berat]"
-                                               class="berat-input"
-                                               min="0.01"
-                                               step="0.01"
-                                               required>
-                                    </div>
+    </div>
 
-                                    <div class="modal-form-group edit-field">
-                                        <label>Harga per kg</label>
+@empty
+          
+<div class="detail-paket-row edit-paket-row">
 
-                                        <input type="text"
-                                               class="harga-paket"
-                                               value="Rp 0"
-                                               readonly>
-                                    </div>
+    <div class="modal-form-group edit-field">
+        <label>Paket Laundry</label>
+
+        <select name="items[0][id_paket]"
+                class="paket-select"
+                required>
+            <option value="">Pilih Paket</option>
+
+            @foreach ($paket as $paketItem)
+                <option value="{{ $paketItem->id_paket }}"
+                        data-harga="{{ $paketItem->harga }}"
+                        data-satuan="{{ $paketItem->satuan }}">
+                    {{ $paketItem->nama_paket }}
+                </option>
+            @endforeach
+        </select>
+    </div>
+
+    <div class="modal-form-group edit-field">
+        <label class="label-jumlah-edit">Jumlah</label>
+
+        <input type="number"
+               name="items[0][berat]"
+               class="berat-input"
+               min="0.01"
+               step="0.01"
+               required>
+    </div>
+
+    <div class="modal-form-group edit-field">
+        <label class="label-harga-edit">Harga</label>
+
+        <input type="text"
+               class="harga-paket"
+               value="Rp 0"
+               readonly>
+    </div>
+</div>
 
                                     <!-- IKON HAPUS PAKET -->
                                     <button type="button"

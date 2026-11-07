@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="id">
 
@@ -92,9 +93,7 @@
                     <button type="button"
                             class="sidebar-link"
                             id="openLogoutModal">
-                        <svg class="menu-svg"
-                             viewBox="0 0 24 24"
-                             fill="currentColor">
+                        <svg class="menu-svg" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M5 3h6v2H5v14h6v2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/>
                             <path d="m16 7 5 5-5 5-1.4-1.4 2.6-2.6H9v-2h8.2l-2.6-2.6z"/>
                         </svg>
@@ -177,7 +176,11 @@
                 <!-- TABLE CARD -->
                 <div class="transaksi-table-card">
 
-                    <div class="transaksi-search-wrapper">
+                    <!-- PENCARIAN DAN FILTER STATUS PEMBAYARAN -->
+                    <form action="{{ route('transaksi.index') }}"
+                          method="GET"
+                          class="transaksi-search-wrapper">
+
                         <div class="transaksi-search-box">
                             <svg viewBox="0 0 24 24"
                                  fill="none"
@@ -192,10 +195,46 @@
 
                             <input type="text"
                                    id="searchTransaksi"
+                                   name="q"
+                                   value="{{ request('q') }}"
                                    placeholder="Cari nama pelanggan..."
                                    autocomplete="off">
                         </div>
-                    </div>
+                        
+<div class="transaksi-filter-tanggal-wrapper">
+    <input type="text"
+           id="filterTanggal"
+           name="tanggal"
+           class="transaksi-filter-tanggal"
+           value="{{ request('tanggal') }}"
+           placeholder="Pilih tanggal"
+           aria-label="Filter tanggal transaksi"
+           autocomplete="off"
+           readonly>
+</div>
+
+                        <select name="status_pembayaran"
+                                class="transaksi-filter-status"
+                                aria-label="Filter status pembayaran"
+                                onchange="this.form.submit()">
+
+                            <option value=""
+                                {{ request('status_pembayaran', '') === '' ? 'selected' : '' }}>
+                                Semua Status
+                            </option>
+
+                            <option value="Lunas"
+                                {{ request('status_pembayaran') === 'Lunas' ? 'selected' : '' }}>
+                                Lunas
+                            </option>
+
+                            <option value="Belum Bayar"
+                                {{ request('status_pembayaran') === 'Belum Bayar' ? 'selected' : '' }}>
+                                Belum Bayar
+                            </option>
+
+                        </select>
+                    </form>
 
                     <!-- TABLE -->
                     <div class="transaksi-table-wrapper">
@@ -210,7 +249,7 @@
                                     <th>Pelanggan</th>
                                     <th>Paket</th>
                                     <th>Harga</th>
-                                    <th>Pembayaran</th>
+                                    <th>Status Pembayaran</th>
                                     <th class="aksi-column">Aksi</th>
                                 </tr>
                             </thead>
@@ -267,12 +306,12 @@
                                                         aria-label="Status pembayaran transaksi {{ $item->id_transaksi }}"
                                                         onchange="this.form.submit()"
                                                         required>
-                                                    <option value="Belum Lunas"
-                                                        {{ ($item->status_pembayaran ?? 'Belum Lunas') === 'Belum Lunas' ? 'selected' : '' }}>
-                                                        Belum Lunas
+                                                    <option value="Belum Bayar"
+                                                        {{ ($item->status_pembayaran ?? 'Belum Bayar') === 'Belum Bayar' ? 'selected' : '' }}>
+                                                        Belum Bayar
                                                     </option>
                                                     <option value="Lunas"
-                                                        {{ ($item->status_pembayaran ?? 'Belum Lunas') === 'Lunas' ? 'selected' : '' }}>
+                                                        {{ ($item->status_pembayaran ?? 'Belum Bayar') === 'Lunas' ? 'selected' : '' }}>
                                                         Lunas
                                                     </option>
                                                 </select>
@@ -283,7 +322,6 @@
                                         <td class="aksi-column">
                                             <div class="transaksi-action-buttons">
 
-                                                <!-- EDIT / DETAIL -->
                                                 <a href="{{ route('transaksi.show', $item->id_transaksi) }}"
                                                    class="transaksi-action-btn transaksi-action-edit"
                                                    title="Edit / Detail">
@@ -302,7 +340,6 @@
                                                     </svg>
                                                 </a>
 
-                                                <!-- HAPUS -->
                                                 <button type="button"
                                                         class="transaksi-action-btn transaksi-action-delete btn-hapus-transaksi"
                                                         data-id="{{ $item->id_transaksi }}"
@@ -490,12 +527,8 @@
                         <select id="status_pembayaran"
                                 name="status_pembayaran"
                                 required>
-                            <option value="Belum Lunas" selected>
-                                Belum Lunas
-                            </option>
-                            <option value="Lunas">
-                                Lunas
-                            </option>
+                            <option value="Belum Bayar" selected>Belum Bayar</option>
+                            <option value="Lunas">Lunas</option>
                         </select>
                     </div>
 
@@ -514,7 +547,8 @@
 
                                     @foreach($paket as $item)
                                         <option value="{{ $item->id_paket }}"
-                                                data-harga="{{ $item->harga }}">
+                                            data-harga="{{ $item->harga }}"
+                                            data-satuan="{{ $item->satuan }}">
                                             {{ $item->nama_paket }}
                                         </option>
                                     @endforeach
@@ -522,15 +556,15 @@
                             </div>
 
                             <div class="form-group">
-                                <label>Berat</label>
+                            <label class="label-jumlah">Jumlah</label>
 
-                                <input type="number"
-                                       name="items[0][berat]"
-                                       class="paket-berat"
-                                       min="0.01"
-                                       step="0.01"
-                                       placeholder="Berat"
-                                       required>
+                            <input type="number"
+                               name="items[0][berat]"
+                               class="paket-berat"
+                               min="0.01"
+                               step="0.01"
+                               placeholder="Masukkan jumlah"
+                               required>
                             </div>
 
                             <div class="form-group">

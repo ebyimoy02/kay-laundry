@@ -188,33 +188,63 @@
 
                 <!-- TABLE CARD -->
                 <div class="transaksi-table-card">
+        
+<!-- SEARCH DAN FILTER ALAMAT -->
+<div class="pelanggan-toolbar">
 
-                    <!-- SEARCH -->
-                    <div class="transaksi-search-wrapper">
-                        <form action="{{ route('pelanggan.index') }}"
-                              method="GET"
-                              class="transaksi-search-box">
+    <!-- SEARCH -->
+    <div class="transaksi-search-wrapper">
+        <form action="{{ route('pelanggan.index') }}"
+              method="GET"
+              class="transaksi-search-box">
 
-                            <svg viewBox="0 0 24 24"
-                                 fill="none"
-                                 xmlns="http://www.w3.org/2000/svg">
-                                <circle cx="11" cy="11" r="7"
-                                        stroke="currentColor"
-                                        stroke-width="2"/>
-                                <path d="M20 20L16.65 16.65"
-                                      stroke="currentColor"
-                                      stroke-width="2"
-                                      stroke-linecap="round"/>
-                            </svg>
+            <svg viewBox="0 0 24 24"
+                 fill="none"
+                 xmlns="http://www.w3.org/2000/svg">
+                <circle cx="11" cy="11" r="7"
+                        stroke="currentColor"
+                        stroke-width="2"/>
+                <path d="M20 20L16.65 16.65"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"/>
+            </svg>
 
-                            <input type="text"
-                                   id="searchPelanggan"
-                                   name="q"
-                                   value="{{ request('q') }}"
-                                   placeholder="Cari nama atau no_hp..."
-                                   autocomplete="off">
-                        </form>
-                    </div>
+            <input type="text"
+                   id="searchPelanggan"
+                   name="q"
+                   value="{{ request('q') }}"
+                   placeholder="Cari nama atau no_hp..."
+                   autocomplete="off">
+        </form>
+    </div>
+
+    <!-- FILTER ALAMAT -->
+    <form action="{{ route('pelanggan.index') }}"
+          method="GET"
+          class="pelanggan-filter-form">
+
+        <input type="hidden"
+               name="q"
+               value="{{ request('q') }}">
+
+        <select name="alamat"
+                id="filterAlamat"
+                aria-label="Pilih alamat pelanggan"
+                onchange="this.form.submit()">
+
+            <option value="">Semua Alamat</option>
+
+            @foreach($daftarAlamat as $alamat)
+                <option value="{{ $alamat }}"
+                    {{ request('alamat') === $alamat ? 'selected' : '' }}>
+                    {{ $alamat }}
+                </option>
+            @endforeach
+        </select>
+    </form>
+
+</div>
 
                     <!-- TABLE -->
                     <div class="transaksi-table-wrapper">

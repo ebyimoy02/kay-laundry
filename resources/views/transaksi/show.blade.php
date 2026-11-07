@@ -167,20 +167,26 @@
                         <h1 class="page-title">Detail Transaksi</h1>
                     </div>
 
-                    <!-- TOMBOL EDIT DAN KEMBALI -->
-                    <div style="display: flex; gap: 10px; align-items: center;">
+<!-- TOMBOL CETAK, EDIT DAN KEMBALI -->
+<div style="display: flex; gap: 10px; align-items: center;">
 
-                        <a href="{{ route('transaksi.edit', $transaksi->id_transaksi) }}"
-                           class="btn-primary">
-                            Edit
-                        </a>
+    <button type="button"
+            class="btn-primary"
+            id="btnCetakTransaksi">
+        Cetak
+    </button>
 
-                        <a href="{{ route('transaksi.index') }}"
-                           class="btn-primary">
-                            &larr; Kembali
-                        </a>
+    <a href="{{ route('transaksi.edit', $transaksi->id_transaksi) }}"
+       class="btn-primary">
+        Edit
+    </a>
 
-                    </div>
+    <a href="{{ route('transaksi.index') }}"
+       class="btn-primary">
+        &larr; Kembali
+    </a>
+
+</div>
 
                 </div>
 
@@ -250,6 +256,13 @@
                                 </dd>
                             </div>
 
+                            <div class="info-row">
+                                <dt>Status Pembayaran</dt>
+                            <dd>
+                                 {{ $transaksi->status_pembayaran ?? 'Belum Bayar' }}
+                             </dd>
+                        </div>
+
                         </dl>
 
                     </div>
@@ -287,7 +300,7 @@
                                 </div>
 
                                 <div class="info-row">
-                                    <dt>Berat</dt>
+                                    <dt>Jumlah</dt>
                                     <dd>
                                         {{ number_format((float) $detail->berat, 2, ',', '.') }}
                                         {{ $detail->paket->satuan ?? '' }}
@@ -354,6 +367,7 @@
     </div>
 
     <script src="{{ asset('js/sidebar-toggle.js') }}"></script>
+    <script src="{{ asset('js/transaksi-detail.js') }}"></script>
 
 </body>
 </html>
