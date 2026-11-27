@@ -1,0 +1,181 @@
+/* =========================================================
+   PENGATURAN AKUN - KAY LAUNDRY
+   ========================================================= */
+
+.account-settings-page {
+    width: 100%;
+    max-width: 850px;
+}
+
+.account-settings-page .account-page-heading {
+    margin-bottom: 24px;
+}
+
+.account-settings-page .account-page-heading h1 {
+    margin: 0 0 8px;
+    color: #0F2A4A;
+    font-size: 26px;
+    font-weight: 700;
+}
+
+.account-settings-page .account-page-heading p {
+    margin: 0;
+    color: #64748b;
+    font-size: 14px;
+}
+
+.account-settings-card {
+    width: 100%;
+    padding: 28px;
+    background: #ffffff;
+    border: 1px solid #e3ecf8;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(4, 40, 92, 0.05);
+}
+
+.account-settings-header {
+    margin-bottom: 25px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid #e5eaf0;
+}
+
+.account-settings-header h2 {
+    margin: 0 0 7px;
+    color: #0F2A4A;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.account-settings-header p {
+    margin: 0;
+    color: #64748b;
+    font-size: 13px;
+}
+
+.account-form-group {
+    margin-bottom: 20px;
+}
+
+.account-form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #0F2A4A;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.account-form-group input {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 44px;
+    padding: 11px 13px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    outline: none;
+    background: #ffffff;
+    color: #0F2A4A;
+    font-family: inherit;
+    font-size: 13px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.account-form-group input:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.10);
+}
+
+.account-form-group input::placeholder {
+    color: #94a3b8;
+}
+
+.account-error {
+    display: block;
+    margin-top: 6px;
+    color: #dc2626;
+    font-size: 12px;
+}
+
+.account-form-info {
+    margin-top: -4px;
+    margin-bottom: 24px;
+    color: #64748b;
+    font-size: 12px;
+}
+
+.account-form-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+    padding-top: 18px;
+    border-top: 1px solid #e5eaf0;
+}
+
+.account-btn-cancel,
+.account-btn-save {
+    min-height: 40px;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.account-btn-cancel {
+    border: 1px solid #cbd5e1;
+    background: #ffffff;
+    color: #475569;
+}
+
+.account-btn-cancel:hover {
+    background: #f1f5f9;
+}
+
+.account-btn-save {
+    border: none;
+    background: #2563eb;
+    color: #ffffff;
+}
+
+.account-btn-save:hover {
+    background: #1d4ed8;
+}
+
+.account-alert {
+    margin-bottom: 20px;
+    padding: 13px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+}
+
+.account-alert-success {
+    border: 1px solid #bbf7d0;
+    background: #f0fdf4;
+    color: #166534;
+}
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+    .account-settings-card {
+        padding: 20px 16px;
+    }
+
+    .account-page-heading h1 {
+        font-size: 22px;
+    }
+
+    .account-form-actions {
+        flex-direction: column-reverse;
+        align-items: stretch;
+    }
+
+    .account-btn-cancel,
+    .account-btn-save {
+        width: 100%;
+        text-align: center;
+        box-sizing: border-box;
+    }
+}

@@ -1,0 +1,90 @@
+/* =========================================================
+   PROFILE DROPDOWN - KAY LAUNDRY
+   ========================================================= */
+
+.admin-profile {
+    position: relative;
+}
+
+/* Tombol profil */
+.profile-dropdown-trigger {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+    text-align: left;
+}
+
+/* Menu dropdown */
+.profile-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 12px);
+    right: 0;
+    z-index: 1000;
+    min-width: 190px;
+    padding: 6px;
+    background: #ffffff;
+    border: 1px solid #e5eaf0;
+    border-radius: 10px;
+    box-shadow: 0 8px 24px rgba(15, 42, 74, 0.12);
+    display: none;
+}
+
+/* Menu saat dibuka */
+.profile-dropdown-menu.is-visible {
+    display: block;
+}
+
+/* Item menu */
+.profile-dropdown-item {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 11px 12px;
+    border: none;
+    border-radius: 7px;
+    background: transparent;
+    color: #0F2A4A;
+    font-size: 13px;
+    text-align: left;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Efek hover */
+.profile-dropdown-item:hover {
+    background: #f1f5f9;
+}
+
+/* Tanda panah pada menu profil */
+.profile-dropdown-trigger::after {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid #0F2A4A;
+    border-bottom: 2px solid #0F2A4A;
+    transform: translateY(-2px) rotate(45deg);
+    margin-left: 8px;
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+}
+
+/* Panah berubah arah ketika dropdown terbuka */
+.profile-dropdown-trigger[aria-expanded="true"]::after {
+    transform: translateY(2px) rotate(225deg);
+}
+
+/* Pastikan tombol profil terlihat di layout utama */
+.admin-profile > .profile-dropdown-trigger {
+    display: flex !important;
+}
+
+/* Pastikan tombol menu dropdown tetap terlihat */
+.admin-profile .profile-dropdown-menu .profile-dropdown-item {
+    display: flex !important;
+}

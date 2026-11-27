@@ -126,19 +126,51 @@
                         <line x1="3" y1="18" x2="21" y2="18"/>
                     </svg>
                 </button>
+          
+<div class="admin-profile">
 
-                <div class="admin-profile">
-                    <div class="admin-avatar">
-                        <svg viewBox="0 0 24 24" fill="#ffffff">
-                            <circle cx="12" cy="8" r="4.2"/>
-                            <path d="M4 21c0-4.2 3.6-6.5 8-6.5s8 2.3 8 6.5v1H4z"/>
-                        </svg>
-                    </div>
-                    <div class="admin-info">
-                        <strong>Kay Laundry</strong>
-                        <span>Operator</span>
-                    </div>
-                </div>
+    <button type="button"
+            class="profile-dropdown-trigger"
+            id="profileDropdownTrigger"
+            aria-expanded="false"
+            aria-controls="profileDropdownMenu">
+
+        <div class="admin-avatar">
+            <svg viewBox="0 0 24 24" fill="#ffffff">
+                <circle cx="12" cy="8" r="4.2"/>
+                <path d="M4 21c0-4.2 3.6-6.5 8-6.5s8 2.3 8 6.5v1H4z"/>
+            </svg>
+        </div>
+
+        <div class="admin-info">
+            <strong>Kay Laundry</strong>
+            <span>Operator</span>
+        </div>
+
+    </button>
+
+    <div class="profile-dropdown-menu"
+         id="profileDropdownMenu"
+         role="menu"
+         aria-hidden="true">
+
+        <a href="/pengaturan-akun"
+           class="profile-dropdown-item"
+           id="openPengaturanAkun"
+           role="menuitem">
+            Pengaturan Akun
+        </a>
+
+        <button type="button"
+                class="profile-dropdown-item"
+                id="profileLogoutButton"
+                role="menuitem">
+            Logout
+        </button>
+
+    </div>
+
+</div>
 
             </header>
 
@@ -684,6 +716,7 @@
     <script src="{{ asset('js/transaksi.js') }}"></script>
     <script src="{{ asset('js/sidebar-toggle.js') }}"></script>
     <script src="{{ asset('js/logout.js') }}"></script>
+    <script src="{{ asset('js/profile-dropdown.js') }}"></script>
 
     <!-- MODAL KONFIRMASI LOGOUT -->
     <div class="logout-modal-overlay"

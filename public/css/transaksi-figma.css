@@ -1032,8 +1032,10 @@
 
     #modalTambahTransaksi .modal-footer .btn-secondary,
     #modalTambahTransaksi .modal-footer .btn-primary {
-        flex: 1;
-        min-width: 0;
+    flex: 1 1 0;
+    width: auto;
+    min-width: 0;
+    white-space: nowrap;
     }
 }
 
@@ -1243,4 +1245,74 @@
         margin: 15mm;
     }
 
+}
+
+/* =========================================================
+   RESPONSIVE TRANSAKSI - HP
+   Memperbaiki jarak filter dan tabel horizontal
+   ========================================================= */
+
+@media (max-width: 576px) {
+
+    /* Hilangkan ruang kosong berlebihan pada filter tanggal */
+    .dashboard-page .transaksi-filter-tanggal-wrapper {
+        flex: 0 0 auto;
+        width: 100%;
+        min-width: 0;
+        min-height: 0;
+    }
+
+    .dashboard-page .transaksi-filter-tanggal {
+        width: 100%;
+    }
+
+    /* Tabel dapat digeser ke kanan dan kiri */
+    .dashboard-page .transaksi-table-wrapper {
+        width: auto;
+        max-width: 100%;
+        overflow-x: auto !important;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* Pertahankan lebar kolom agar tidak berdesakan */
+    #tabelTransaksi {
+        width: 900px;
+        min-width: 900px;
+        table-layout: fixed;
+    }
+}
+
+/* Memastikan placeholder filter tanggal terlihat */
+.transaksi-filter-tanggal-wrapper input::placeholder {
+    color: #8795aa !important;
+    opacity: 1 !important;
+    -webkit-text-fill-color: #8795aa;
+}
+
+.transaksi-filter-tanggal-wrapper input.flatpickr-input {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+}
+
+/* POSISI TOMBOL MODAL TAMBAH TRANSAKSI DI HP */
+@media (max-width: 576px) {
+
+    #modalTambahTransaksi .modal-footer {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+    }
+
+    #modalTambahTransaksi .modal-footer .btn-secondary,
+    #modalTambahTransaksi .modal-footer .btn-primary {
+        flex: 1 1 0;
+        width: auto;
+        min-width: 0;
+        white-space: nowrap;
+    }
 }

@@ -1412,3 +1412,126 @@ html, body {
     flex: 1;
     min-width: 0;
 }
+
+/* =========================================================
+   RESPONSIVE SIDEBAR - TABLET DAN HP
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+    .dashboard-wrapper {
+        position: relative;
+        min-height: 100vh;
+    }
+
+    /* SIDEBAR MENJADI PANEL GESER */
+    .dashboard-wrapper > #sidebarMenu {
+        position: fixed !important;
+        top: 0;
+        left: 0;
+        bottom: 0;
+
+        width: 260px !important;
+        min-width: 260px !important;
+        flex: 0 0 260px !important;
+
+        height: 100vh;
+        height: 100dvh;
+
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+
+        overflow-x: hidden !important;
+        overflow-y: auto !important;
+
+        z-index: 1001;
+    }
+
+    /* SIDEBAR TERBUKA */
+    .dashboard-wrapper.mobile-sidebar-open > #sidebarMenu {
+        transform: translateX(0);
+    }
+
+    /* TETAP TAMPIL PENUH MESKIPUN STATUS DESKTOP COLLAPSED */
+    .dashboard-wrapper.sidebar-collapsed > #sidebarMenu.sidebar {
+        width: 260px !important;
+        min-width: 260px !important;
+        flex: 0 0 260px !important;
+    }
+
+    .dashboard-wrapper.sidebar-collapsed > #sidebarMenu.sidebar .sidebar-brand h2 {
+        display: block !important;
+    }
+
+    .dashboard-wrapper.sidebar-collapsed > #sidebarMenu.sidebar .sidebar-brand {
+        justify-content: flex-start !important;
+    }
+
+    .dashboard-wrapper.sidebar-collapsed > #sidebarMenu.sidebar .sidebar-link span {
+        display: inline !important;
+    }
+
+    .dashboard-wrapper.sidebar-collapsed > #sidebarMenu.sidebar .sidebar-link {
+        justify-content: flex-start !important;
+        gap: 12px !important;
+    }
+
+    /* LAPISAN GELAP DI BELAKANG SIDEBAR */
+    .dashboard-wrapper::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+
+        background: rgba(0, 0, 0, 0.45);
+
+        opacity: 0;
+        visibility: hidden;
+
+        transition:
+            opacity 0.3s ease,
+            visibility 0.3s ease;
+
+        z-index: 1000;
+    }
+
+    .dashboard-wrapper.mobile-sidebar-open::before {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    /* KONTEN UTAMA MEMAKAI LEBAR LAYAR */
+    .dashboard-wrapper > .main-content {
+        width: 100%;
+        min-width: 0;
+        flex: 1 1 100%;
+    }
+
+}
+
+/* =========================================================
+   PERBAIKAN TULISAN SIDEBAR PADA HP DAN TABLET
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+    /* Tampilkan kembali nama laundry */
+    #sidebarMenu .sidebar-brand h2 {
+        display: block !important;
+    }
+
+    #sidebarMenu .sidebar-brand {
+        justify-content: flex-start !important;
+    }
+
+    /* Tampilkan kembali tulisan setiap menu */
+    #sidebarMenu .sidebar-link span {
+        display: inline !important;
+    }
+
+    /* Atur ikon dan tulisan agar sejajar */
+    #sidebarMenu .sidebar-link {
+        justify-content: flex-start !important;
+        gap: 12px !important;
+    }
+
+}

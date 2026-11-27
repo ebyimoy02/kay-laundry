@@ -200,20 +200,66 @@ document.addEventListener('DOMContentLoaded', function () {
     const filterTanggal = document.getElementById('filterTanggal');
 
     if (filterTanggal && typeof flatpickr === 'function') {
-        flatpickr(filterTanggal, {
+
+        // Pastikan placeholder tersedia sebelum Flatpickr dijalankan.
+        filterTanggal.setAttribute(
+            'placeholder',
+            'Pilih tanggal'
+        );
+
+        const kalenderFilterTanggal = flatpickr(filterTanggal, {
+
             locale: flatpickr.l10ns.id || 'default',
+
             dateFormat: 'Y-m-d',
-            altInput: true,
+
+           altInput: true,
+
+            altInputClass: 'transaksi-filter-tanggal',
+
             altFormat: 'd/m/Y',
+
+            altInputPlaceholder: 'Pilih tanggal',
+
+            disableMobile: true,
+
             allowInput: false,
+
             defaultDate: filterTanggal.value || null,
 
+            // Pastikan input tampilan memiliki placeholder.
+            onReady: function (selectedDates, dateStr, instance) {
+
+                if (instance.altInput) {
+
+                    instance.altInput.setAttribute(
+                        'placeholder',
+                        'Pilih tanggal'
+                    );
+
+                    instance.altInput.setAttribute(
+                        'aria-label',
+                        'Filter tanggal transaksi'
+                    );
+                }
+            },
+
             onChange: function (selectedDates, dateStr, instance) {
+
                 if (dateStr && instance.input.form) {
                     instance.input.form.submit();
                 }
             }
         });
+
+        // Pastikan placeholder tetap terpasang setelah inisialisasi.
+        if (kalenderFilterTanggal.altInput) {
+
+            kalenderFilterTanggal.altInput.setAttribute(
+                'placeholder',
+                'Pilih tanggal'
+            );
+        }
     }
 
     /*

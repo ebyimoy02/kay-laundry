@@ -8,6 +8,7 @@ use App\Http\Controllers\PaketLaundryController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PengaturanAkunController;
 
 /*
 |--------------------------------------------------------------------------
@@ -88,3 +89,10 @@ Route::get('/laporan/cetak', [LaporanController::class, 'cetak'])
 
 Route::get('/laporan', [LaporanController::class, 'index'])
     ->name('laporan.index');
+
+// Pengaturan Akun
+Route::get('/pengaturan-akun', [PengaturanAkunController::class, 'index'])
+    ->name('pengaturan-akun.index');
+
+Route::put('/pengaturan-akun', [PengaturanAkunController::class, 'update'])
+    ->name('pengaturan-akun.update');
